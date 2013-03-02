@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="GB2312"?>
+<chart bgColor="FFFFFF" bgAlpha="0" showBorder="0" upperLimit="4" lowerLimit="0"
+	gaugeRoundRadius="5" chartTopMargin="0" ticksBelowGauge="0" pointerOnTop="0"
+	showGaugeLabels="1" valueAbovePointer="0" pointerRadius="9"
+	minorTMAlpha="0" autoScale="1" origW="450" origH="100">
+	<colorRange>
+		<color minValue="0" maxValue="1" code="afd8f8" label="正常"/>
+		<color minValue="1" maxValue="2" code="cdc309" name="低风险"/>
+		<color minValue="2" maxValue="3" code="f6bd0f" name="中风险"/>
+		<color minValue="3" maxValue="4" code="ff654f" name="高风险"/>
+	</colorRange>
+	<pointers>
+		<pointer value="0" bgColor="CCCCCC" borderColor="333333"/>
+	</pointers>
+	
+	<styles>
+		<definition>
+			<style name="ValueFont" type="Font" bgColor="666666" size="10"
+				color="FFFFFF"/>
+			<style name="LabelFont" type="font" size="12" color="FFFFFF"/>
+		</definition>
+		<application>
+			<apply toObject="VALUE" styles="valueFont"/>
+			<apply toObject="GAUGELABELS" styles="LabelFont"/>
+		</application>
+	</styles>
+</chart>

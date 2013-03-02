@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chart bgAlpha="0" bgColor="FFFFFF" showYAxisValues="1" 
+	showValues="0" showBorder="0" canvasBorderThickness="1"
+	canvasBorderColor="666666" alternateHGridColor="FCB541"
+	alternateHGridAlpha="20" divLineColor="FCB541" divLineAlpha="50"
+	baseFontColor="666666" chartTopMargin="5"
+	chartBottomMargin="5" caption=""  
+	labelDisplay="ROTATE" slantLabels="1" labelStep="2">
+
+	<!-- trendLines>
+		<line isTrendZone="1" color="afd8f8" displayvalue="" alpha="0"/>		
+	</trendLines -->
+	
+	<styles>
+		<definition>
+			<style name="Anim1" type="animation" param="_xscale" start="0" duration="1"/>
+			<style name="Anim2" type="animation" param="_alpha" start="0" duration="0.6"/>
+			<style name="DataShadow" type="Shadow" alpha="40"/>
+			<style name="labelFont" type="font" size="10" bold="0"/>
+			<style name="legendFont" type="font" size="12" />
+			<style name="captionFont" type="font" size="14" color="666666" borderColor="666666" />
+		</definition>
+		<application>
+			<apply toObject="DIVLINES" styles="Anim1"/>
+			<apply toObject="HGRID" styles="Anim2"/>
+			<apply toObject="DATALABELS" styles="DataShadow,Anim2,labelFont"/>
+			<apply toObject="TRENDVALUES" styles="labelFont"/>
+			<apply toObject="CAPTION" styles="captionFont" />
+			<apply toObject="LEGEND" styles="legendFont" />
+		</application>
+	</styles>
+	
+</chart>

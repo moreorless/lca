@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="6"
+   name=""
+   committed-date="2012-09-27T14:04:22.158654Z"
+   url="https://127.0.0.1/svn/bit/NssaWeb/web/fusion/charts/charts"
+   last-author="gao_xiaoliang"
+   kind="dir"
+   uuid="30a96e5c-97a5-b148-8aa3-28072eca692b"
+   repos="https://127.0.0.1/svn/bit"
+   revision="92"/>
+<entry
+   committed-rev="6"
+   name="stackedcolumn2d.swf"
+   text-time="2013-02-09T03:58:16.101725Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="3564cdddb3688fe5717d80e316d7fe0c"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.727703Z"/>
+<entry
+   committed-rev="6"
+   name="column2d.swf"
+   text-time="2013-02-09T03:58:16.105725Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="4957ab6c7eb769d5a518ea36351647d6"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.892713Z"/>
+<entry
+   committed-rev="6"
+   name="doughnut2d.swf"
+   text-time="2013-02-09T03:58:16.109725Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="60f3a53018eca3a9eaf582e23dab460c"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.937715Z"/>
+<entry
+   committed-rev="6"
+   name="pie2d.swf"
+   text-time="2013-02-09T03:58:16.113725Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="d01334c04734ee2c413e7e6d8d16a9ec"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:16.015720Z"/>
+<entry
+   committed-rev="6"
+   name="stackedcolumn3d.swf"
+   text-time="2013-02-09T03:58:16.117726Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="7f3ecfc561ac6b67f06db192df013b02"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:16.024720Z"/>
+<entry
+   committed-rev="6"
+   name="column3d.swf"
+   text-time="2013-02-09T03:58:16.121726Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="09246981273e954baf9ea0161189db02"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:16.052722Z"/>
+<entry
+   committed-rev="6"
+   name="pie3d.swf"
+   text-time="2013-02-09T03:58:16.124726Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="d1b66cf4d07b210c68e4e118494eec7f"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:16.060722Z"/>
+<entry
+   committed-rev="6"
+   name="MSLine.swf"
+   text-time="2013-02-09T03:58:16.127726Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="f89e77a5cd3b5b78fdaa83a63c9e9578"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:16.068723Z"/>
+<entry
+   committed-rev="6"
+   name="line.swf"
+   text-time="2013-02-09T03:58:16.130726Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="2093d008081e97e42b85c3c5ec5d34fd"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:16.078723Z"/>
+<entry
+   committed-rev="6"
+   name="stackedbar2d.swf"
+   text-time="2013-02-09T03:58:16.134727Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="b0cabcdbe0b734cc9797512b35926910"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:16.087724Z"/>
+<entry
+   committed-rev="6"
+   name="bar2d.swf"
+   text-time="2013-02-09T03:58:16.137727Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="51b2498ee32376567fdccf97308ea52b"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:16.097724Z"/>
+</wc-entries>

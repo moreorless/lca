@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chart caption='%CAPTION%' showValues='1' decimals='0' formatNumberScale='0' rotateYAxisName="0" yAxisNameWidth="15" labelDisplay="WRAP" showCanvasBg="1" canvasBgAlpha="30" chartLeftMargin="30">
+%DATA%
+
+	<styles>
+		<definition>
+			<style name="captionFont" type="font" size="14" color="666666" borderColor="666666" />
+
+			<style name="labelFont" type="font" size="12" font="Verdana" />
+		</definition>
+		<application>
+			<apply toObject="DATALABELS" styles="labelFont" />
+			<apply toObject="DATAVALUES" styles="labelFont" />
+			<apply toObject="TOOLTIP" styles="labelFont" />
+			<apply toObject="YAXISNAME" styles="labelFont" />
+			<apply toObject="CAPTION" styles="captionFont" />
+
+		</application>
+	</styles>
+</chart>	

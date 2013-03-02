@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chart showValues='0' showYAxisValues="0" numberSuffix='%UNIT%' numDivLines="1" decimals='0' formatNumberScale='0' rotateYAxisName="0" yAxisNameWidth="15" labelDisplay='WRAP' showCanvasBg="1" canvasBgAlpha="30">
+%DATA%
+
+	<trendLines>
+		<line startValue="0" isTrendZone="1" displayvalue="unavail" alpha="0"/>
+		<line startValue="1" isTrendZone="1" displayvalue="avail" alpha="0"/>		
+	</trendLines>
+	<styles>
+		<definition>
+			<style name="labelFont" type="font" size="10" font="Verdana" />
+		</definition>
+		<application>
+			<apply toObject="DATALABELS" styles="labelFont" />
+			<apply toObject="DATAVALUES" styles="labelFont" />
+			<apply toObject="TOOLTIP" styles="labelFont" />
+			<apply toObject="YAXISNAME" styles="labelFont" />
+		</application>
+	</styles>
+</chart>	

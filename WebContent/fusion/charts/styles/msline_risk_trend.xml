@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chart caption='安全态势趋势图' numdivlines='4' showValues='0' bgColor="FFFFFF" showBorder="0" 
+       numVDivLines='22' anchorRadius='2' labelDisplay='rotate' slantLabels='1' labelStep="%LABELSTEP%" 
+       lineThickness='2' palette='4' connectNullData='0' xtLabelManagement='0'>
+
+	%DATA%
+</chart>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="GB2312"?>
+<chart bgColor="FFFFFF" bgAlpha="0" lowerLimit="0" upperLimit="4"
+	gaugeStartAngle="210" gaugeEndAngle="-30" gaugeOuterRadius="100"
+	gaugeInnerRadius="0" gaugeOriginY="125" majorTMColor="666666" majorTMAlpha="30"
+	majorTMHeight="35" majorTMThickness="2" minorTMAlpha="0" placeValuesInside="1"
+	pivotFillMix="E7E7E7,8E8E8E" pivotFillRatio="60,40" pivotFillType="linear"
+	pivotFillAngle="45" pivotRadius="20" showShadow="0" showValue="1" showBorder="0"
+	valueBelowPivot="1" toolTipBgColor="000000" autoScale="1" origW="250"
+	origH="250">
+	<dials>
+		<dial radius="85" valueY="188" baseWidth="12" topWidth="1" color="FFD700"
+			borderColor="FFFFFF" value="0"/>
+	</dials>
+	
+	<trendpoints>
+		<point startValue="0" endValue="1" displayValue="无风险" valueInside="1"
+			radius="105" innerRadius="95" alpha="0" showBorder="0" thickness="0"/>
+		<point startValue="1" endValue="2" displayValue="低风险" valueInside="1"
+			radius="105" innerRadius="95" alpha="0" showBorder="0" thickness="0"/>
+		<point startValue="2" endValue="3" displayValue="中等风险" valueInside="1"
+			radius="105" innerRadius="95" alpha="0" showBorder="0" thickness="0"/>
+		<point startValue="3" endValue="4" displayValue="高风险" valueInside="1"
+			radius="105" innerRadius="95" alpha="0" showBorder="0" thickness="0"/>
+	</trendpoints>
+	
+	<annotations autoScale="1" origW="250" origH="250">
+		<annotationGroup id="Grp3" showBelow="1">
+			<annotation type="circle" x="125" y="125" color="FFFFFF" radius="100"/>
+		</annotationGroup>
+		<annotationGroup id="NoRiskArc" showBelow="1">
+			<annotation type="arc" x="125" y="125" radius="105" innerRadius="55"
+				startAngle="210" endAngle="150" color="FFFFFF,87CEEB,FFFFFF"
+				fillRatio="50,43,8"/>
+		</annotationGroup>
+		<annotationGroup id="LowRiskArc" showBelow="1">
+			<annotation type="arc" x="125" y="125" radius="105" innerRadius="55"
+				startAngle="150" endAngle="90" color="FFFFFF,FFFF00,FFFFFF"
+				fillRatio="50,43,8"/>
+		</annotationGroup>
+		<annotationGroup id="MidRiskArc" showBelow="1">
+			<annotation type="arc" x="125" y="125" radius="105" innerRadius="55"
+				startAngle="90" endAngle="30" color="FFFFFF,FF8F02,FFFFFF"
+				fillRatio="50,43,8"/>
+		</annotationGroup>
+		<annotationGroup id="HighRiskArc" showBelow="1">
+			<annotation type="arc" x="125" y="125" radius="105" innerRadius="55"
+				startAngle="30" endAngle="-30" color="FFFFFF,FFA07A,FFFFFF"
+				fillRatio="50,43,8"/>
+		</annotationGroup>
+		<annotationGroup id="Grp2" showBelow="1">
+			<annotation type="arc" x="125" y="125"
+				color="8E8E8E,E7E7E7,8E8E8E,E7E7E7,8E8E8E" fillAngle="90"
+				radius="115" innerRadius="105" fillPattern="linear"/>
+		</annotationGroup>
+		<annotationGroup id="ValuePanel" showBelow="1">
+			<annotation type="rectangle" color="639ACE,FFFFFF" x="95" y="175"
+				toX="155" toY="200" showBorder="0" radius="5"
+				fillColor="8E8E8E,000000,8E8E8E" fillAngle="0"
+				fillRatio="10,40,50" fillAlpha="100" borderColor="000000"
+				borderAlpha="45" borderThickness="1"/>
+		</annotationGroup>
+	</annotations>
+	
+	<styles>
+		<definition>
+			<style name="LimitFont" type="font" face="Verdana" size="12"
+				color="666666" bold="0"/>
+			<style name="valueFont" type="font" face="Arial" size="12" color="FFFFFF"
+				bold="1"/>
+			<style name="pivotGlow" type="glow" color="000000" alpha="45"/>
+			<style name="circleShadow" type="shadow" distance="5" angle="75"/>
+			<style name="circleGlow" type="glow" color="000000" alpha="45"/>
+		</definition>
+		<application>
+			<apply toObject="TRENDVALUES" styles="LimitFont"/>
+			<apply toObject="PIVOT" styles="pivotGlow,circleShadow"/>
+			<apply toObject="Grp2" styles="circleShadow,circleGlow"/>
+			<apply toObject="VALUE" styles="valueFont"/>
+		</application>
+	</styles>
+</chart>

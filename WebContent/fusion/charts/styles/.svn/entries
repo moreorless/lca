@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="54"
+   name=""
+   committed-date="2012-11-03T08:15:50.999979Z"
+   url="https://127.0.0.1/svn/bit/NssaWeb/web/fusion/charts/styles"
+   last-author="gao_xiaoliang"
+   kind="dir"
+   uuid="30a96e5c-97a5-b148-8aa3-28072eca692b"
+   repos="https://127.0.0.1/svn/bit"
+   revision="92"/>
+<entry
+   committed-rev="6"
+   name="line_bizhealth.xml"
+   text-time="2013-02-09T03:58:15.586695Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="442b8abd1b80dcf5b0d83b05d1933495"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.494690Z"/>
+<entry
+   committed-rev="6"
+   name="column3d_node_risk.xml"
+   text-time="2013-02-09T03:58:15.589695Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="d4c57b3b44c2615f1107f4baf62c4093"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.496690Z"/>
+<entry
+   committed-rev="6"
+   name="tomcat_availability.xml"
+   text-time="2013-02-09T03:58:15.593696Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="85b37ea32bb8a327614b59b7a116a4ff"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.510691Z"/>
+<entry
+   committed-rev="6"
+   name="baseline.xml"
+   text-time="2013-02-09T03:58:15.597696Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="09dcd1dff395509f7e8b6911bf83b6be"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.513691Z"/>
+<entry
+   committed-rev="6"
+   name="line_threat_timeSeries.xml"
+   text-time="2013-02-09T03:58:15.600696Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="129a1c1b481d276d6f309151bb72d871"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.515691Z"/>
+<entry
+   committed-rev="6"
+   name="emptydata.xml"
+   text-time="2013-02-09T03:58:15.603696Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="dddb272e951960c18d2d9f7fafa76c41"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.517691Z"/>
+<entry
+   committed-rev="6"
+   name="monitorcolumn3d.xml"
+   text-time="2013-02-09T03:58:15.606696Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="bdd2e3efdea86ba5fd54ca03d445c0d5"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.519691Z"/>
+<entry
+   committed-rev="6"
+   name="event_stat_portal.xml"
+   text-time="2013-02-09T03:58:15.608696Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="4b635518deb5bccc4c3a0b2ec62a060d"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.521691Z"/>
+<entry
+   committed-rev="6"
+   name="basepie3d.xml"
+   text-time="2013-02-09T03:58:15.611697Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="fc6b1135e837c22056170225c52488c4"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.523692Z"/>
+<entry
+   committed-rev="6"
+   name="column3d_threat_totalThreatValue.xml"
+   text-time="2013-02-09T03:58:15.614697Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="9f0bcedbef5cbe4073c0c8ff62357d2b"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.524692Z"/>
+<entry
+   committed-rev="6"
+   name="pie3d_threat_assetValue.xml"
+   text-time="2013-02-09T03:58:15.618697Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="225a12ca38712b284dd35233b37d9bb0"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.526692Z"/>
+<entry
+   committed-rev="54"
+   name="msline_risk_trend.xml"
+   text-time="2013-02-09T03:58:15.620697Z"
+   committed-date="2012-11-03T08:15:50.999979Z"
+   checksum="24e2434caa5c08d934217ef876032845"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.529692Z"/>
+<entry
+   committed-rev="6"
+   name="line_risk_trend.xml"
+   text-time="2013-02-09T03:58:15.623697Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="0c87831e57b6c326e0090db3d9c2be3b"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.533692Z"/>
+<entry
+   committed-rev="6"
+   name="monitorpie3d.xml"
+   text-time="2013-02-09T03:58:15.626697Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="fc6b1135e837c22056170225c52488c4"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.535692Z"/>
+<entry
+   committed-rev="6"
+   name="event_stat.xml"
+   text-time="2013-02-09T03:58:15.629698Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="eff710313d5d782272d0cc20ddbc3924"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.538692Z"/>
+<entry
+   committed-rev="6"
+   name="basecolumn3d.xml"
+   text-time="2013-02-09T03:58:15.633698Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="90da430e77516fe0ebf873efdb9189cf"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.540693Z"/>
+<entry
+   committed-rev="6"
+   name="stackedcolumn3d_priority_category.xml"
+   text-time="2013-02-09T03:58:15.636698Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="a773d0fb978b4172b35f9947131f79f2"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.544693Z"/>
+<entry
+   committed-rev="6"
+   name="column3d_for_risk.xml"
+   text-time="2013-02-09T03:58:15.640698Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="ce8fc9d347b64723e51e7b7be8e3a542"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.547693Z"/>
+<entry
+   committed-rev="6"
+   name="line_risk_vuln.xml"
+   text-time="2013-02-09T03:58:15.646699Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="e26d7c3c5b911e1b2a16ce1b758aced8"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.552693Z"/>
+<entry
+   committed-rev="6"
+   name="pie3d_risk_level.xml"
+   text-time="2013-02-09T03:58:15.643698Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="38d397a9b75994cfd90e914429d6db11"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.550693Z"/>
+<entry
+   committed-rev="6"
+   name="column3d_for_knowledgebase.xml"
+   text-time="2013-02-09T03:58:15.649699Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="28d5ebf54c0bee9d4162ddc694f6b645"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.554693Z"/>
+<entry
+   committed-rev="6"
+   name="basebar2d.xml"
+   text-time="2013-02-09T03:58:15.652699Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="89b50dd69f571ae7366bbbb34c2da344"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.556693Z"/>
+<entry
+   committed-rev="6"
+   name="stackedcolumn3d_asset_count.xml"
+   text-time="2013-02-09T03:58:15.655699Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="96df0c1e5a84744e2341102f4cf2e2a6"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.558694Z"/>
+<entry
+   committed-rev="6"
+   name="monitorstackedcolumn3d.xml"
+   text-time="2013-02-09T03:58:15.658699Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="87571f4841ce96faf6574c15861d5f97"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.560694Z"/>
+<entry
+   committed-rev="6"
+   name="basepie2d.xml"
+   text-time="2013-02-09T03:58:15.661699Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="9d1f289ce9882a5c5b269de2c5c35dba"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.562694Z"/>
+<entry
+   committed-rev="6"
+   name="line_analyse_trend.xml"
+   text-time="2013-02-09T03:58:15.668700Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="37020cb7e86ede2b167ca98dcf1d1528"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.567694Z"/>
+<entry
+   committed-rev="6"
+   name="pie3d_asset_value.xml"
+   text-time="2013-02-09T03:58:15.665700Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="dafc1cc9861190f6ebd8b15b96d5bfcb"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.564694Z"/>
+<entry
+   committed-rev="6"
+   name="pie3d_for_risk.xml"
+   text-time="2013-02-09T03:58:15.671700Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="62c3f5fa9f8cb19b31df0286e208f7e1"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.569694Z"/>
+<entry
+   committed-rev="6"
+   name="pie3d_for_knowledgebase.xml"
+   text-time="2013-02-09T03:58:15.675700Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="a7b0aacc0d189d57820451a3d44f1880"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.571694Z"/>
+<entry
+   committed-rev="6"
+   name="column3d_domain_value.xml"
+   text-time="2013-02-09T03:58:15.679701Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="390669e045f6b71df33b5d2ae1f7b150"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.574695Z"/>
+<entry
+   committed-rev="6"
+   name="column3d_Xdevice_Yalert.xml"
+   text-time="2013-02-09T03:58:15.682701Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="e3bdbd3f8aa1756696f56c7c60e6e9a7"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.576695Z"/>
+<entry
+   committed-rev="6"
+   name="basecolumn2d.xml"
+   text-time="2013-02-09T03:58:15.687701Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="f0506fab87ffb6b5674a7dce5eb5c917"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.579695Z"/>
+<entry
+   committed-rev="6"
+   name="msline_of_vuln.xml"
+   text-time="2013-02-09T03:58:15.702702Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="474335bbed544453e701f507c5e291df"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:15.582695Z"/>
+</wc-entries>

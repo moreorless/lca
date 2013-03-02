@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chart bgAlpha='0' bgColor='FFFFFF' showBorder="0" yAxisName='告警数量' rotateYAxisName='0' yAxisNameWidth='15' showValues='1' decimals='0' formatNumberScale='0' useRoundEdges='1' plotFillAngle="270" >
+%DATA%
+
+	<styles>
+		<definition>
+			<style name="labelFont" type="font" size="12" font="Verdana" />
+		</definition>
+		<application>
+			<apply toObject="DATALABELS" styles="labelFont" />
+			<apply toObject="DATAVALUES" styles="labelFont" />
+			<apply toObject="TOOLTIP" styles="labelFont" />
+			<apply toObject="YAXISNAME" styles="labelFont" />
+		</application>
+	</styles>
+</chart>

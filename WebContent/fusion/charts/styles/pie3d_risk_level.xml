@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chart decimals="0" enableSmartLabels="1" showBorder="0" startingAngle="70" pieYScale="60" pieSliceDepth="30" plotFillAlpha="80" labelSepChar=":" showPercentInToolTip="1" caption="资产态势等级分布">
+%DATA%
+
+	<styles>
+		<definition>
+			<style name="labelFont" type="font" size="12" font="Verdana" />
+			<style name="captionFont" type="font" size="14" color="666666" borderColor="666666" />
+		</definition>
+		<application>
+			<apply toObject="DATALABELS" styles="labelFont" />
+			<apply toObject="TOOLTIP" styles="labelFont" />
+			<apply toObject="CAPTION" styles="captionFont" />
+		</application>
+	</styles>
+</chart>

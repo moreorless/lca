@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="GB2312"?>
+<chart bgColor="FFFFFF" bgAlpha="0" showTickMarks="0" cylRadius="0" showValue="0"
+	showBorder="0" autoscale="1" origH="80" origW="100" cylOriginX="-1000"
+	cylOriginY="-1000">
+	<!--value>3000</value-->
+	<annotations autoscale="1" origH="80" origW="100" constrainedScale="0">
+		<annotationGroup id="Grp1">
+			<annotation type="rectangle" x="10" y="5" toX="90" toY="75" radius="10"
+				fillAngle="90" fillRatio="10,40,50" color="afd8f8,FFFFFF,afd8f8"
+				showBorder="0" fillAlpha="20,100,20"/>
+			<annotation type="text" label="N/A" font="Verdana" xPos="50" yPos="40"
+				align="center" vAlign="middle" fontcolor="666666" fontSize="22"/>
+		</annotationGroup>
+	</annotations>
+	<styles>
+		<definition>
+			<style name="RectShadow" type="shadow" strength="1"/>
+		</definition>
+		<application>
+			<apply toObject="Grp1" styles="RectShadow"/>
+		</application>
+	</styles>
+	
+</chart>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chart setAdaptiveYMin="1" numDisplaySets="18" showRealTimeValue="0" chartBottomMargin="0"
+	showPlotBorder="0" bgColor="FFFFFF" bgAlpha="0" showBorder="0"
+	canvasBorderThickness="1" canvasBorderColor="666666" canvasPadding="5"
+	labelDisplay="ROTATE" slantLabels="1" numberSuffix="%UNIT%"
+	decimals="1" legendPosition="RIGHT">
+	%DATA%
+	
+	<styles>
+		<definition>
+			<style name="legendFont" type="font" size="10" />
+			<style name="labelFont" type="font" size="8" />
+		</definition>
+		<application>
+			<apply toObject="LEGEND" styles="legendFont" />
+			<apply toObject="DATALABELS" styles="labelFont" />
+		</application>
+	</styles>
+</chart>

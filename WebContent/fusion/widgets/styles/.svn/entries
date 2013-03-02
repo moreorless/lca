@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="6"
+   name=""
+   committed-date="2012-09-27T14:04:22.158654Z"
+   url="https://127.0.0.1/svn/bit/NssaWeb/web/fusion/widgets/styles"
+   last-author="gao_xiaoliang"
+   kind="dir"
+   uuid="30a96e5c-97a5-b148-8aa3-28072eca692b"
+   repos="https://127.0.0.1/svn/bit"
+   revision="92"/>
+<entry
+   committed-rev="6"
+   name="memusage.xml"
+   text-time="2013-02-09T03:58:16.243733Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="9d30f2ad7e8efb1e777049adfe0c296f"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:16.218731Z"/>
+<entry
+   committed-rev="6"
+   name="businessangular.xml"
+   text-time="2013-02-09T03:58:16.246733Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="5ca0052d2dee03911564a56f86640f71"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:16.221732Z"/>
+<entry
+   committed-rev="6"
+   name="emptydata.xml"
+   text-time="2013-02-09T03:58:16.250733Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="aed8ad640fc6005d4c1f815d262bc225"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:16.224732Z"/>
+<entry
+   committed-rev="6"
+   name="linkflowrealtime.xml"
+   text-time="2013-02-09T03:58:16.253733Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="8391f1aa9f1d21715f1b4ab4aa863f08"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:16.228732Z"/>
+<entry
+   committed-rev="6"
+   name="storageusage.xml"
+   text-time="2013-02-09T03:58:16.255733Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="9861ed8ab85c67d597ecf9185e243c51"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:16.230732Z"/>
+<entry
+   committed-rev="6"
+   name="priorityangular-metal.xml"
+   text-time="2013-02-09T03:58:16.258734Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="5b50c1f696927519626ed315293bd2bf"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:16.233732Z"/>
+<entry
+   committed-rev="6"
+   name="priorityangular.xml"
+   text-time="2013-02-09T03:58:16.261734Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="7b1e41709fd6a608ba656a7bbafaa9d1"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:16.236732Z"/>
+<entry
+   committed-rev="6"
+   name="cpuusage.xml"
+   text-time="2013-02-09T03:58:16.264734Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="5c8af701039150a88c8c8a3f6878e6e7"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:16.237732Z"/>
+<entry
+   committed-rev="6"
+   name="prioritylinear.xml"
+   text-time="2013-02-09T03:58:16.267734Z"
+   committed-date="2012-09-27T14:04:22.158654Z"
+   checksum="68c474b4eaf88cdb01a673c9bb63b3ff"
+   last-author="gao_xiaoliang"
+   kind="file"
+   prop-time="2013-02-09T03:58:16.240733Z"/>
+</wc-entries>

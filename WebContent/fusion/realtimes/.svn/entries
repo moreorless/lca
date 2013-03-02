@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="6"
+   name=""
+   committed-date="2012-09-27T14:04:22.158654Z"
+   url="https://127.0.0.1/svn/bit/NssaWeb/web/fusion/realtimes"
+   last-author="gao_xiaoliang"
+   kind="dir"
+   uuid="30a96e5c-97a5-b148-8aa3-28072eca692b"
+   repos="https://127.0.0.1/svn/bit"
+   revision="92"/>
+<entry
+   name="styles"
+   kind="dir"/>
+<entry
+   name="charts"
+   kind="dir"/>
+</wc-entries>

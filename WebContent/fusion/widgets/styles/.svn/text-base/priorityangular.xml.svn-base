@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="GB2312"?>
+<chart bgAlpha="0" bgColor="FFFFFF" lowerLimit="0" upperLimit="5" showBorder="0"
+	basefontColor="000000" gaugeOuterRadius="160" gaugeInnerRadius="100"
+	showGaugeBorder="1" gaugeBorderColor="666666" gaugeBorderThickness="1"
+	showTickValues="0" showTickMarks="0" autoScale="1" origW="350" origH="200"
+	pivotRadius="15" pivotBgColor="333333" pivotBorderColor="FFFFFF"
+	pivotFillMix="" pivotBorderThickness="2" showPivotBorder="1">
+	<colorRange>
+		<color minValue="0" maxValue="1" code="8BBA00"/>
+		<color minValue="1" maxValue="2" code="C5DFF6"/>
+		<color minValue="2" maxValue="3" code="E09464"/>
+		<color minValue="3" maxValue="4" code="F6BD0F"/>
+		<color minValue="4" maxValue="5" code="FF654F"/> 
+	</colorRange>
+	
+	<dials>
+		<dial value="0" bgColor="333333" radius="95" borderColor="FFFFFF"
+			borderAlpha="100" baseWidth="30" topWidth="1" borderThickness="2"/>
+	</dials>
+	
+	<trendpoints>
+		<point displayValue="I" startValue="0" endValue="1" radius="100"
+			innerRadius="40" color="8BBA00" alpha="30" borderColor="FFFFFF"/>
+		<point displayValue="II" startValue="1" endValue="2" radius="100"
+			innerRadius="40" color="C5DFF6" alpha="30" borderColor="FFFFFF"/>
+		<point displayValue="III" startValue="2" endValue="3" radius="100"
+			innerRadius="40" color="E09464" alpha="30" borderColor="FFFFFF"/>
+		<point displayValue="IV" startValue="3" endValue="4" radius="100"
+			innerRadius="40" color="F6BD0F" alpha="30" borderColor="FFFFFF"/>
+		<point displayValue="V" startValue="4" endValue="5" radius="100"
+			innerRadius="40" color="FF654F" alpha="30" borderColor="FFFFFF"/>
+	</trendpoints>
+	
+	<styles>
+		<definition>
+			<style name="labelFont" type="font" size="12" color="FFFFFF" bold="1"
+				isHTML="1"/>
+			<style name="labelGlow" type="glow" color="000000" alpha="45"/>
+		</definition>
+		<application>
+			<apply toObject="TRENDVALUES" styles="labelFont,labelGlow"/>
+		</application>
+	</styles>
+</chart>

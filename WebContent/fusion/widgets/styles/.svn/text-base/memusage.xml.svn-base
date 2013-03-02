@@ -1,0 +1,18 @@
+<chart showBorder="0" bgColor="FFFFFF" upperLimit='100' lowerLimit='0' numberSuffix='%25' 
+majorTMNumber='11' majorTMColor='646F8F' majorTMHeight='9' 
+minorTMNumber='2' minorTMColor='646F8F' minorTMHeight='3' 
+majorTMThickness='1' decimalPrecision='0' ledGap='2' ledSize='2' 
+annRenderDelay='1.7'
+autoScale="1" origW="150" origH="180"> 
+
+	<colorRange>
+		<color minValue='0' maxValue='20' code='00dd00' /> 
+	</colorRange>
+	<value>%DATA%</value>
+	<styles>
+		<definition>
+		</definition>
+		<application>
+		</application>
+	</styles>
+</chart>

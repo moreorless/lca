@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chart dataStreamURL="%URL%" refreshInterval="300" dataStamp="%DATASTAMP%" numDisplaySets="288"
+	setAdaptiveYMin="1"	showRealTimeValue="0" realTimeValuePadding="50"
+	labelStep="20"
+	showPlotBorder="0" bgColor="FFFFFF" bgAlpha="0" showBorder="0" canvasBorderThickness="1" canvasBorderColor="666666"
+	numberScaleValue='1,1000,1000' numberScaleUnit='Kbps,Mbps,Gbps' >
+	%CATEGORIES%
+	<dataset seriesName='发送流量' showValues='0' color="FF0000">
+	%SFLOW%
+	</dataset>
+	<dataset seriesName='接收流量' showValues='0' color="00FF00">
+	%RFLOW%
+	</dataset>
+	<dataset seriesName='总流量' showValues='0' color="0000FF">
+	%TFLOW%
+	</dataset>
+	<styles>
+		<definition>
+			<style name="legendFont" type="font" size="12" />
+			<style name="labelFont" type="font" size="8" />
+		</definition>
+		<application>
+			<apply toObject="LEGEND" styles="legendFont" />
+			<apply toObject="DATALABELS" styles="labelFont" />
+		</application>
+	</styles>
+</chart>

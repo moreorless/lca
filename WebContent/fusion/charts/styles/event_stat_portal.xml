@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chart showValues="1" decimals="0" formatNumberScale="0"
+	rotateYAxisName="0" rotateXAxisName="0" yAxisNameWidth="15"
+	xAxisNameWidth="15" showLabels="0" useRoundEdges='1' thousandSeparator=""
+	enableSmartLabels="1" startingAngle='70' pieYScale="60" pieSliceDepth="30"
+	showBorder="0" bgAlpha="0,0">
+	<styles>
+		<definition>
+			<style name="labelFont" type="font" size="12" font="Verdana" />
+			<style name="tooltipFont" type="font" size="12" font="Verdana"
+				isHTML='1' />
+			<style name="valueFont" type="font" size="10" font="Verdana" />
+		</definition>
+		<application>
+			<apply toObject="DATALABELS" styles="labelFont" />
+			<apply toObject="DATAVALUES" styles="valueFont" />
+			<apply toObject="TOOLTIP" styles="tooltipFont" />
+			<apply toObject="YAXISNAME" styles="labelFont" />
+			<apply toObject="XAXISNAME" styles="labelFont" />
+			<apply toObject="LEGEND" styles="labelFont" />
+		</application>
+	</styles>
+</chart>

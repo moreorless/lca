@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chart showYAxisValues="1" showValues="0" showBorder="0" bgColor="FFFFFF" labelDisplay="ROTATE" slantLabels="1" decimals="2" caption="安全态势趋势" labelStep="%LABELSTEP%" drawAnchors="1" anchorAlpha="0" chartLeftMargin="50" showLimits="0">
+%DATA%
+	
+	<styles>
+		<definition>
+			<style name="Anim1" type="animation" param="_xscale" start="0" duration="1" />
+			<style name="Anim2" type="animation" param="_alpha" start="0" duration="0.6" />
+			<style name="labelFont" type="font" size="12" font="Verdana" />
+			<style name="captionFont" type="font" size="14" color="666666" borderColor="666666" />
+		</definition>
+		<application>
+			<apply toObject="DIVLINES" styles="Anim1" />
+			<apply toObject="HGRID" styles="Anim2" />
+			<apply toObject="DATALABELS" styles="Anim2,labelFont" />
+			<apply toObject="TOOLTIP" styles="labelFont" />
+			<apply toObject="CAPTION" styles="captionFont" />
+	</application>	
+	</styles>
+
+</chart> 

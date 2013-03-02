@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chart caption='%CAPTION%' decimals="0" formatNumberScale='0' enableSmartLabels='1' showBorder='0' startingAngle='70' pieYScale="60" pieSliceDepth="30" plotFillAlpha="80" labelSepChar=":" showPercentInToolTip="1">
+%DATA%
+
+	<styles>
+		<definition>
+			<style name="captionFont" type="font" size="14" color="666666" borderColor="666666" />
+			<style name="labelFont" type="font" size="12" font="Verdana" />
+		</definition>
+		<application>
+		    <apply toObject='CAPTION' styles='captionFont' />
+			<apply toObject="DATALABELS" styles="labelFont" />
+			<apply toObject="TOOLTIP" styles="labelFont" />
+		</application>
+	</styles>
+</chart>

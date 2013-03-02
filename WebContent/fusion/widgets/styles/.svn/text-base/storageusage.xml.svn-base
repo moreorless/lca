@@ -1,0 +1,6 @@
+<chart upperLimit='100' lowerLimit='0' tickMarkGap='5' majorTMNumber='11' numberSuffix='%'
+showBorder="0" bgColor="FFFFFF"
+cylRadius="45" cylFillColor="009294"
+autoScale="1" origW="150" origH="180">
+	<value>%DATA%</value>
+</chart>
