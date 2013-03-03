@@ -1,7 +1,7 @@
  <%@ page contentType="text/html;charset=utf-8" language="java" %>
  
  <!-- Fixed navbar -->
-      <div class="navbar navbar-fixed-top">
+      <div class="navbar navbar-fixed-top" id="nav">
         <div class="navbar-inner">
           <div class="container">
             <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
