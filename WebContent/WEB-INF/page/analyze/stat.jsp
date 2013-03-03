@@ -11,7 +11,10 @@
 	</style>
   </head>
   <body>
-  	<%@ include file="/includes/header.jsp" %>
+  	<c:import url="/includes/header.jsp">
+  		<c:param name="currentNav">statistic</c:param>
+  	</c:import>
+  	
   	<div id="wrap" class="container">
   		
   		<ul class="nav nav-pills">

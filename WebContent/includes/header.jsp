@@ -1,5 +1,5 @@
  <%@ page contentType="text/html;charset=utf-8" language="java" %>
- 
+ <%@ include file="/includes/taglibs.jsp"%>
  <!-- Fixed navbar -->
       <div class="navbar navbar-fixed-top" id="nav">
         <div class="navbar-inner">
@@ -9,11 +9,13 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="brand" href="#">中海油碳理层分析系统</a>
+            <a class="brand" id="logo_bar" href="#">中海油碳理层分析系统</a>
             <div class="nav-collapse collapse">
               <ul class="nav">
-                <li class="active"><a href="#"><img src="${base}/images/logo.png" width="16" height="16"/>&nbsp;行业数据分析</a></li>
-                <li><a href="#"><img src="${base}/images/config.png" width="16" height="16"/>&nbsp;自定义项目</a></li>
+                <li <c:if test="${param.currentNav == 'statistic'}">class="active"</c:if>>
+                	<a href="${base}/ele/stat"><img src="${base}/images/logo.png" width="16" height="16"/>&nbsp;行业数据分析</a></li>
+                <li <c:if test="${param.currentNav == 'config'}">class="active"</c:if>>
+                	<a href="${base}/ele/config"><img src="${base}/images/config.png" width="16" height="16"/>&nbsp;自定义项目</a></li>
               </ul>
               
 			<div class="btn-group" style="float:right">
@@ -33,3 +35,5 @@
           </div>
         </div>
       </div>
+      
+      

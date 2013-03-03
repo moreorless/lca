@@ -13,7 +13,10 @@ import org.nutz.ioc.annotation.InjectName;
 import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.Ok;
+import org.nutz.mvc.annotation.Param;
 
+import com.cnooc.lca.electricity.bean.Station;
+import com.cnooc.lca.electricity.excel.CommonTemplate;
 import com.cnooc.lca.electricity.excel.T_Cell;
 import com.cnooc.lca.electricity.excel.T_Cycle;
 import com.cnooc.lca.electricity.excel.T_Position;
@@ -34,12 +37,19 @@ public class EleModule {
 		excelReader = new ExcelReader("d://LCA总计算模型-2013-01-08.xls");
 	}
 	
+	/**
+	 * 进入“行业数据分析页面”
+	 * @param ioc
+	 * @param request
+	 */
 	@At
-	@Ok("jsp:page.analyze.main")
-	public void main(Ioc ioc, HttpServletRequest request){
+	@Ok("jsp:page.analyze.stat")
+	public void stat(Ioc ioc, HttpServletRequest request){
 		
 		// mei_600生命周期模板
 		Template mei_600 = ioc.get(Template.class, "mei_600");
+		
+		CommonTemplate mei_600_new = ioc.get(CommonTemplate.class, "mei_600_new");
 		
 		T_Cycle cycle_m600 = createCycle(mei_600);
 		request.setAttribute("cycle", cycle_m600);
@@ -51,6 +61,20 @@ public class EleModule {
 		request.setAttribute("consumptionNames", t_procedure.getConsumptionNames());
 		// 获取全部排放指标
 		request.setAttribute("emissionNames", t_procedure.getEmissionNames());
+	}
+	
+	@At
+	@Ok("jsp:page.analyze.config")
+	public void config(){
+		// 读取配置信息
+		logger.info("读取配置信息");
+	}
+	
+	@At
+	@Ok("redirect:/ele/config?saveOk=true")
+	public void saveConfig(HttpServletRequest request, @Param("..")Station station){
+		// 保存配置
+		logger.info("保存配置信息");
 	}
 	
 	

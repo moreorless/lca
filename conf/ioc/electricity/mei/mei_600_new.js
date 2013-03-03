@@ -1,6 +1,6 @@
 var ioc = {
-	mei_600 : {
-		type : "com.cnooc.lca.electricity.excel.Template",
+	mei_600_new : {
+		type : "com.cnooc.lca.electricity.excel.CommonTemplate",
 		fields  : {
 			sheetIndex : 1,
 			stationName : "煤电",
