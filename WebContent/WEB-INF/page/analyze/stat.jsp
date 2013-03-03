@@ -65,11 +65,12 @@
    <script type="text/javascript" src="${base}/amchart/swfobject.js"></script>
    
    <script type="text/javascript">
-		var so = new SWFObject("${base}/amchart/amcolumn_1.6.0.1/amcolumn/amcolumn.swf", "amcolumn", "100%", "300", "8", "#FFFFFF");
-		so.addVariable("path", "amcolumn/");
-		so.addVariable("settings_file", encodeURIComponent("${base}/amchart/amcolumn_settings.xml"));
-		so.addVariable("data_file", encodeURIComponent("${base}/amchart/amcolumn_data.txt"));
-
+		var so = new SWFObject("${base}/amchart/amcolumn_1.6.0.1/amcolumn/amcolumn.swf", "amcolumn", "100%", "400", "8", "#FFFFFF");
+		so.addVariable("path", "${base}/amchart/");
+		
+		so.addVariable("settings_file", encodeURIComponent("${base}/common/amchart/stat/amcolumn_settings.xml"));
+		so.addVariable("data_file", encodeURIComponent("${base}/common/amchart/stat/amcolumn_data.xml"));
+		
 		so.addParam("wmode", "opaque");
 		so.write("amcharts");
 	</script>

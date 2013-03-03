@@ -5,15 +5,41 @@
 <head>
 <title>chart demo</title>
 <script type="text/javascript" src="${base}/amchart/swfobject.js"></script>
+
+<style type="text/css">
+	body > div{
+		float : left;
+		margin : 20px;
+	}
+</style>
+
 </head>
 <body>
-	<div id="amcharts_1261636719173">You need to upgrade your Flash Player</div>
+	<div id="amcharts_line">You need to upgrade your Flash Player</div>
+	
+	<div id="amcharts_column">You need to upgrade your Flash Player</div>
+	
+	<div id="amcharts_stackcolumn">You need to upgrade your Flash Player</div>
+	
 	<script type="text/javascript">
-		var so = new SWFObject("${base}/amchart/amcolumn_1.6.0.1/amcolumn/amcolumn.swf", "amcolumn", "600", "400", "8", "#FFFFFF");
-		so.addVariable("path", "amcolumn/");
-		so.addVariable("settings_file", encodeURIComponent("${base}/WEB-INF/page/demo/amline_settings.xml"));
-		so.addVariable("data_file", encodeURIComponent("${base}/"));
-		so.write("amcharts_1261636719173");
+		var so = new SWFObject("${base}/amchart/amline_1.6.0.1/amline/amline.swf", "amline", "500", "400", "8", "#FFFFFF");
+		so.addVariable("path", "${base}/amchart/");
+		so.addVariable("settings_file", encodeURIComponent("${base}/common/demo/amline_settings.xml"));
+		so.addVariable("data_file", encodeURIComponent("${base}/common/demo/amline_data.xml"));
+		so.write("amcharts_line");
+	
+		var so = new SWFObject("${base}/amchart/amcolumn_1.6.0.1/amcolumn/amcolumn.swf", "amcolumn", "500", "400", "8", "#FFFFFF");
+		so.addVariable("path", "${base}/amchart/");
+		so.addVariable("settings_file", encodeURIComponent("${base}/common/demo/amcolumn_settings.xml"));
+		so.addVariable("data_file", encodeURIComponent("${base}/common/demo/amcolumn_data.xml"));
+		so.write("amcharts_column");
+		
+		var so = new SWFObject("${base}/amchart/amcolumn_1.6.0.1/amcolumn/amcolumn.swf", "stackcolumn", "520", "380", "8", "#FFFFFF");
+		so.addVariable("path", "${base}/amchart/");
+		so.addVariable("settings_file", encodeURIComponent("${base}/common/demo/stackcolumn_settings.xml"));
+		so.addVariable("data_file", encodeURIComponent("${base}/common/demo/stackcolumn_data.xml"));
+		so.write("amcharts_stackcolumn");
+		
 	</script>
 </body>
 </html>
