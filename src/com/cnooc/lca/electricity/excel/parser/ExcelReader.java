@@ -1,4 +1,4 @@
-package com.cnooc.lca.electricity.excel.reader;
+package com.cnooc.lca.electricity.excel.parser;
 
 import java.io.FileInputStream;
 import java.io.IOException;

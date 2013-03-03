@@ -19,7 +19,7 @@ import com.cnooc.lca.electricity.excel.T_Cycle;
 import com.cnooc.lca.electricity.excel.T_Position;
 import com.cnooc.lca.electricity.excel.T_Procedure;
 import com.cnooc.lca.electricity.excel.Template;
-import com.cnooc.lca.electricity.excel.reader.ExcelReader;
+import com.cnooc.lca.electricity.excel.parser.ExcelReader;
 
 
 @IocBean(create="init")

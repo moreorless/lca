@@ -1,4 +1,4 @@
-package com.cnooc.lca.service;
+package com.cnooc.lca.electricity.service;
 
 import java.util.HashMap;
 import java.util.List;

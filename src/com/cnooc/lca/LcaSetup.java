@@ -20,15 +20,7 @@ public class LcaSetup implements Setup{
 
 	@Override
 	public void init(NutConfig config) {
-		/*
-		// 自动为com.cnooc.lca包下的javabean执行建表操作
-		// Dao dao = config.getIoc().get(NutDao.class, "dao");
-		Dao dao = config.getIoc().get(Dao.class);
-		for(Class<?> klass : Scans.me().scanPackage("com.cnooc.lca")){
-			if(klass.getAnnotation(Table.class) != null)
-				dao.create(klass, false);
-		}
-		*/
+		
 	}
 
 }
