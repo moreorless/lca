@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title>LCA</title>
+    <title>中海油碳理层分析系统</title>
     <link type="text/css" rel="stylesheet" href="${base}/css/bootstrap.css" />
     <link type="text/css" rel="stylesheet" href="${base}/css/index.css"/>
 	<style type="text/css">
@@ -13,6 +13,14 @@
   <body>
   	<%@ include file="/includes/header.jsp" %>
   	<div id="wrap" class="container">
+  		
+  		<ul class="nav nav-pills">
+		  <li class="active">
+		    <a href="#">综合能耗统计</a>
+		  </li>
+		  <li><a href="#">碳排放统计</a></li>
+		  <li><a href="#">影响潜能统计</a></li>
+		</ul>
   		
   		<div id="amcharts" style="text-align:center">You need to upgrade your Flash Player</div>
   		<div class="seperator"></div>
@@ -58,6 +66,8 @@
 		so.addVariable("path", "amcolumn/");
 		so.addVariable("settings_file", encodeURIComponent("${base}/amchart/amcolumn_settings.xml"));
 		so.addVariable("data_file", encodeURIComponent("${base}/amchart/amcolumn_data.txt"));
+
+		so.addParam("wmode", "opaque");
 		so.write("amcharts");
 	</script>
   </body>
