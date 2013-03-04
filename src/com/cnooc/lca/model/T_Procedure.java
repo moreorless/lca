@@ -1,8 +1,9 @@
-package com.cnooc.lca.electricity.excel;
+package com.cnooc.lca.model;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
 
 public class T_Procedure{
 	/**

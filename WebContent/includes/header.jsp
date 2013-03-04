@@ -1,6 +1,13 @@
  <%@ page contentType="text/html;charset=utf-8" language="java" %>
  <%@ include file="/includes/taglibs.jsp"%>
  <!-- Fixed navbar -->
+ 	  <c:if test="${param.cycletype == null }">
+ 	  	<c:set var="cycletype" value="${session_cycletype_list[0].code}"></c:set>
+ 	  </c:if>
+ 	  <c:if test="${param.target == null }">
+ 	  	<c:set var="target" value="consumption"></c:set>
+ 	  </c:if>
+ 	  
       <div class="navbar navbar-fixed-top" id="nav">
         <div class="navbar-inner">
           <div class="container">
@@ -13,9 +20,15 @@
             <div class="nav-collapse collapse">
               <ul class="nav">
                 <li <c:if test="${param.currentNav == 'statistic'}">class="active"</c:if>>
-                	<a href="${base}/ele/stat"><img src="${base}/images/logo.png" width="16" height="16"/>&nbsp;行业数据分析</a></li>
+                	<c:if test="${param.target == null }">
+                	<a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=consumption"><img src="${base}/images/logo.png" width="16" height="16"/>&nbsp;行业数据分析</a>
+                	</c:if>
+                	<c:if test="${param.target != null }">
+                	<a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=${param.target}"><img src="${base}/images/logo.png" width="16" height="16"/>&nbsp;行业数据分析</a>
+                	</c:if>
+                </li>
                 <li <c:if test="${param.currentNav == 'config'}">class="active"</c:if>>
-                	<a href="${base}/ele/config"><img src="${base}/images/config.png" width="16" height="16"/>&nbsp;自定义项目</a></li>
+                	<a href="${base}/cycle/config?cycletype=${param.cycletype}"><img src="${base}/images/config.png" width="16" height="16"/>&nbsp;自定义项目</a></li>
               </ul>
               
 			<div class="btn-group" style="float:right">
@@ -24,12 +37,16 @@
 				    <span class="caret"></span>
 				  </a>
 				  <ul class="dropdown-menu">
-	                   <li><a href="#">发电生命周期</a></li>
-	                   <li><a href="#">交通燃料生命周期</a></li>
-	                   <li><a href="#">天然气产业链生命周期</a></li>
-	                 </ul>
+				  	<c:forEach items="${session_cycletype_list}" var="cycletype">
+				  		<c:if test="${param.currentNav == 'statistic' }">
+					  	   <li><a href="${base}/cycle/stat?&cycletype=${cycletype.code}&target=${param.target}">${cycletype.name}</a></li>
+				  		</c:if>
+				  		<c:if test="${param.currentNav == 'config' }">
+					  	   <li><a href="${base}/cycle/config?&cycletype=${cycletype.code}">${cycletype.name}</a></li>
+				  		</c:if>
+				  	</c:forEach>
+	              </ul>
 			</div>
-              
               
             </div><!--/.nav-collapse -->
           </div>

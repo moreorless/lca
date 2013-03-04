@@ -1,7 +1,9 @@
-package com.cnooc.lca.electricity.excel;
+package com.cnooc.lca.model;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
 
 /**
  * 全周期模板
@@ -19,7 +21,7 @@ public class T_Cycle {
 	/**
 	 * 发电站名称
 	 */
-	private String stationName;
+	private String name;
 	
 	/**
 	 * 电站机组
@@ -31,17 +33,33 @@ public class T_Cycle {
 	 */
 	private List<T_Procedure> procedures;
 	
+	/**
+	 * 综合能耗
+	 */
+	private double totalConsumption;
+	
+	/**
+	 * 影响潜能集合
+	 */
+	private Map<String, Double> influenceMap;
+	
+	/**
+	 * 排放集合  <code>{排放物, {工序， 排放值}}</code>
+	 */
+	private Map<String, Map<String, Double>> emissionMap;
+	
+	
 	public int getSheetIndex() {
 		return sheetIndex;
 	}
 	public void setSheetIndex(int sheetIndex) {
 		this.sheetIndex = sheetIndex;
 	}
-	public String getStationName() {
-		return stationName;
+	public String getName() {
+		return name;
 	}
-	public void setStationName(String stationName) {
-		this.stationName = stationName;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getUnit() {
 		return unit;
@@ -56,17 +74,41 @@ public class T_Cycle {
 		this.procedures = procedures;
 	}
 	
+	public double getTotalConsumption() {
+		return totalConsumption;
+	}
+	public void setTotalConsumption(double totalConsumption) {
+		this.totalConsumption = totalConsumption;
+	}
+	
+	
+	
+	
+	public Map<String, Double> getInfluenceMap() {
+		return influenceMap;
+	}
+	public void setInfluenceMap(Map<String, Double> influenceMap) {
+		this.influenceMap = influenceMap;
+	}
+	
+	
+
+	public Map<String, Map<String, Double>> getEmissionMap() {
+		return emissionMap;
+	}
+	public void setEmissionMap(Map<String, Map<String, Double>> emissionMap) {
+		this.emissionMap = emissionMap;
+	}
 	/**
-	 * 获取总排放
+	 * 从各个工序计算综合能耗
 	 * @return
 	 */
-	public double getTotalConsumption(){
-		double totalConsumption = 0;
+	public void calcTotalConsumption(){
+		this.totalConsumption = 0;
 		Iterator<T_Procedure> iter = this.procedures.iterator();
 		while(iter.hasNext()){
-			totalConsumption += iter.next().getTotalConsumption();
+			this.totalConsumption += iter.next().getTotalConsumption();
 		}
-		return totalConsumption;
 	}
 	
 	/**

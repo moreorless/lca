@@ -1,8 +1,10 @@
-package com.cnooc.lca.electricity.excel.parser;
+package com.cnooc.lca.excel.parser;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -14,13 +16,13 @@ import org.apache.poi.poifs.filesystem.POIFSFileSystem;
  * @author jianglei
  * 
  */
-public class ExcelReader {
+public class ExcelParser {
 	private String filepath;
 
-	public ExcelReader(String path) {
+	public ExcelParser(String path) {
 		this.filepath = path;
 	}
-	
+
 	/**
 	 * @param sheetIndex (表单)
 	 * @param columnIndex （栏）
@@ -33,18 +35,18 @@ public class ExcelReader {
 	 * 
 	 */
 	public double getCellValue(int sheetIndex, int rowIndex, String columnIndex) throws IOException {
-		
+
 		double value = 0;
 		FileInputStream fis;
 		POIFSFileSystem fs;
 		fis = new FileInputStream(this.filepath);
 		fs = new POIFSFileSystem(fis); // 利用poi读取excel文件流		
-		
+
 		HSSFWorkbook wb = new HSSFWorkbook(fs); // 读取excel工作簿
 		HSSFSheet sheet = wb.getSheetAt(sheetIndex); // 读取excel的sheet，0表示读取第一个、1表示第二个.....
-		
+
 		HSSFRow row = sheet.getRow(rowIndex-1); // 取出sheet中的某一行数据
-		
+
 		if (row != null) {
 			HSSFCell cell = row.getCell(columnIndex.toLowerCase().toCharArray()[0] - 'a'); // 获取该行中的一个单元格对象
 			switch(cell.getCellType()){
@@ -64,15 +66,60 @@ public class ExcelReader {
 				value = 0;				
 			}
 		}
-		
+
 		return value;
 	}
-	
+	/**
+	 * 写入单元格
+	 * @param sheetIndex
+	 * @param rowIndex
+	 * @param columnIndex
+	 * @param value
+	 * @throws IOException
+	 */
+	public void setCellValue(int sheetIndex, int rowIndex, String columnIndex,
+			double value) throws IOException {
+		FileInputStream fis;
+		POIFSFileSystem fs;
+		fis = new FileInputStream(this.filepath);
+		fs = new POIFSFileSystem(fis);
+
+		HSSFWorkbook wb = new HSSFWorkbook(fs);
+		HSSFSheet sheet = wb.getSheetAt(sheetIndex);
+		HSSFRow row = sheet.getRow(rowIndex - 1);
+
+		if (row != null) {
+			HSSFCell cell = row
+					.getCell(columnIndex.toLowerCase().toCharArray()[0] - 'a');
+			switch (cell.getCellType()) {
+
+			case HSSFCell.CELL_TYPE_NUMERIC:
+				cell.setCellValue(value);
+				break;
+			case HSSFCell.CELL_TYPE_BLANK:
+				cell.setCellValue(value);
+				break;
+			default:
+
+			}
+		}
+		
+		// 写入后重新计算公式
+		HSSFFormulaEvaluator.evaluateAllFormulaCells(wb);
+		FileOutputStream fileOut = new FileOutputStream(this.filepath);
+		wb.write(fileOut);
+		fileOut.close();
+
+	}
+
 	public static void main(String[] args) {
 		try {
-			ExcelReader ExcelReader = new ExcelReader("d://LCA总计算模型-2013-01-08.xls");
-			double value = ExcelReader.getCellValue(1, 44, "n");
-			System.out.println("\t" + value);
+			ExcelParser excelReader = new ExcelParser("d://test.xls");
+			double value = excelReader.getCellValue(1, 81, "e");
+			System.out.println("\tBefore modify:\t" + value);
+			excelReader.setCellValue(1, 78, "e", 20);
+			value = excelReader.getCellValue(1, 81, "e");
+			System.out.println("\tAfter modify:\t" + value);		
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

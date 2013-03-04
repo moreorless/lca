@@ -1,4 +1,5 @@
-package com.cnooc.lca.electricity.excel;
+package com.cnooc.lca.model;
+
 
 /**
  * 单元格

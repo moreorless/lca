@@ -1,4 +1,4 @@
-package com.cnooc.lca.electricity.excel;
+package com.cnooc.lca.model;
 
 	
 	public class T_Position{

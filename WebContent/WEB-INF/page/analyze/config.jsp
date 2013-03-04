@@ -16,18 +16,32 @@
   	</c:import>
   	<div id="wrap" class="container">
 		<c:if test="${param.saveOk == true }">
-		<div>信息保存成功</div>
+		<div id="tip_area" style="height:40px;line-height:40px;" class="alert-success">信息保存成功</div>
 		</c:if>
-		<form action="${base}/ele/saveConfig">
+		<form action="${base}/cycle/saveConfig" class="form-horizontal">
 		  <fieldset>
-		    <legend>自定义项目参数</legend>
-		    <label>Label name</label>
-		    <input type="text" placeholder="Type something…">
-		    <span class="help-block">Example block-level help text here.</span>
-		    <label class="checkbox">
-		      <input type="checkbox"> Check me out
-		    </label>
-		    <button type="submit" class="btn">Submit</button>
+		    <legend>自定义项目参数  <label style="float:right; color:#005580"><b>${curCycleType.name}</b></label></legend>
+		    
+		    
+		    <div class="control-group">
+		    	<label class="control-label" for="inputEmail">参数1</label>
+		    	<div class="controls">
+		    		<input type="text" id="inputEmail" />
+		    	</div>
+		    </div>
+		    
+		    <div class="control-group">
+		    	<label class="control-label" for="inputEmail2">参数2</label>
+		    	<div class="controls">
+		    		<input type="text" id="inputEmail2" />
+		    	</div>
+		    </div>
+		    
+		    <div class="control-group">
+    			<div class="controls">
+				    <button type="submit" class="btn">Submit</button>
+				</div>
+			</div>
 		  </fieldset>
 		</form>
 	
@@ -37,7 +51,14 @@
    <script type="text/javascript" src="${base}/js/jquery.js"></script>
    <script type="text/javascript" src="${base}/js/bootstrap.js"></script>
 
-   
+   <script type="text/javascript">
+   	$(document).ready(function(){
+   		setTimeout(function(){
+   			$("#tip_area").hide('slow');	
+   		}, 3000);
+   		
+   	});
+   </script>
 
   </body>
 </html>

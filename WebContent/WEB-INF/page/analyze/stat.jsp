@@ -3,6 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+  	<link rel = "Shortcut Icon" href="${base }/favicon.ico" />
     <title>中海油碳理层分析系统</title>
     <link type="text/css" rel="stylesheet" href="${base}/css/bootstrap.css" />
     <link type="text/css" rel="stylesheet" href="${base}/css/index.css"/>
@@ -18,42 +19,38 @@
   	<div id="wrap" class="container">
   		
   		<ul class="nav nav-pills">
-		  <li class="active">
-		    <a href="#">综合能耗统计</a>
+		  <li <c:if test="${param.target == 'consumption' }">class="active"</c:if>>
+		    <a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=consumption">综合能耗统计</a>
 		  </li>
-		  <li><a href="#">碳排放统计</a></li>
-		  <li><a href="#">影响潜能统计</a></li>
+		  <li <c:if test="${param.target == 'emission' }">class="active"</c:if>>
+		  	<a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=emission">碳排放统计</a>
+		  </li>
+		  <li <c:if test="${param.target == 'influence' }">class="active"</c:if>>
+		  	<a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=influence">影响潜能统计</a>
+		  </li>
+		  
+		  <li style="float:right;color:#005580"><b>${curCycleType.name}</b></li>
 		</ul>
   		
   		<div id="amcharts" style="text-align:center">You need to upgrade your Flash Player</div>
   		<div class="seperator"></div>
-  		<div><b>${cycle.stationName}</b>(${cycle.unit})</div>
   		
 		<table class="table table-striped table-bordered table-condensed">
 			<thead>
 				<tr>
-					<td width="500" align="center">工序</td>
-					<c:forEach items="${consumptionNames}" var="consumptionName">
-					<td>${consumptionName}</td>
-					</c:forEach>
-					<c:forEach items="${emissionNames}" var="emissionName">
-					<td>${emissionName}</td>
+					<td width="100" align="center"></td>
+					<c:forEach items="${cycleList}" var="cycle">
+					<td>${cycle.name}</td>
 					</c:forEach>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${cycle.procedures}" var="procedure">
 				<tr>
-					<td width="500" align="center">${procedure.name }</td>
-					<c:forEach items="${procedure.consumption}" var="cCell">
-					<td>${cCell.value}</td>
-					</c:forEach>
-					<c:forEach items="${procedure.emission}" var="eCell">
-					<td>${eCell.value}</td>
-					</c:forEach>
-				</tr>
+				<td width="100" align="center">综合能耗</td>
+					<c:forEach items="${cycleList}" var="cycle">
+					<td>${cycle.totalConsumption}</td>
 				</c:forEach>
-				
+				</tr>
 			</tbody>
 		</table>  	
   	
