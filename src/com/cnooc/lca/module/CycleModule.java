@@ -3,7 +3,6 @@ package com.cnooc.lca.module;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.nutz.ioc.Ioc;
@@ -13,7 +12,6 @@ import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.Param;
 
-import com.cnooc.lca.electricity.bean.Station;
 import com.cnooc.lca.model.T_Cycle;
 import com.cnooc.lca.service.CycleService;
 import com.cnooc.lca.service.CycleType;
@@ -26,15 +24,6 @@ public class CycleModule {
 	
 	// 所有的生命周期类型，及其数据
 	private static final String CYCLETYPE_LIST = "session_cycletype_list";
-	
-	// {stat, config}
-	private static final String SESSION_CURRENT_NAV = "currentNav";
-	
-	// {electric, transport, gas}
-	private static final String SESSION_CURRENT_CYCLETYPE = "currentCycle";
-	
-	// {consumption, emission, influence}
-	private static final String SESSION_CURRENT_CONTENT = "currentContent";  
 	
 	/**
 	 * 进入“行业数据分析页面”
@@ -88,9 +77,14 @@ public class CycleModule {
 	
 	@At
 	@Ok("redirect:/cycle/config?saveOk=true")
-	public void saveConfig(HttpServletRequest request, @Param("..")Station station){
+	public void saveConfig(Ioc ioc, HttpServletRequest request, @Param("cycletype") String cycleType){
 		// 保存配置
 		logger.info("保存配置信息");
+		
+		
+		CycleService cycleService = ioc.get(CycleService.class);
+		cycleService.reloadCycleTypeList(cycleType);		// 重新加载配置文件
+		
 	}
 	
 }

@@ -110,7 +110,7 @@ public class CycleService {
 	 * <p>在修改原始数据时调用</p>
 	 * @cycleTypeCode	生命周期类型编码(electirc/transport/gas)
 	 */
-	public void loadCycleTypeList(String cycleTypeCode){
+	public void reloadCycleTypeList(String cycleTypeCode){
 		CycleType cycleType = getCycleTypeByCode(cycleTypeCode);
 		
 		cycleType.reloadData(ioc);

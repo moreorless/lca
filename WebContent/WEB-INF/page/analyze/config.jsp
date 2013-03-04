@@ -20,7 +20,7 @@
 		</c:if>
 		<form action="${base}/cycle/saveConfig" class="form-horizontal">
 		  <fieldset>
-		    <legend>自定义项目参数  <label style="float:right; color:#005580"><b>${curCycleType.name}</b></label></legend>
+		    <legend style="font-size:16px">自定义项目参数  <label style="float:right; color:#005580"><b>${curCycleType.name}</b></label></legend>
 		    
 		    
 		    <div class="control-group">
