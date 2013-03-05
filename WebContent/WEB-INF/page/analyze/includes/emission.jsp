@@ -1,7 +1,32 @@
 <%@ page contentType="text/html;charset=utf-8" language="java" %>
 <%@ include file="/includes/taglibs.jsp"%>
- 
-<div id="amcharts" style="text-align:center">You need to upgrade your Flash Player</div>
+
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span2">
+      <div id="emission_sel_area">
+      	<div class="control-group">
+		    <div class="controls">
+				<label class="radio">
+				<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1">CO2
+				</label>
+				<label class="radio">
+				  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">CH4
+				</label>
+				<label class="radio">
+				  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" checked><b>总计</b>
+				</label>
+		    </div>
+		  </div>
+      
+      </div>
+    </div>
+    <div class="span10">
+      <div id="amcharts" style="text-align:center">You need to upgrade your Flash Player</div>
+    </div>
+  </div>
+</div>
+
 <div class="seperator"></div>
 		
 <table class="table table-striped table-bordered table-condensed">

@@ -1,7 +1,9 @@
 package com.cnooc.lca.service;
 
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.nutz.ioc.Ioc;
 
@@ -104,6 +106,19 @@ public class CycleType {
 			T_Cycle t_cycle = tp.createcycle();
 			this.cycleList.add(t_cycle);
 		}
+	}
+	
+	/**
+	 * 获取该类型下影响潜能的名称列表
+	 * @return
+	 */
+	public Set<String> getInflunceNames(){
+		Set<String> infNameSet = new LinkedHashSet<>();
+		for(T_Cycle t_cycle : cycleList){
+			Set<String> theInfNameSet = t_cycle.getInfluenceMap().keySet();
+			infNameSet.addAll(theInfNameSet);
+		}
+		return infNameSet;
 	}
 	
 }

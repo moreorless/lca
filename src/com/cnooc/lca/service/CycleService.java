@@ -34,17 +34,14 @@ public class CycleService {
 	 */
 	private List<CycleType> cycleTypeList = new LinkedList<>();
 	
-	private boolean _loaded;
+	private boolean _loaded = false;
 	
 	/**
 	 * 获取系统内生命周期类型列表，有序
 	 * @return
 	 */
 	public List<CycleType> getCycleTypeList(){
-		if(!_loaded){
-			loadCycleTypeList();
-			_loaded = true;
-		}
+		loadCycleTypeList();
 		return cycleTypeList;
 	}
 	
@@ -66,7 +63,9 @@ public class CycleService {
 	 * 从配置文件加载生命周期类型列表
 	 */
 	public void loadCycleTypeList(){
-		
+		if(_loaded){
+			return;
+		}
 		cycleTypeList.clear();
 		
 		// 解析cycleconfig.js
@@ -107,6 +106,7 @@ public class CycleService {
 			cycleTypeList.add(cycleType);
 		}
 		
+		_loaded = true;
 	}
 	
 	/**

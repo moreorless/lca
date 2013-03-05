@@ -31,8 +31,8 @@ public class LcaSetup implements Setup{
 		
 		
 		// 系统启动时，构建数据模型
-		CycleService cycleConfig = config.getIoc().get(CycleService.class);
-		cycleConfig.loadCycleTypeList();
+		CycleService cycleService = config.getIoc().get(CycleService.class);
+		cycleService.loadCycleTypeList();
 		
 	}
 

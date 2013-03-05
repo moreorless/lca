@@ -50,6 +50,8 @@ public class CycleModule {
 		// 读取综合能耗数据
 		List<T_Cycle> cycleList = curCycleType.getCycleList();
 		request.setAttribute("cycleList", cycleList);
+		
+		request.setAttribute("influnceNames", curCycleType.getInflunceNames());
 	}
 	
 	

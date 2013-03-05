@@ -7,6 +7,7 @@
     <title>中海油碳理层分析系统</title>
     <link type="text/css" rel="stylesheet" href="${base}/css/bootstrap.css" />
     <link type="text/css" rel="stylesheet" href="${base}/css/index.css"/>
+    <link type="text/css" rel="stylesheet" href="${base}/css/stat.css"/>
 	<style type="text/css">
 		.seperator{height:20px;}
 	</style>
