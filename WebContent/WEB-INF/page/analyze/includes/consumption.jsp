@@ -21,4 +21,4 @@
 		</c:forEach>
 		</tr>
 	</tbody>
-</table> 	
+</table>

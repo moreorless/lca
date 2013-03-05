@@ -37,15 +37,20 @@
   	
   	</div>
   	
-  	<%@ include file="/includes/footer.jsp" %>
+  <%@ include file="/includes/footer.jsp" %>
    <script type="text/javascript" src="${base}/js/jquery.js"></script>
    <script type="text/javascript" src="${base}/js/bootstrap.js"></script>
    <script type="text/javascript" src="${base}/amchart/swfobject.js"></script>
    
    <script type="text/javascript">
+		
+   		<c:choose>
+   		</c:choose>
+		<c:if test="${param.target == 'consumption'}">
+		</c:if>
+		
 		var so = new SWFObject("${base}/amchart/amcolumn_1.6.0.1/amcolumn/amcolumn.swf", "amcolumn", "100%", "400", "8", "#FFFFFF");
 		so.addVariable("path", "${base}/amchart/");
-		
 		so.addVariable("settings_file", encodeURIComponent("${base}/common/amchart/stat/amcolumn_settings.xml"));
 		so.addVariable("data_file", encodeURIComponent("${base}/common/amchart/stat/amcolumn_data.xml"));
 		

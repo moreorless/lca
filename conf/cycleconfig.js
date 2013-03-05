@@ -4,7 +4,7 @@ var ioc = {
 	        "electric" : {                         // 生命周期编码
 	                name : "发电",                 // 生命周期名称
 	                excel : "electricity.xls",     // 对应的excel文件
-	                cycleNameList : ["mei_600", "hedian"]    // 对应excel中的各个sheet
+	                cycleNameList : ["mei_600"]    // 对应excel中的各个sheet
 
 	        },
 	        "transport" : {

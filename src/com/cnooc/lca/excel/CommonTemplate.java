@@ -150,8 +150,18 @@ public class CommonTemplate implements ITemplate{
 	}
 	
 	private double getCellValue(ExcelParser parser, int sheetIndex, String cellPos){
-		String column = cellPos.split(",")[0];
-		int row = Integer.parseInt(cellPos.split(",")[1]);
+		String column = "";
+		
+		int rowIndex = 0;
+		for(rowIndex = 0; rowIndex< cellPos.length(); rowIndex++){
+			char c = cellPos.charAt(rowIndex);
+			if(c >= '0' && c <= '9'){
+				break;
+			}
+			column += c;
+		}
+		
+		int row = Integer.parseInt(cellPos.substring(rowIndex));
 		double result = 0.0;
 		try{
 			result = parser.getCellValue(sheetIndex, row, column); 
