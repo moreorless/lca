@@ -31,9 +31,20 @@
 		  
 		  <li style="float:right;color:#005580"><b>${curCycleType.name}</b></li>
 		</ul>
-  		
-  		<c:import url="/WEB-INF/page/analyze/includes/consumption.jsp">
-  		</c:import>
+  		<c:choose>
+   			<c:when test="${param.target == 'consumption'}">
+		  		<c:import url="/WEB-INF/page/analyze/includes/consumption.jsp">
+		  		</c:import>
+   			</c:when>
+   			<c:when test="${param.target == 'emission'}">
+				<c:import url="/WEB-INF/page/analyze/includes/emission.jsp">
+		  		</c:import>
+   			</c:when>
+   			<c:when test="${param.target == 'influence'}">
+   				<c:import url="/WEB-INF/page/analyze/includes/influence.jsp">
+		  		</c:import>
+   			</c:when>
+   		</c:choose>
   	
   	</div>
   	
@@ -43,16 +54,22 @@
    <script type="text/javascript" src="${base}/amchart/swfobject.js"></script>
    
    <script type="text/javascript">
-		
+		var swfPath = "${base}/amchart/amcolumn_1.6.0.1/amcolumn/amcolumn.swf";
+		var setting_file = "${base}/common/amchart/stat/amcolumn_settings.xml";
+		var data_file = "${base}/common/amchart/stat/amcolumn_data.xml";
    		<c:choose>
+   			<c:when test="${param.target == 'consumption'}">
+   			</c:when>
+   			<c:when test="${param.target == 'emission'}">
+   			</c:when>
+   			<c:when test="${param.target == 'influence'}">
+   			</c:when>
    		</c:choose>
-		<c:if test="${param.target == 'consumption'}">
-		</c:if>
 		
-		var so = new SWFObject("${base}/amchart/amcolumn_1.6.0.1/amcolumn/amcolumn.swf", "amcolumn", "100%", "400", "8", "#FFFFFF");
+		var so = new SWFObject(swfPath, "amcolumn", "100%", "400", "8", "#FFFFFF");
 		so.addVariable("path", "${base}/amchart/");
-		so.addVariable("settings_file", encodeURIComponent("${base}/common/amchart/stat/amcolumn_settings.xml"));
-		so.addVariable("data_file", encodeURIComponent("${base}/common/amchart/stat/amcolumn_data.xml"));
+		so.addVariable("settings_file", encodeURIComponent(setting_file));
+		so.addVariable("data_file", encodeURIComponent(data_file));
 		
 		so.addParam("wmode", "opaque");
 		so.write("amcharts");
