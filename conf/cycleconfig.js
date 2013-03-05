@@ -1,22 +1,23 @@
 var ioc = {
 
-	cycleconfig : {
-			"electric" : {
-					name : "发电",
-					cycleNameList : ["mei_600"],
-					excel : "electricity.xls"
-			},
-			"transport" : {
-					name : "交通燃料",
-					cycleNameList : [],
-					excel : "transport.xls"
-			},
-			"gas" : {
-					name : "天然气产业链",
-					cycleNameList : [],
-					excel : "gas.xls"
-				}
-		}
+		cycleconfig : {
+	        "electric" : {                         // 生命周期编码
+	                name : "发电",                 // 生命周期名称
+	                excel : "electricity.xls",     // 对应的excel文件
+	                cycleNameList : ["mei_600", "hedian"]    // 对应excel中的各个sheet
 
+	        },
+	        "transport" : {
+	                name : "交通燃料",
+	                excel : "transport.xls",
+	                cycleNameList : []
 
+	        },
+	        "gas" : {
+	                name : "天然气产业链",
+	                excel : "gas.xls",
+	                cycleNameList : []
+
+	            }
+	    }
 };
