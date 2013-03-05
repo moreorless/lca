@@ -60,10 +60,13 @@
 		var data_file = "${base}/common/amchart/stat/amcolumn_data.xml";
    		<c:choose>
    			<c:when test="${param.target == 'consumption'}">
+   			data_file = "${base}/common/amchart/stat/consumption_data.xml";
    			</c:when>
    			<c:when test="${param.target == 'emission'}">
+   			data_file = "${base}/common/amchart/stat/emission_data.xml";
    			</c:when>
    			<c:when test="${param.target == 'influence'}">
+   			data_file = "${base}/common/amchart/stat/influence_data.xml";
    			</c:when>
    		</c:choose>
 		
