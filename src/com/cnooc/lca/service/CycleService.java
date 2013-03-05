@@ -90,13 +90,17 @@ public class CycleService {
 			List<T_Cycle> cycleList = new LinkedList<>();
 			
 			for(String cycleName : cycleNameList){
-				CommonTemplate tp = ioc.get(CommonTemplate.class, cycleName);
+				try{
+					CommonTemplate tp = ioc.get(CommonTemplate.class, cycleName);
+					// 设置tp对应的excel文件名
+					tp.setExcelName(excelName);
+					
+					T_Cycle t_cycle = tp.createcycle();
+					cycleList.add(t_cycle);
+				}catch (Exception e) {
+					logger.error("加载生命周期项目出错：" + cycleName, e);
+				}
 				
-				// 设置tp对应的excel文件名
-				tp.setExcelName(excelName);
-				
-				T_Cycle t_cycle = tp.createcycle();
-				cycleList.add(t_cycle);
 			}
 			cycleType.setCycleList(cycleList);
 			

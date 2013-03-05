@@ -32,27 +32,8 @@
 		  <li style="float:right;color:#005580"><b>${curCycleType.name}</b></li>
 		</ul>
   		
-  		<div id="amcharts" style="text-align:center">You need to upgrade your Flash Player</div>
-  		<div class="seperator"></div>
-  		
-		<table class="table table-striped table-bordered table-condensed">
-			<thead>
-				<tr>
-					<td width="100" align="center"></td>
-					<c:forEach items="${cycleList}" var="cycle">
-					<td>${cycle.name}</td>
-					</c:forEach>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-				<td width="100" align="center">综合能耗</td>
-					<c:forEach items="${cycleList}" var="cycle">
-					<td>${cycle.totalConsumption}</td>
-				</c:forEach>
-				</tr>
-			</tbody>
-		</table>  	
+  		<c:import url="/WEB-INF/page/analyze/includes/consumption.jsp">
+  		</c:import>
   	
   	</div>
   	
