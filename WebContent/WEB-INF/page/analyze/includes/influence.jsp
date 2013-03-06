@@ -51,7 +51,7 @@
 		<tr>
 			<td width="100" align="center"></td>
 			<c:forEach items="${cycleList}" var="cycle">
-			<td>${cycle.name}</td>
+			<td>${cycle.name}-${cycle.unit}</td>
 			</c:forEach>
 		</tr>
 	</thead>
@@ -61,7 +61,8 @@
 		<tr>
 		<td width="100" align="center">${influnceName}</td>
 			<c:forEach items="${cycleList}" var="cycle">
-			<td>${cycle.influenceMap[influnceName]}</td>
+			<td><fmt:formatNumber value="${cycle.influenceMap[influnceName] }" pattern="#.##" minFractionDigits="2"  />
+			</td>
 		</c:forEach>
 		</tr>
 		

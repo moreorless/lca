@@ -1,6 +1,7 @@
 package com.cnooc.lca.service;
 
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,8 @@ public class CycleService {
 
 	private Logger logger = Logger.getLogger(this.getClass());
 	
+	private static final String CYCLE_CONFIG_FILE = "cycleconfig.js";
+	
 	@Inject("refer:$Ioc")
 	private Ioc ioc;
 	
@@ -34,14 +37,30 @@ public class CycleService {
 	 */
 	private List<CycleType> cycleTypeList = new LinkedList<>();
 	
+	/**
+	 * 系统内的工序列表
+	 */
+	private Map<String, List<String>> procedureList = new LinkedHashMap<>();
+	
 	private boolean _loaded = false;
+	
+	public void init(){
+		if(_loaded){
+			return;
+		}
+		
+		loadDefaultProcedures();
+		loadCycleTypeList();
+		
+		_loaded = true;
+	}
+	
 	
 	/**
 	 * 获取系统内生命周期类型列表，有序
 	 * @return
 	 */
 	public List<CycleType> getCycleTypeList(){
-		loadCycleTypeList();
 		return cycleTypeList;
 	}
 	
@@ -63,16 +82,16 @@ public class CycleService {
 	 * 从配置文件加载生命周期类型列表
 	 */
 	public void loadCycleTypeList(){
-		if(_loaded){
-			return;
-		}
+		
 		cycleTypeList.clear();
 		
+		logger.debug("读取全局配置文件 cycleconfig.js");
 		// 解析cycleconfig.js
-		JsonLoader reader = new JsonLoader("cycleconfig.js");
+		JsonLoader reader = new JsonLoader(CYCLE_CONFIG_FILE);
 		Map configMap = reader.getMap().get("cycleconfig");
 
-		logger.debug("读取全局配置文件 cycleconfig.js");
+		Map procedureConfig = reader.getMap().get("defaultProcedures");
+		
 		for(String code : (Set<String>)configMap.keySet()){
 			CycleType cycleType = (CycleType)Mapl.maplistToObj(configMap.get(code), CycleType.class);
 			cycleType.setCode(code);
@@ -106,7 +125,6 @@ public class CycleService {
 			cycleTypeList.add(cycleType);
 		}
 		
-		_loaded = true;
 	}
 	
 	/**
@@ -133,4 +151,27 @@ public class CycleService {
 		return null;
 	}
 	
+	
+	
+	/**
+	 * 加载系统内的工序配置
+	 */
+	public void loadDefaultProcedures(){
+		
+		
+		// 解析cycleconfig.js
+		JsonLoader reader = new JsonLoader(CYCLE_CONFIG_FILE);
+		Map procedureConfig = reader.getMap().get("defaultProcedures");
+		
+		this.procedureList = procedureConfig;
+	}
+	
+	/**
+	 * 获取系统内的工序列表
+	 * @return
+	 */
+	public List<String> getProcedureList(String cycleTypeCode){
+		
+		return this.procedureList.get(cycleTypeCode);
+	}
 }

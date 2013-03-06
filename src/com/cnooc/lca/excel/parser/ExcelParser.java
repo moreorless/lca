@@ -3,6 +3,8 @@ package com.cnooc.lca.excel.parser;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -17,10 +19,35 @@ import org.apache.poi.poifs.filesystem.POIFSFileSystem;
  * 
  */
 public class ExcelParser {
+	private Logger logger = Logger.getLogger(this.getClass());
+	
 	private String filepath;
+	
+	private HSSFWorkbook wb;
 
 	public ExcelParser(String path) {
 		this.filepath = path;
+		
+		FileInputStream fis = null;
+		POIFSFileSystem fs = null;
+		try{
+			
+			fis = new FileInputStream(this.filepath);
+			fs = new POIFSFileSystem(fis); // 利用poi读取excel文件流		
+			
+			wb = new HSSFWorkbook(fs); // 读取excel工作簿
+		}catch (Exception e) {
+			logger.error("读取excel文件出错, file = " + filepath, e);
+			if(fis != null){
+				try{
+					fis.close();
+				}catch (Exception err) {
+					err.printStackTrace();
+				}
+			}
+		}finally{
+		}
+		
 	}
 
 	/**
@@ -37,12 +64,7 @@ public class ExcelParser {
 	public double getCellValue(int sheetIndex, int rowIndex, String columnIndex) throws IOException {
 
 		double value = 0;
-		FileInputStream fis;
-		POIFSFileSystem fs;
-		fis = new FileInputStream(this.filepath);
-		fs = new POIFSFileSystem(fis); // 利用poi读取excel文件流		
-
-		HSSFWorkbook wb = new HSSFWorkbook(fs); // 读取excel工作簿
+		
 		HSSFSheet sheet = wb.getSheetAt(sheetIndex); // 读取excel的sheet，0表示读取第一个、1表示第二个.....
 
 		HSSFRow row = sheet.getRow(rowIndex-1); // 取出sheet中的某一行数据
@@ -79,12 +101,7 @@ public class ExcelParser {
 	 */
 	public void setCellValue(int sheetIndex, int rowIndex, String columnIndex,
 			double value) throws IOException {
-		FileInputStream fis;
-		POIFSFileSystem fs;
-		fis = new FileInputStream(this.filepath);
-		fs = new POIFSFileSystem(fis);
-
-		HSSFWorkbook wb = new HSSFWorkbook(fs);
+		
 		HSSFSheet sheet = wb.getSheetAt(sheetIndex);
 		HSSFRow row = sheet.getRow(rowIndex - 1);
 

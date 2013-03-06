@@ -151,22 +151,23 @@ public class CommonTemplate implements ITemplate{
 	
 	private double getCellValue(ExcelParser parser, int sheetIndex, String cellPos){
 		String column = "";
-		
-		int rowIndex = 0;
-		for(rowIndex = 0; rowIndex< cellPos.length(); rowIndex++){
-			char c = cellPos.charAt(rowIndex);
-			if(c >= '0' && c <= '9'){
-				break;
-			}
-			column += c;
-		}
-		
-		int row = Integer.parseInt(cellPos.substring(rowIndex));
+		int row = -1;
 		double result = 0.0;
+
 		try{
+			int rowIndex = 0;
+			for(rowIndex = 0; rowIndex< cellPos.length(); rowIndex++){
+				char c = cellPos.charAt(rowIndex);
+				if(c >= '0' && c <= '9'){
+					break;
+				}
+				column += c;
+			}
+			
+			row = Integer.parseInt(cellPos.substring(rowIndex));
 			result = parser.getCellValue(sheetIndex, row, column); 
 		}catch (Exception e) {
-			logger.error("读取单元格内数据出错, excel=" + excelName + ", sheet=" + sheetIndex + ", pos=" + column+row , e);
+			logger.error("读取单元格内数据出错, excel=" + excelName + ", sheet=" + sheetIndex + ", pos=" + column + row , e);
 		}
 		return result;
 	}

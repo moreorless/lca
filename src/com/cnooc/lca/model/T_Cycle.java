@@ -1,6 +1,7 @@
 package com.cnooc.lca.model;
 
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +40,12 @@ public class T_Cycle {
 	private double totalConsumption;
 	
 	/**
+	 * 总排放
+	 */
+	private double totalEmission;
+	
+	
+	/**
 	 * 影响潜能集合
 	 */
 	private Map<String, Double> influenceMap;
@@ -48,6 +55,10 @@ public class T_Cycle {
 	 */
 	private Map<String, Map<String, Double>> emissionMap;
 	
+	/**
+	 * 合并后的排放，将各排放物加和
+	 */
+	private Map<String, Double> mergedEmissionMap;
 	
 	public int getSheetIndex() {
 		return sheetIndex;
@@ -81,9 +92,6 @@ public class T_Cycle {
 		this.totalConsumption = totalConsumption;
 	}
 	
-	
-	
-	
 	public Map<String, Double> getInfluenceMap() {
 		return influenceMap;
 	}
@@ -99,6 +107,53 @@ public class T_Cycle {
 	public void setEmissionMap(Map<String, Map<String, Double>> emissionMap) {
 		this.emissionMap = emissionMap;
 	}
+	
+	
+	
+	
+	
+	public double getTotalEmission() {
+		mergeEmissions();
+		return this.totalEmission;
+	}
+	public void setTotalEmission(double totalEmission) {
+		this.totalEmission = totalEmission;
+	}
+
+
+	private boolean _emissionMerged = false;
+	public Map<String, Double> getMergedEmissionMap() {
+		mergeEmissions();
+		return mergedEmissionMap;
+	}
+	
+	
+	
+	
+	private void mergeEmissions(){
+		if(_emissionMerged){
+			return;
+		}
+		
+		this.totalEmission = 0;   // 所有排放的求和
+		
+		this.mergedEmissionMap = new LinkedHashMap<>();
+		for(String emissionName : this.emissionMap.keySet()){
+			Map<String, Double> procMap = emissionMap.get(emissionName);
+			double mergedValue = 0;
+			for(Double v : procMap.values()){
+				mergedValue += v;
+			}
+			this.mergedEmissionMap.put(emissionName, mergedValue);
+			this.totalEmission += mergedValue;
+		}
+		
+		_emissionMerged = true;
+	}
+	
+	public void setMergedEmissionMap(Map<String, Double> mergedEmissionMap) {
+		this.mergedEmissionMap = mergedEmissionMap;
+	}
 	/**
 	 * 从各个工序计算综合能耗
 	 * @return
@@ -110,24 +165,5 @@ public class T_Cycle {
 			this.totalConsumption += iter.next().getTotalConsumption();
 		}
 	}
-	
-	/**
-	 * 合并全周期各个工序的能耗
-	 * @return
-	 */
-	public List<T_Cell> mergeConsumptions(){
-		// TODO: to be continue.
-		return null;
-	}
-	
-	/**
-	 * 合并全周期各个工序的排放
-	 * @return
-	 */
-	public List<T_Cell> mergeEmissions(){
-		// TODO: to be continue.
-		return null;
-	}
-	
 	
 }

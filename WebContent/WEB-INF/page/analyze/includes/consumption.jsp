@@ -9,7 +9,7 @@
 		<tr>
 			<td width="100" align="center"></td>
 			<c:forEach items="${cycleList}" var="cycle">
-			<td>${cycle.name}</td>
+			<td>${cycle.name}-${cycle.unit}</td>
 			</c:forEach>
 		</tr>
 	</thead>
@@ -17,7 +17,7 @@
 		<tr>
 		<td width="100" align="center">综合能耗</td>
 			<c:forEach items="${cycleList}" var="cycle">
-			<td>${cycle.totalConsumption}</td>
+			<td><fmt:formatNumber value="${cycle.totalConsumption}" pattern="#.##" minFractionDigits="2"  /></td>
 		</c:forEach>
 		</tr>
 	</tbody>

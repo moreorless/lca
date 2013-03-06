@@ -32,17 +32,17 @@ public class CycleModule {
 	 */
 	@At
 	@Ok("jsp:page.analyze.stat")
-	public void stat(Ioc ioc, HttpServletRequest request, @Param("cycletype") String cycleType){
+	public void stat(Ioc ioc, HttpServletRequest request, @Param("cycletype") String cycleTypeCode){
 		CycleService cycleService = ioc.get(CycleService.class);
 		List<CycleType> cycleTypeList = cycleService.getCycleTypeList();
 		request.getSession().setAttribute(CYCLETYPE_LIST, cycleTypeList);
 		
 		CycleType curCycleType;
 		// 如果没有设置生命周期类型，默认设置第一个
-		if(cycleType == null){
+		if(cycleTypeCode == null){
 			curCycleType = cycleTypeList.get(0);
 		}else{
-			curCycleType = cycleService.getCycleType(cycleType);
+			curCycleType = cycleService.getCycleType(cycleTypeCode);
 		}
 		
 		request.setAttribute("curCycleType", curCycleType);
@@ -52,6 +52,8 @@ public class CycleModule {
 		request.setAttribute("cycleList", cycleList);
 		
 		request.setAttribute("influnceNames", curCycleType.getInflunceNames());
+		
+		request.setAttribute("procedureNames", cycleService.getProcedureList(cycleTypeCode));
 	}
 	
 	

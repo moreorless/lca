@@ -34,16 +34,36 @@
 		<tr>
 			<td width="100" align="center"></td>
 			<c:forEach items="${cycleList}" var="cycle">
-			<td>${cycle.name}</td>
+			<td>${cycle.name}-${cycle.unit}</td>
 			</c:forEach>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-		<td width="100" align="center">排放</td>
+			<td width="100" align="center">CO2</td>
+			
 			<c:forEach items="${cycleList}" var="cycle">
-			<td>${cycle.totalConsumption}</td>
-		</c:forEach>
+			<td><fmt:formatNumber value="${cycle.mergedEmissionMap['CO2']}" pattern="#.##" minFractionDigits="2"  /></td>
+			</c:forEach>
+			
+		</tr>
+		
+		<tr>
+			<td width="100" align="center">CH4</td>
+			
+			<c:forEach items="${cycleList}" var="cycle">
+			<td><fmt:formatNumber value="${cycle.mergedEmissionMap['CH4']}" pattern="#.##" minFractionDigits="2"  /></td>
+			</c:forEach>
+			
+		</tr>
+		
+		<tr>
+			<td width="100" align="center">总计</td>
+			
+			<c:forEach items="${cycleList}" var="cycle">
+			<td><fmt:formatNumber value="${cycle.totalEmission}" pattern="#.##" minFractionDigits="2"  /></td>
+			</c:forEach>
+			
 		</tr>
 	</tbody>
 </table>
