@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.cnooc.lca.excel.parser.WritableExcel;
+
 
 /**
  * 全周期模板
@@ -60,6 +62,11 @@ public class T_Cycle {
 	 */
 	private Map<String, Double> mergedEmissionMap;
 	
+	/**
+	 * 参数配置
+	 */
+	private WritableExcel paramConfigure;
+	
 	public int getSheetIndex() {
 		return sheetIndex;
 	}
@@ -108,10 +115,6 @@ public class T_Cycle {
 		this.emissionMap = emissionMap;
 	}
 	
-	
-	
-	
-	
 	public double getTotalEmission() {
 		mergeEmissions();
 		return this.totalEmission;
@@ -120,6 +123,13 @@ public class T_Cycle {
 		this.totalEmission = totalEmission;
 	}
 
+	
+	public WritableExcel getParamConfigure() {
+		return paramConfigure;
+	}
+	public void setParamConfigure(WritableExcel paramConfigure) {
+		this.paramConfigure = paramConfigure;
+	}
 
 	private boolean _emissionMerged = false;
 	public Map<String, Double> getMergedEmissionMap() {

@@ -10,6 +10,7 @@ import org.nutz.ioc.Ioc;
 import com.cnooc.lca.excel.CommonTemplate;
 import com.cnooc.lca.excel.ExcelFactory;
 import com.cnooc.lca.excel.parser.ExcelParser;
+import com.cnooc.lca.excel.parser.WritableExcel;
 import com.cnooc.lca.model.T_Cycle;
 
 /**
@@ -45,6 +46,12 @@ public class CycleType {
 	
 	
 	private List<T_Cycle> cycleList;
+	
+	/**
+	 * 生命周期类型对应的参数配置 
+	 */
+	private WritableExcel paramConfigure;
+	
 
 	public String getCode() {
 		return code;
@@ -84,6 +91,17 @@ public class CycleType {
 
 	public void setCycleList(List<T_Cycle> cycleList) {
 		this.cycleList = cycleList;
+	}
+
+	
+	
+	
+	public WritableExcel getParamConfigure() {
+		return paramConfigure;
+	}
+
+	public void setParamConfigure(WritableExcel paramConfigure) {
+		this.paramConfigure = paramConfigure;
 	}
 
 	/**

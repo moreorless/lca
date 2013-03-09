@@ -18,28 +18,26 @@
 		<c:if test="${param.saveOk == true }">
 		<div id="tip_area" style="height:40px;line-height:40px;" class="alert-success">信息保存成功</div>
 		</c:if>
-		<form action="${base}/cycle/saveConfig" class="form-horizontal">
+		<form action="${base}/cycle/saveConfig?cycletype=${param.cycletype}" class="form-horizontal" method="post">
 		  <fieldset>
 		    <legend style="font-size:16px">自定义项目参数  <label style="float:right; color:#005580"><b>${curCycleType.name}</b></label></legend>
 		    
-		    
-		    <div class="control-group">
-		    	<label class="control-label" for="inputEmail">参数1</label>
-		    	<div class="controls">
-		    		<input type="text" id="inputEmail" />
-		    	</div>
-		    </div>
-		    
-		    <div class="control-group">
-		    	<label class="control-label" for="inputEmail2">参数2</label>
-		    	<div class="controls">
-		    		<input type="text" id="inputEmail2" />
-		    	</div>
-		    </div>
+		    <c:forEach items="${curCycleType.paramConfigure.sheets}" var="wSheet">
+		    	<a href="#" class="btn btn-primary disabled">${wSheet.name}</a>
+		    	<c:forEach items="${wSheet.cells}" var="wCell">
+		    		<div class="control-group">
+				    	<label class="control-label" for="inputEmail">${wCell.paramName}</label>
+				    	<div class="controls">
+				    		<input type="text" value="<fmt:formatNumber value='${wCell.value }' pattern='.000' />"
+				    			name="params.${wCell.sheetIndex}_${wCell.column}_${wCell.row}" />
+				    	</div>
+				    </div>		
+		    	</c:forEach>
+		    </c:forEach>
 		    
 		    <div class="control-group">
     			<div class="controls">
-				    <button type="submit" class="btn">Submit</button>
+				    <button type="submit" class="btn">保存</button>
 				</div>
 			</div>
 		  </fieldset>

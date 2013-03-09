@@ -1,17 +1,21 @@
 package com.cnooc.lca.module;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.nutz.ioc.Ioc;
 import org.nutz.ioc.annotation.InjectName;
+import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.Param;
 
+import com.cnooc.lca.excel.ExcelFactory;
+import com.cnooc.lca.excel.parser.ExcelParser;
 import com.cnooc.lca.model.InfluenceNames;
 import com.cnooc.lca.model.T_Cycle;
 import com.cnooc.lca.service.CycleService;
@@ -25,6 +29,9 @@ public class CycleModule {
 	
 	// 所有的生命周期类型，及其数据
 	private static final String CYCLETYPE_LIST = "session_cycletype_list";
+	
+	@Inject("refer:cycleService")
+	private CycleService cycleService;
 	
 	/**
 	 * 进入“行业数据分析页面”
@@ -66,7 +73,6 @@ public class CycleModule {
 		// 读取配置信息
 		logger.info("读取配置信息");
 		
-		CycleService cycleService = ioc.get(CycleService.class);
 		List<CycleType> cycleTypeList = cycleService.getCycleTypeList();
 		request.getSession().setAttribute(CYCLETYPE_LIST, cycleTypeList);
 		
@@ -83,14 +89,32 @@ public class CycleModule {
 	}
 	
 	@At
-	@Ok("redirect:/cycle/config?saveOk=true")
-	public void saveConfig(Ioc ioc, HttpServletRequest request, @Param("cycletype") String cycleType){
-		// 保存配置
-		logger.info("保存配置信息");
+	@Ok("redirect:/cycle/config?saveOk=true&cycletype=${p.cycletype}")
+	public void saveConfig(Ioc ioc, HttpServletRequest request, @Param("cycletype") String cycleTypeCode, @Param("::params.")Map<String, String> paramMap){
 		
+		CycleType curCycleType = cycleService.getCycleType(cycleTypeCode);
+		String excelFileName = curCycleType.getExcel();
+		ExcelParser excelParser = ExcelFactory.me().getParser(excelFileName);
+		excelParser.setAutoCommit(false);
+		
+		// 保存配置
+		for(String key : paramMap.keySet()){
+			String[] keyitems = key.split("_");
+			int sheetIndex = Integer.parseInt(keyitems[0]);
+			String column = keyitems[1];
+			int row = Integer.parseInt(keyitems[2]);
+			try{
+				double value = Double.parseDouble(paramMap.get(key));
+				excelParser.setCellValue(sheetIndex, row, column, value);
+				logger.debug("保存自定义项目参数, sheet=" + sheetIndex + ", cell=" + column + row + ", value=" + value);
+				
+			}catch (Exception e) { 
+				logger.error("保存值错误 value=" + paramMap.get(key), e);
+			}
+		}
 		
 		CycleService cycleService = ioc.get(CycleService.class);
-		cycleService.reloadCycleTypeList(cycleType);		// 重新加载配置文件
+		cycleService.reloadCycleTypeList(cycleTypeCode);				// 重新加载配置文件
 		
 	}
 	

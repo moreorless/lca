@@ -7,6 +7,7 @@ import org.nutz.mvc.NutConfig;
 import org.nutz.mvc.Setup;
 
 import com.cnooc.lca.common.GlobalConfig;
+import com.cnooc.lca.excel.WriterConfig;
 import com.cnooc.lca.service.CycleService;
 
 public class LcaSetup implements Setup{
@@ -33,6 +34,10 @@ public class LcaSetup implements Setup{
 		// 系统启动时，构建数据模型
 		CycleService cycleService = config.getIoc().get(CycleService.class);
 		cycleService.init();
+		
+		// 自定义项目参数配置
+		WriterConfig writerConfig = config.getIoc().get(WriterConfig.class);
+		writerConfig.load();
 		
 	}
 

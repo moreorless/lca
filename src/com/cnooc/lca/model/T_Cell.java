@@ -9,6 +9,11 @@ public class T_Cell{
 	 * 单元格代表的数据名称
 	 */
 	private String name;
+	
+	/**
+	 * 描述
+	 */
+	private String desciption;
 	/**
 	 * 单元格的数据值
 	 */
@@ -24,6 +29,13 @@ public class T_Cell{
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public String getDesciption() {
+		return desciption;
+	}
+	public void setDesciption(String desciption) {
+		this.desciption = desciption;
 	}
 	public Object getValue() {
 		return value;
