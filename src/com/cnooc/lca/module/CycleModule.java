@@ -113,6 +113,9 @@ public class CycleModule {
 			}
 		}
 		
+		excelParser.updateBatch();
+		excelParser.setAutoCommit(true);
+		
 		CycleService cycleService = ioc.get(CycleService.class);
 		cycleService.reloadCycleTypeList(cycleTypeCode);				// 重新加载配置文件
 		
