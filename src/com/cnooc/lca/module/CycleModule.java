@@ -15,6 +15,7 @@ import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.Param;
 
 import com.cnooc.lca.excel.ExcelFactory;
+import com.cnooc.lca.excel.WriterConfig;
 import com.cnooc.lca.excel.parser.ExcelParser;
 import com.cnooc.lca.model.InfluenceNames;
 import com.cnooc.lca.model.T_Cycle;
@@ -33,6 +34,8 @@ public class CycleModule {
 	@Inject("refer:cycleService")
 	private CycleService cycleService;
 	
+	@Inject("refer:writerConfig")
+	private WriterConfig writerConfig;
 	/**
 	 * 进入“行业数据分析页面”
 	 * @param ioc
@@ -116,9 +119,8 @@ public class CycleModule {
 		excelParser.updateBatch();
 		excelParser.setAutoCommit(true);
 		
-		CycleService cycleService = ioc.get(CycleService.class);
 		cycleService.reloadCycleTypeList(cycleTypeCode);				// 重新加载配置文件
-		
+		writerConfig.load();
 	}
 	
 }

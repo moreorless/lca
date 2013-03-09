@@ -6,7 +6,7 @@ var ioc = {
 	            sheets : [				        // excel sheets
 			     { index : 1,     			    // sheet序号，0表示第一页
 			       name : '煤电',               // sheet名称 
-	               params : {"年运行时间(小时)":"E6", "年总发电量":"E7"}  // 参数名与位置的映射
+	               params : {"年运行时间(小时)":"E6", "总发电量":"E7"}  // 参数名与位置的映射
 	             }
 	            ]
 	        },

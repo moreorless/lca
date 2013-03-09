@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.nutz.lang.Strings;
 
 import com.cnooc.lca.excel.parser.ExcelParser;
 import com.cnooc.lca.model.InfluenceNames;
@@ -137,7 +138,14 @@ public class CommonTemplate implements ITemplate{
 				
 				double unitedProcValue = 0; 
 				for(String origProcName : origProcNames){
+					if(Strings.isEmpty(origProcName)) continue;
+					
 					String cellPos = origProcMap.get(origProcName);
+					if(Strings.isEmpty(cellPos)) {
+						logger.warn("---原始工序--- " + origProcName + ", 未配置单元格位置");
+						continue;
+					}
+					
 					double origProcValue = getCellValue(parser, getSheetIndex(), cellPos);
 					unitedProcValue += origProcValue;
 					logger.debug("---原始工序--- " + origProcName + " = " + origProcValue);

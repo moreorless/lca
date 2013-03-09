@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.nutz.http.sender.PostSender;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
@@ -72,7 +73,9 @@ public class WriterConfig {
 					
 					
 					double cellValue = 0;
+					HSSFCell cell = null;
 					try{
+						cell = parser.getCell(sheetIndex, cellPos.getRow(), cellPos.getColumn());
 						cellValue = parser.getCellValue(sheetIndex, cellPos.getRow(), cellPos.getColumn());
 					}catch (Exception e) {
 						logger.error("读取自定义配置参数项单元格初始值错误, sheet=" + sheetIndex 
@@ -80,6 +83,10 @@ public class WriterConfig {
 					}
 					WritableCell wCell = new WritableCell(sheetIndex, cellPos.getColumn(), cellPos.getRow(), cellValue);
 					logger.debug("参数 -- name=" + paramName + ", pos=" + posStr + ", value=" + cellValue);
+					if(cell.getCellType() == HSSFCell.CELL_TYPE_FORMULA){
+						wCell.setFormula(true);
+						logger.error("参数 -- name=" + paramName + "对应的单元格时公式，不能编辑, pos=" + posStr + ", value=" + cellValue);
+					}
 					wCell.setDescription(paramName);
 					wCell.setParamName(paramName);
 					wSheet.addCell(wCell);

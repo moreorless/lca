@@ -25,11 +25,13 @@
 		    <c:forEach items="${curCycleType.paramConfigure.sheets}" var="wSheet">
 		    	<a href="#" class="btn btn-primary disabled">${wSheet.name}</a>
 		    	<c:forEach items="${wSheet.cells}" var="wCell">
-		    		<div class="control-group">
-				    	<label class="control-label" for="inputEmail">${wCell.paramName}</label>
+		    		<div class="control-group<c:if test="${wCell.formula }"> error</c:if><c:if test="${!wCell.formula }"> success</c:if>">
+				    	<label class="control-label" for="inputEmail"><b>${wCell.paramName}</b></label>
 				    	<div class="controls">
 				    		<input type="text" value="<fmt:formatNumber value='${wCell.value }' pattern='.000' />"
-				    			name="params.${wCell.sheetIndex}_${wCell.column}_${wCell.row}" />
+				    			name="params.${wCell.sheetIndex}_${wCell.column}_${wCell.row}" 
+				    			<c:if test="${wCell.formula }">disabled</c:if>/>
+				    		<span class="help-inline"><c:if test="${wCell.formula }">中间结果，不允许修改</c:if></span>
 				    	</div>
 				    </div>		
 		    	</c:forEach>

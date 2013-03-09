@@ -24,6 +24,11 @@ public class WritableCell {
 	 */
 	private String description;
 	
+	/**
+	 * 是否是公式
+	 */
+	private boolean formula = false;
+	
 	public WritableCell(int sheetIndex, String column, int row, double value){
 		this.sheetIndex = sheetIndex;
 		this.column = column;
@@ -77,6 +82,14 @@ public class WritableCell {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public boolean getFormula() {
+		return formula;
+	}
+
+	public void setFormula(boolean formula) {
+		this.formula = formula;
 	}
 	
 	
