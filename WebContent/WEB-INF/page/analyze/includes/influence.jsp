@@ -37,7 +37,7 @@
 		    </div>
 		  </div>
       </div>
-   <div style="float:left;color:#005580"><b>环境影响潜值单位:kg-eq</b></div>
+   <!-- div style="float:left;color:#005580"><b>环境影响潜值单位:kg-eq</b></div-->
 	</div>
     <div class="span10">
       <div id="amcharts" style="text-align:center">You need to upgrade your Flash Player</div>
