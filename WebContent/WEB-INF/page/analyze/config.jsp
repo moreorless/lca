@@ -15,8 +15,12 @@
   		<c:param name="currentNav">config</c:param>
   	</c:import>
   	<div id="wrap" class="container">
-		
-		<div id="tip_area" style="height:40px;line-height:40px;<c:if test='${!param.saveOk}'>display:none;</c:if>" class="alert-success">操作成功</div>
+		<c:if test='${param.saveOk}'>
+		<div id="tip_area" style="height:40px;line-height:40px;" class="alert-success">保存成功</div>
+		</c:if>
+		<c:if test='${param.restoreOk}'>
+		<div id="tip_area" style="height:40px;line-height:40px;" class="alert-success">恢复成功</div>
+		</c:if>
 		<form action="${base}/cycle/saveConfig?cycletype=${param.cycletype}" class="form-horizontal" method="post">
 		  <fieldset>
 		    <legend style="font-size:16px">自定义项目参数  
@@ -65,11 +69,7 @@
    			$.ajax({
    				url : '${base}/cycle/restoreExcel',
    				success : function(){
-   					$('#tip_area').show();
-   					setTimeout(function(){
-   						$('#tip_area').hide();
-   						window.location = '${base}/cycle/config?cycletype=${param.cycletype}';
-   					}, 3000);
+   					window.location = '${base}/cycle/config?cycletype=${param.cycletype}&restoreOk=true';
    				},
    				error : function(){
    					
