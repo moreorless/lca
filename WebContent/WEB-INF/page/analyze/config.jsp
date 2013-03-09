@@ -23,9 +23,9 @@
 		</c:if>
 		<form action="${base}/cycle/saveConfig?cycletype=${param.cycletype}" class="form-horizontal" method="post">
 		  <fieldset>
-		    <legend style="font-size:16px">自定义项目参数  
-		    
-		    	<label style="float:right; color:#005580"><b>${curCycleType.name}</b></label>
+		    <legend style="font-size:16px;height:50px;line-height:50px;">
+		    	<label style="float:left;height:60px;line-height:60px;">自定义项目参数</label>  
+		    	<label style="float:right; color:#005580;height:60px;line-height:60px;"><b>${curCycleType.name}</b></label>
 		    
 		    </legend>
 		    

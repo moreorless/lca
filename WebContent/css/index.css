@@ -15,21 +15,25 @@ body {
 
 /* Wrapper for page content to push down footer */
 #wrap {
-  min-height: 100%;
+  /*min-height: 100%;*/
   height: auto !important;
   height: 100%;
-  
-  padding-top:60px;
+  /* Negative indent footer by it's height */
+  margin: 0px auto -40px;
+  padding: 40px 0 40px 0;
+  *padding-top:60px;
 }
 
 /* Set the fixed height of the footer here */
 #push,
 #footer {
   height: 40px;
-  padding-top : 20px;
+  /*padding-top : 20px;*/
 }
 #footer {
   background-color: rgb(13, 55, 83);
+  position:fixed;
+  left:0;right:0;bottom:0;
 }
 
 /* Lastly, apply responsive CSS fixes as necessary */
@@ -40,6 +44,14 @@ body {
     padding-left: 20px;
     padding-right: 20px;
   }
+}
+
+#wrap > .container {
+  padding-top: 60px;
+}
+.container .credit {
+  /*margin: 20px 0;*/
+  margin-top:10px;
 }
 
 code {

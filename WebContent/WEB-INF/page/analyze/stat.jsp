@@ -9,7 +9,7 @@
     <link type="text/css" rel="stylesheet" href="${base}/css/index.css"/>
     <link type="text/css" rel="stylesheet" href="${base}/css/stat.css"/>
 	<style type="text/css">
-		.seperator{height:20px;}
+		.seperator{height:10px;}
 	</style>
   </head>
   <body>
@@ -18,8 +18,8 @@
   	</c:import>
   	
   	<div id="wrap" class="container">
-  		
-  		<ul class="nav nav-pills">
+  		<div>
+  		<ul class="nav nav-pills" style="margin:10px 0 10px 0">
 		  <li <c:if test="${param.target == 'consumption' }">class="active"</c:if>>
 		    <a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=consumption">综合能耗统计</a>
 		  </li>
@@ -32,6 +32,7 @@
 		  
 		  <li style="float:right;color:#005580"><b>${curCycleType.name}</b></li>
 		</ul>
+		</div>
   		<c:choose>
    			<c:when test="${param.target == 'consumption'}">
 		  		<c:import url="/WEB-INF/page/analyze/includes/consumption.jsp">
@@ -63,7 +64,7 @@
 		so : null,
 		init : function(){
 			
-			this.so = new SWFObject(this.swfPath, "amcolumn", "100%", "360", "8", "#FFFFFF");
+			this.so = new SWFObject(this.swfPath, "amcolumn", "100%", "340", "8", "#FFFFFF");
 			this.so.addVariable("path", "${base}/amchart/");
 			
 			<c:choose>

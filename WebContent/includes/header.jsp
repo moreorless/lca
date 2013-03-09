@@ -21,14 +21,16 @@
               <ul class="nav">
                 <li <c:if test="${param.currentNav == 'statistic'}">class="active"</c:if>>
                 	<c:if test="${param.target == null }">
-                	<a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=consumption"><img src="${base}/images/logo.png" width="16" height="16"/>&nbsp;行业数据分析</a>
+                	<a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=consumption">
+                	<img src="${base}/images/stat.png" width="16" height="16"/>&nbsp;行业数据分析</a>
                 	</c:if>
                 	<c:if test="${param.target != null }">
-                	<a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=${param.target}"><img src="${base}/images/logo.png" width="16" height="16"/>&nbsp;行业数据分析</a>
+                	<a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=${param.target}">
+                	<img src="${base}/images/stat.png" width="16" height="16"/>&nbsp;行业数据分析</a>
                 	</c:if>
                 </li>
                 <li <c:if test="${param.currentNav == 'config'}">class="active"</c:if>>
-                	<a href="${base}/cycle/config?cycletype=${param.cycletype}"><img src="${base}/images/config.png" width="16" height="16"/>&nbsp;自定义项目</a></li>
+                	<a href="${base}/cycle/config?cycletype=${param.cycletype}"><img src="${base}/images/config_16.png" width="16" height="16"/>&nbsp;自定义项目</a></li>
               </ul>
               
 			<div class="btn-group" style="float:right">
