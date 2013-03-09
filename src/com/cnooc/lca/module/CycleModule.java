@@ -122,5 +122,17 @@ public class CycleModule {
 		cycleService.reloadCycleTypeList(cycleTypeCode);				// 重新加载配置文件
 		writerConfig.load();
 	}
+	/**
+	 * 恢复excel文件
+	 * <p>访问路径${base}/cycle/restoreExcel</p>
+	 */
+	@At
+	@Ok("json")
+	public void restoreExcel(){
+		ExcelFactory.me().restoreExcelFile();
+		
+		cycleService.loadCycleTypeList();				// 重新加载配置文件
+		writerConfig.load();
+	}
 	
 }

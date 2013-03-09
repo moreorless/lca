@@ -15,17 +15,20 @@
   		<c:param name="currentNav">config</c:param>
   	</c:import>
   	<div id="wrap" class="container">
-		<c:if test="${param.saveOk == true }">
-		<div id="tip_area" style="height:40px;line-height:40px;" class="alert-success">信息保存成功</div>
-		</c:if>
+		
+		<div id="tip_area" style="height:40px;line-height:40px;<c:if test='${!param.saveOk}'>display:none;</c:if>" class="alert-success">操作成功</div>
 		<form action="${base}/cycle/saveConfig?cycletype=${param.cycletype}" class="form-horizontal" method="post">
 		  <fieldset>
-		    <legend style="font-size:16px">自定义项目参数  <label style="float:right; color:#005580"><b>${curCycleType.name}</b></label></legend>
+		    <legend style="font-size:16px">自定义项目参数  
+		    
+		    	<label style="float:right; color:#005580"><b>${curCycleType.name}</b></label>
+		    
+		    </legend>
 		    
 		    <c:forEach items="${curCycleType.paramConfigure.sheets}" var="wSheet">
-		    	<a href="#" class="btn btn-primary disabled">${wSheet.name}</a>
+		    	<label class="label label-info">${wSheet.name}</label>
 		    	<c:forEach items="${wSheet.cells}" var="wCell">
-		    		<div class="control-group<c:if test="${wCell.formula }"> error</c:if><c:if test="${!wCell.formula }"> success</c:if>">
+		    		<div class="control-group<c:if test="${wCell.formula }"> error</c:if><c:if test="${!wCell.formula }"> </c:if>">
 				    	<label class="control-label" for="inputEmail"><b>${wCell.paramName}</b></label>
 				    	<div class="controls">
 				    		<input type="text" value="<fmt:formatNumber value='${wCell.value }' pattern='.000' />"
@@ -39,7 +42,8 @@
 		    
 		    <div class="control-group">
     			<div class="controls">
-				    <button type="submit" class="btn">保存</button>
+				    <button type="submit" class="btn btn-primary">保存</button>
+				    <button type="button" class="btn" id="btn-restore">恢复初始值</button>
 				</div>
 			</div>
 		  </fieldset>
@@ -56,6 +60,22 @@
    		setTimeout(function(){
    			$("#tip_area").hide('slow');	
    		}, 3000);
+   		
+   		$("#btn-restore").click(function(){
+   			$.ajax({
+   				url : '${base}/cycle/restoreExcel',
+   				success : function(){
+   					$('#tip_area').show();
+   					setTimeout(function(){
+   						$('#tip_area').hide();
+   						window.location = '${base}/cycle/config?cycletype=${param.cycletype}';
+   					}, 3000);
+   				},
+   				error : function(){
+   					
+   				}
+   			});
+   		});
    		
    	});
    </script>

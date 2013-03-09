@@ -2,6 +2,9 @@ package com.cnooc.lca.excel;
 
 import java.io.File;
 
+import org.apache.log4j.Logger;
+import org.nutz.lang.Files;
+
 import com.cnooc.lca.common.GlobalConfig;
 import com.cnooc.lca.excel.parser.ExcelParser;
 
@@ -11,7 +14,8 @@ import com.cnooc.lca.excel.parser.ExcelParser;
  *
  */
 public class ExcelFactory {
-
+	private Logger logger = Logger.getLogger(this.getClass());
+	
 	private static ExcelFactory _instance = new ExcelFactory();
 	private ExcelFactory(){}
 	
@@ -46,6 +50,28 @@ public class ExcelFactory {
 	 */
 	public ExcelParser getParser(String excelName){
 		return new ExcelParser(folderPath + File.separator + excelName);
+	}
+	
+	/**
+	 * 恢复excel文件
+	 * @param excelName  
+	 */
+	public void restoreExcelFile(){
+		try{
+			Files.copyDir(new File(folderPath + File.separator + "bak"), new File(folderPath));
+		}catch (Exception e) {
+
+			logger.error("恢复excel文件出错", e);
+		}
+	}
+	
+	public static void main(String[] args){
+		try{
+			Files.copyDir(new File("d:\\bak"), new File("d:\\"));
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 }
