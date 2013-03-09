@@ -7,32 +7,33 @@
       <div id="emission_sel_area">
       	<div class="control-group">
 		    <div class="controls">
-		    	<!-- 
-				<c:forEach items="${influnceNames }" var="influnceName" >
+				<c:forEach items="${influnceNames }" var="influnceName" varStatus="stat">
 				<label class="radio">
-				  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+				  <input type="radio" name="influenceRadios" value="${influenceNameToUuid[influnceName]}"<c:if test="${stat.last}">checked</c:if>>
 				   ${influnceName }
 				</label>
 				</c:forEach>
-				 -->
+				<!-- 
 				<label class="radio">
-				  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">全球变暖
+				  <input type="radio" name="influenceRadios" value="全球变暖">全球变暖
 				</label>
 				<label class="radio">
-				  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">酸化
+				  <input type="radio" name="influenceRadios" value="酸化">酸化
 				</label>
 				<label class="radio">
-				  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">富营养化
+				  <input type="radio" name="influenceRadios" value="富营养化">富营养化
 				</label>
 				<label class="radio">
-				  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">粉尘
+				  <input type="radio" name="influenceRadios" value="粉尘">粉尘
 				</label>
 				<label class="radio">
-				  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">光化学臭氧
+				  <input type="radio" name="influenceRadios" value="光化学臭氧">光化学臭氧
 				</label>
 				<label class="radio">
-				  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" checked="checked"><b>总计</b>				  
+				  <input type="radio" name="influenceRadios" value="总计" checked="checked"><b>总计</b>				  
 				</label>
+				
+				-->
 		    </div>
 		  </div>
       
@@ -61,7 +62,7 @@
 		<tr>
 		<td width="100" align="center">${influnceName}</td>
 			<c:forEach items="${cycleList}" var="cycle">
-			<td><fmt:formatNumber value="${cycle.influenceMap[influnceName] }" pattern="#.##" minFractionDigits="2"  />
+			<td><fmt:formatNumber value="${cycle.influenceMap[influnceName] }" pattern="#.##" minFractionDigits="3"  />
 			</td>
 		</c:forEach>
 		</tr>

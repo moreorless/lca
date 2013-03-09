@@ -13,15 +13,66 @@
 		
 	</series>
 	<graphs>
-		<graph gid="1">
-			<value xid="100" color="#318DBD">0.34022652</value>
-			<value xid="101" color="#318DBD">0.011450291</value>
-			<value xid="102" color="#318DBD">0.281779288</value>
-			<value xid="103" color="#318DBD">0.0017249</value>
-			<value xid="104" color="#318DBD">0.000870</value>
-			<value xid="105" color="#318DBD">0.020264988</value>
-			<value xid="106" color="#318DBD">0.359115149</value>
-			<value xid="107" color="#318DBD">0.457127622</value>
+		<!-- graph 对应工序级别 -->
+		<graph gid="1" title="电厂建设">
+			<value xid="100">0.34022652</value>
+			<value xid="101">0.011450291</value>
+			<value xid="102">0.281779288</value>
+			<value xid="103">0.0017249</value>
+			<value xid="104">0.000870</value>
+			<value xid="105">0.020264988</value>
+			<value xid="106">0.359115149</value>
+			<value xid="107">0.457127622</value>
+		</graph>
+		<graph gid="2" title="原料开采">
+			<value xid="100">0.34022652</value>
+			<value xid="101">0.011450291</value>
+			<value xid="102">0.281779288</value>
+			<value xid="103">0.0017249</value>
+			<value xid="104">0.000870</value>
+			<value xid="105">0.020264988</value>
+			<value xid="106">0.359115149</value>
+			<value xid="107">0.457127622</value>
+		</graph>
+		<graph gid="3" title="原料运输">
+			<value xid="100">0.34022652</value>
+			<value xid="101">0.011450291</value>
+			<value xid="102">0.281779288</value>
+			<value xid="103">0.0017249</value>
+			<value xid="104">0.000870</value>
+			<value xid="105">0.020264988</value>
+			<value xid="106">0.359115149</value>
+			<value xid="107">0.457127622</value>
+		</graph>
+		<graph gid="4" title="发电">
+			<value xid="100">0.34022652</value>
+			<value xid="101">0.011450291</value>
+			<value xid="102">0.281779288</value>
+			<value xid="103">0.0017249</value>
+			<value xid="104">0.000870</value>
+			<value xid="105">0.020264988</value>
+			<value xid="106">0.359115149</value>
+			<value xid="107">0.457127622</value>
+		</graph>
+		<graph gid="5" title="电厂退役">
+			<value xid="100">0.34022652</value>
+			<value xid="101">0.011450291</value>
+			<value xid="102">0.281779288</value>
+			<value xid="103">0.0017249</value>
+			<value xid="104">0.000870</value>
+			<value xid="105">0.020264988</value>
+			<value xid="106">0.359115149</value>
+			<value xid="107">0.457127622</value>
+		</graph>
+		<graph gid="6" title="废弃物处理">
+			<value xid="100">0.34022652</value>
+			<value xid="101">0.011450291</value>
+			<value xid="102">0.281779288</value>
+			<value xid="103">0.0017249</value>
+			<value xid="104">0.000870</value>
+			<value xid="105">0.020264988</value>
+			<value xid="106">0.359115149</value>
+			<value xid="107">0.457127622</value>
 		</graph>
 	</graphs>
 </chart>

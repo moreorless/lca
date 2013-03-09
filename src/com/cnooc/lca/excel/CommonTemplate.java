@@ -1,14 +1,15 @@
 package com.cnooc.lca.excel;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
 
 import com.cnooc.lca.excel.parser.ExcelParser;
+import com.cnooc.lca.model.InfluenceNames;
 import com.cnooc.lca.model.T_Cycle;
 
 /**
@@ -70,6 +71,7 @@ public class CommonTemplate implements ITemplate{
 	 */
 	private Map<String, String> influences;
 	
+	
 	/**
 	 * <p>排放集合</p>
 	 * <p>key 排放物名称(CO2)， value 电厂周期内对应的排放物集合</p>
@@ -111,6 +113,7 @@ public class CommonTemplate implements ITemplate{
 			String infName = iter.next();
 			double infValue = getCellValue(parser, getSheetIndex(), influences.get(infName));
 			influenceMap.put(infName, infValue);
+			InfluenceNames.me().addInfluenceName(infName);
 			
 			logger.debug("影响潜能 : " + infName + " = " + infValue);
 		}

@@ -8,13 +8,13 @@
       	<div class="control-group">
 		    <div class="controls">
 				<label class="radio">
-				<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1">CO2
+				<input type="radio" name="emissionRadios" value="CO2">CO2
 				</label>
 				<label class="radio">
-				  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">CH4
+				  <input type="radio" name="emissionRadios" value="CH4">CH4
 				</label>
 				<label class="radio">
-				  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" checked><b>总计</b>
+				  <input type="radio" name="emissionRadios" value="total" checked><b>总计</b>
 				</label>
 		    </div>
 		  </div>

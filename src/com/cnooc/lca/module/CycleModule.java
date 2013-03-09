@@ -12,6 +12,7 @@ import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.Param;
 
+import com.cnooc.lca.model.InfluenceNames;
 import com.cnooc.lca.model.T_Cycle;
 import com.cnooc.lca.service.CycleService;
 import com.cnooc.lca.service.CycleType;
@@ -52,8 +53,10 @@ public class CycleModule {
 		request.setAttribute("cycleList", cycleList);
 		
 		request.setAttribute("influnceNames", curCycleType.getInflunceNames());
+		request.setAttribute("influenceNameToUuid", InfluenceNames.me().getNameToUuidMap());
 		
 		request.setAttribute("procedureNames", cycleService.getProcedureList(cycleTypeCode));
+		
 	}
 	
 	

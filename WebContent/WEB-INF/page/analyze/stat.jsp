@@ -55,31 +55,89 @@
    <script type="text/javascript" src="${base}/amchart/swfobject.js"></script>
    
    <script type="text/javascript">
-		var swfPath = "${base}/amchart/amcolumn_1.6.0.1/amcolumn/amcolumn.swf";
-		var setting_file = "${base}/common/amchart/stat/amcolumn_settings.xml";
-		var data_file = "${base}/common/amchart/stat/amcolumn_data.xml";
-   		<c:choose>
-   			<c:when test="${param.target == 'consumption'}">
-   			setting_file = "${base}/common/amchart/stat/consumption_settings.xml";
-   			data_file = "${base}/chart/consumption";
-   			</c:when>
-   			<c:when test="${param.target == 'emission'}">
-   			setting_file = "${base}/common/amchart/stat/emission_settings.xml";
-   			data_file = "${base}/chart/emission";
-   			</c:when>
-   			<c:when test="${param.target == 'influence'}">
-   			setting_file = "${base}/common/amchart/stat/influence_settings.xml";
-   			data_file = "${base}/chart/influence";
-   			</c:when>
-   		</c:choose>
+   
+   var ChartHandler = {
+		swfPath : "${base}/amchart/amcolumn_1.6.0.1/amcolumn/amcolumn.swf",
+		setting_file : "${base}/common/amchart/stat/amcolumn_settings.xml",
+		data_file : "${base}/common/amchart/stat/amcolumn_data.xml",
+		so : null,
+		init : function(){
+			
+			this.so = new SWFObject(this.swfPath, "amcolumn", "100%", "400", "8", "#FFFFFF");
+			this.so.addVariable("path", "${base}/amchart/");
+			
+			<c:choose>
+	   			<c:when test="${param.target == 'consumption'}">
+	   			setting_file = "${base}/common/amchart/stat/consumption_settings.xml";
+	   			data_file = "${base}/chart/consumption"  + "?cycletype=${param.cycletype}";
+	   			</c:when>
+	   			<c:when test="${param.target == 'emission'}">
+	   			setting_file = "${base}/common/amchart/stat/emission_settings.xml";
+	   			data_file = "${base}/chart/emission"  + "?cycletype=${param.cycletype}";
+	   			
+				var statItem = $("input[type='radio'][name='emissionRadios']:checked").val();
+	   			
+	   			data_file += ("&statItem=" + statItem);
+	   			</c:when>
+	   			<c:when test="${param.target == 'influence'}">
+	   			setting_file = "${base}/common/amchart/stat/influence_settings.xml";
+	   			data_file = "${base}/chart/influence"  + "?cycletype=${param.cycletype}";
+	   			
+	   			var statItem = $("input[type='radio'][name='influenceRadios']:checked").val();
+	   			
+	   			data_file += ("&statItem=" + statItem);
+	   			</c:when>
+	   		</c:choose>
+			
+			this.so.addVariable("settings_file", encodeURIComponent(setting_file));
+			this.so.addVariable("data_file", encodeURIComponent(data_file));
+			
+			this.so.addParam("wmode", "opaque");
+			this.so.write("amcharts");
+		},
+		/**
+		* 重新加载影响潜能统计图
+		*/
+		reloadInfluenceChart : function(){
+   			data_file = "${base}/chart/influence"  + "?cycletype=${param.cycletype}";
+   			
+   			var statItem = $("input:radio[name='influenceRadios']:checked").val();
+   			data_file += ("&statItem=" + statItem);
+   			this.so.addVariable("data_file", encodeURIComponent(data_file));
+   			
+   			//document.getElementById('amcolumn').reloadData();
+   			//document.getElementById('amcolumn').reloadAll();		// 只刷新数据未生效
+   			this.so.write("amcharts");
+		},
+		/**
+		* 重新加载排放统计图
+		*/
+		reloadEmissionChart : function(){
+   			data_file = "${base}/chart/emission"  + "?cycletype=${param.cycletype}";
+   			
+   			var statItem = $("input:radio[name='emissionRadios']:checked").val();
+   			data_file += ("&statItem=" + statItem);
+   			this.so.addVariable("data_file", encodeURIComponent(data_file));
+   			
+   			//document.getElementById('amcolumn').reloadData();
+   			//document.getElementById('amcolumn').reloadAll();		// 只刷新数据未生效
+   			this.so.write("amcharts");
+		}
 		
-		var so = new SWFObject(swfPath, "amcolumn", "100%", "400", "8", "#FFFFFF");
-		so.addVariable("path", "${base}/amchart/");
-		so.addVariable("settings_file", encodeURIComponent(setting_file));
-		so.addVariable("data_file", encodeURIComponent(data_file));
-		
-		so.addParam("wmode", "opaque");
-		so.write("amcharts");
+   };
+   
+   $(document).ready(function(){
+	   ChartHandler.init();
+	   
+	   $("input:radio[name='influenceRadios']").click(function(){
+		   ChartHandler.reloadInfluenceChart();
+	   });
+	   
+	   $("input:radio[name='emissionRadios']").click(function(){
+		   ChartHandler.reloadEmissionChart();
+	   });
+   });
+   
 	</script>
   </body>
 </html>

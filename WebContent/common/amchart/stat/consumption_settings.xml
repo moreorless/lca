@@ -12,7 +12,7 @@
   <font>Tahoma</font>                                         <!-- [Arial] (font name) use device fonts, such as Arial, Times New Roman, Tahoma, Verdana... -->
   <text_size></text_size>                                     <!-- [11] (Number) text size of all texts. Every text size can be set individually in the settings below -->
   <text_color></text_color>                                   <!-- [#000000] (hex color code) main text color. Every text color can be set individually in the settings below-->
-  <decimals_separator></decimals_separator>                   <!-- [,] (string) decimal separator. Note, that this is for displaying data only. Decimals in data xml file must be separated with a dot -->
+  <decimals_separator>.</decimals_separator>                   <!-- [,] (string) decimal separator. Note, that this is for displaying data only. Decimals in data xml file must be separated with a dot -->
   <thousands_separator></thousands_separator>                 <!-- [ ] (string) thousand separator. use "none" if you don't want to separate -->
   <digits_after_decimal></digits_after_decimal>               <!-- [] (Number) if your value has less digits after decimal then is set here, zeroes will be added -->
   <redraw></redraw>                                           <!-- [false] (true / false) if your chart's width or height is set in percents, and redraw is set to true, the chart will be redrawn then screen size changes -->
@@ -20,7 +20,7 @@
   <reload_data_interval></reload_data_interval>               <!-- [0] (Number) how often data should be reloaded (time in seconds) -->
   <preloader_on_reload></preloader_on_reload>                 <!-- [false] (true / false) Whether to show preloaded when data or settings are reloaded -->
   <add_time_stamp></add_time_stamp>                           <!-- [false] (true / false) if true, a unique number will be added every time flash loads data. Mainly this feature is useful if you set reload _data_interval -->
-  <precision></precision>                                     <!-- [2] (Number) shows how many numbers should be shown after comma for calculated values (percents) -->
+  <precision>2</precision>                                     <!-- [2] (Number) shows how many numbers should be shown after comma for calculated values (percents) -->
   <depth>20</depth>                                            <!-- [0] (Number) the depth of chart and columns (for 3D effect) -->
   <angle>45</angle>                                            <!-- [30] (0 - 90) angle of chart area and columns (for 3D effect) -->
   <colors></colors>                                           <!-- [#FF6600,#FCD202,#B0DE09,#0D8ECF,#2A0CD0,#CD0D74,#CC0000,#00CC00,#0000CC,#DDDDDD,#999999,#333333,#990000] Colors of graphs. if the graph color is not set, color from this array will be used -->
@@ -196,7 +196,7 @@
   </error_messages>    
   
   <strings>
-    <no_data></no_data>                                       <!-- [No data for selected period] (text) if data is missing, this message will be displayed -->
+    <no_data>没有数据</no_data>                                       <!-- [No data for selected period] (text) if data is missing, this message will be displayed -->
     <export_as_image></export_as_image>                       <!-- [Export as image] (text) text for right click menu -->
     <collecting_data></collecting_data>                       <!-- [Collecting data] (text) this text is displayed while exporting chart to an image -->
   </strings>  

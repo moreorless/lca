@@ -12,7 +12,7 @@
   <font>Tahoma</font>                                         <!-- [Arial] (font name) use device fonts, such as Arial, Times New Roman, Tahoma, Verdana... -->
   <text_size></text_size>                                     <!-- [11] (Number) text size of all texts. Every text size can be set individually in the settings below -->
   <text_color></text_color>                                   <!-- [#000000] (hex color code) main text color. Every text color can be set individually in the settings below-->
-  <decimals_separator>.</decimals_separator>                   <!-- [,] (string) decimal separator. Note, that this is for displaying data only. Decimals in data xml file must be separated with a dot -->
+  <decimals_separator></decimals_separator>                   <!-- [,] (string) decimal separator. Note, that this is for displaying data only. Decimals in data xml file must be separated with a dot -->
   <thousands_separator></thousands_separator>                 <!-- [ ] (string) thousand separator. use "none" if you don't want to separate -->
   <digits_after_decimal></digits_after_decimal>               <!-- [] (Number) if your value has less digits after decimal then is set here, zeroes will be added -->
   <redraw></redraw>                                           <!-- [false] (true / false) if your chart's width or height is set in percents, and redraw is set to true, the chart will be redrawn then screen size changes -->
@@ -21,8 +21,8 @@
   <preloader_on_reload></preloader_on_reload>                 <!-- [false] (true / false) Whether to show preloaded when data or settings are reloaded -->
   <add_time_stamp>true</add_time_stamp>                           <!-- [false] (true / false) if true, a unique number will be added every time flash loads data. Mainly this feature is useful if you set reload _data_interval -->
   <precision></precision>                                     <!-- [2] (Number) shows how many numbers should be shown after comma for calculated values (percents) -->
-  <depth>20</depth>                                            <!-- [0] (Number) the depth of chart and columns (for 3D effect) -->
-  <angle>45</angle>                                            <!-- [30] (0 - 90) angle of chart area and columns (for 3D effect) -->
+  <depth>20</depth>                                           <!-- [0] (Number) the depth of chart and columns (for 3D effect) -->
+  <angle>25</angle>                                           <!-- [30] (0 - 90) angle of chart area and columns (for 3D effect) -->
   <colors></colors>                                           <!-- [#FF6600,#FCD202,#B0DE09,#0D8ECF,#2A0CD0,#CD0D74,#CC0000,#00CC00,#0000CC,#DDDDDD,#999999,#333333,#990000] Colors of graphs. if the graph color is not set, color from this array will be used -->
 
     
@@ -30,10 +30,10 @@
     <type></type>                                             <!-- [clustered] (clustered, stacked, 100% stacked, 3d column) -->
     <width>50</width>                                         <!-- [80] (0 - 100) width of column (in percents)  -->
     <spacing>0</spacing>                                      <!-- [5] (Number) space between columns of one category axis value, in pixels. Negative values can be used. -->
-    <grow_time>1</grow_time>                                  <!-- [0] (Number) grow time in seconds. Leave 0 to appear instantly -->
-    <grow_effect>regular</grow_effect>                               <!-- [elastic] (elastic, regular, strong) -->
-    <sequenced_grow>true</sequenced_grow>                     <!-- [false] (true / false) whether columns should grow at the same time or one after another -->    
-    <alpha></alpha>                                           <!-- [100] (Number) alpha of all columns -->
+    <grow_time>2</grow_time>                                  <!-- [0] (Number) grow time in seconds. Leave 0 to appear instantly -->
+    <grow_effect>strong</grow_effect>                         <!-- [elastic] (elastic, regular, strong) -->    
+    <sequenced_grow></sequenced_grow>                         <!-- [false] (true / false) whether columns should grow at the same time or one after another -->
+    <alpha>60</alpha>                                         <!-- [100] (Number) alpha of all columns -->
     <border_color></border_color>                             <!-- [#FFFFFF] (hex color code) -->
     <border_alpha></border_alpha>                             <!-- [0] (Number) -->
     <data_labels>
@@ -52,6 +52,23 @@
     <hover_brightness>30</hover_brightness>                   <!-- [0] (from -255 to 255) The column may darken/lighten when the use rolls over it. The intensity may be set here -->                         
   </column>
   
+  <line>                                                      <!-- Here are general settings for "line" graph type. You can set most of these settings for individual lines in graph settings below -->
+    <connect></connect>                                       <!-- [false] (true / false) whether to connect points if data is missing -->
+    <width></width>                                           <!-- [2] (Number) line width -->
+    <alpha></alpha>                                           <!-- [100] (Number) line alpha -->
+    <fill_alpha></fill_alpha>                                 <!-- [0] (Number) fill alpha -->
+    <bullet></bullet>                                         <!-- [] (square, round, square_outlined, round_outlined, square_outline, round_outline, filename.swf) can be used predefined bullets or loaded custom bullets. Leave empty if you don't want to have bullets at all. Outlined bullets use plot area color for outline color -->
+    <bullet_size></bullet_size>                               <!-- [8] (Number) bullet size -->
+    <data_labels>
+       <![CDATA[{value}]]>                                    <!-- [] ({title} {value} {series} {percents} {start} {difference} {total}) You can format any data label: {title} will be replaced with real title, {value} - with value and so on. You can add your own text or html code too. -->
+    </data_labels>
+    <data_labels_text_color></data_labels_text_color>         <!-- [text_color] (hex color code) --> 
+    <data_labels_text_size></data_labels_text_size>           <!-- [text_size] (Number) -->
+    <balloon_text>                                                    
+      <![CDATA[{value}]]>                                     <!-- [] use the same formatting rules as for data labels -->
+    </balloon_text>      
+    <link_target></link_target>                               <!-- [] (_blank, _top ...) -->
+  </line>
   
     
   <background>                                                <!-- BACKGROUND -->
@@ -227,7 +244,7 @@
       <text_color></text_color>                               <!-- [text_color] (hex color code) button text color -->
       <text_size></text_size>                                 <!-- [text_size](Number) button text size -->
       <text>                                                  <!-- [] (text) html tags may be used (supports <b>, <i>, <u>, <font>, <a href="">, <br/>. Enter text between []: <![CDATA[your <b>bold</b> and <i>italic</i> text]]>-->
-        <![CDATA[<b>影响潜能</b>]]>
+        <![CDATA[<b>碳排放</b>]]>
       </text>        
     </label>
     
