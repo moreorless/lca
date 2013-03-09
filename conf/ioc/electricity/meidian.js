@@ -4,7 +4,8 @@ var ioc = {
 		fields  : {
 			sheetIndex : 1,
 			name : "煤电",
-			unit : "600MW",
+			//unit : "600MW",
+			unit : "",
 			totalConsumption : "D305",
 			influences : {"全球变暖" : "F227", "酸化" : "F238", "富营养化" : "F244", "粉尘" : "F245", "光化学臭氧" : "F253", "加权总计" : "F276"},
 			emissions : {

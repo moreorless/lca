@@ -31,37 +31,37 @@
 		
 <table class="table table-striped table-bordered table-condensed">
 	<thead>
-		<tr>
-			<td width="100" align="center"></td>
+		<tr bgcolor="#C1CDC1">
+			<td align="center" style="text-align:center;vertical-align:middle"></td>
 			<c:forEach items="${cycleList}" var="cycle">
-			<td>${cycle.name}-${cycle.unit}</td>
+			<td style="text-align:center;vertical-align:middle"><b>${cycle.name}${cycle.unit}</b></td>
 			</c:forEach>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<td width="100" align="center">CO2</td>
+			<td align="center" width="75px" style="text-align:center;vertical-align:middle"><b>CO2</b></td>
 			
 			<c:forEach items="${cycleList}" var="cycle">
-			<td><fmt:formatNumber value="${cycle.mergedEmissionMap['CO2']}" pattern="#.##" minFractionDigits="2"  /></td>
+			<td style="text-align:center; min-width:50px"><fmt:formatNumber value="${cycle.mergedEmissionMap['CO2']}" pattern="#.##" minFractionDigits="2"  /></td>
 			</c:forEach>
 			
 		</tr>
 		
 		<tr>
-			<td width="100" align="center">CH4</td>
+			<td align="center" width="75px" style="text-align:center;vertical-align:middle"><b>CH4</b></td>
 			
 			<c:forEach items="${cycleList}" var="cycle">
-			<td><fmt:formatNumber value="${cycle.mergedEmissionMap['CH4']}" pattern="#.##" minFractionDigits="2"  /></td>
+			<td style="text-align:center; min-width:50px"><fmt:formatNumber value="${cycle.mergedEmissionMap['CH4']}" pattern="#.##" minFractionDigits="2"  /></td>
 			</c:forEach>
 			
 		</tr>
 		
 		<tr>
-			<td width="100" align="center">总计</td>
+			<td align="center" width="75px" style="text-align:center;vertical-align:middle"><b>总计</b></td>
 			
 			<c:forEach items="${cycleList}" var="cycle">
-			<td><fmt:formatNumber value="${cycle.totalEmission}" pattern="#.##" minFractionDigits="2"  /></td>
+			<td style="text-align:center; min-width:50px"><fmt:formatNumber value="${cycle.totalEmission}" pattern="#.##" minFractionDigits="2"  /></td>
 			</c:forEach>
 			
 		</tr>

@@ -63,7 +63,7 @@
 		so : null,
 		init : function(){
 			
-			this.so = new SWFObject(this.swfPath, "amcolumn", "100%", "400", "8", "#FFFFFF");
+			this.so = new SWFObject(this.swfPath, "amcolumn", "100%", "360", "8", "#FFFFFF");
 			this.so.addVariable("path", "${base}/amchart/");
 			
 			<c:choose>

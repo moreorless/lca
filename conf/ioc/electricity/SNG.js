@@ -33,7 +33,7 @@ var ioc = {
 		fields  : {
 			sheetIndex : 8,
 			name : "SNG",
-			unit : "热电联产",
+			unit : "热联",
 			totalConsumption : "D245",
 			influences : {"全球变暖" : "G165", "酸化" : "G176", "富营养化" : "G182", "粉尘" : "G183", "光化学臭氧" : "G191", "加权总计" : "G214"},
 			emissions : {

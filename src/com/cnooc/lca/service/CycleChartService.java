@@ -145,11 +145,10 @@ public class CycleChartService {
 			}
 				
 			double influence = cycle.getInfluenceMap().get(infName);
-			BigDecimal bigDecimal = new BigDecimal(influence);
 			
 			consumptionGraphEle.addElement("value").addAttribute("xid", ""+i)
 				.addAttribute("color", columnColor)
-				.addText(bigDecimal.setScale(DEFAULT_SCALE, RoundingMode.HALF_UP).toString());
+				.addText(fixDecimal(influence));
 			
 			i++;
 		}
@@ -207,8 +206,11 @@ public class CycleChartService {
 	}
 
 	private String fixDecimal(double value){
-		BigDecimal bigDecimal = new BigDecimal(value);
+		
+		/*BigDecimal bigDecimal = new BigDecimal(value);
 		return bigDecimal.setScale(DEFAULT_SCALE, RoundingMode.HALF_UP).toString();
+		*/
+		return String.valueOf(value);
 		
 	}
 	
