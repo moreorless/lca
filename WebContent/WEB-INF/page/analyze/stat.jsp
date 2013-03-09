@@ -131,10 +131,32 @@
 	   
 	   $("input:radio[name='influenceRadios']").click(function(){
 		   ChartHandler.reloadInfluenceChart();
+		   
+		   var radios = document.getElementsByName('influenceRadios');
+		   var tb = document.getElementById('table_influence');
+		   for( var i = 1; i < tb.rows.length; i++ ) 
+			   tb.rows[i].bgColor = "white";
+			
+		   for( var i = 0; i < radios.length; i++ ) 
+		   { 
+			   if(radios[i].checked) 
+				   tb.rows[i+1].bgColor = '#1AE6E6';
+		   } 
 	   });
 	   
 	   $("input:radio[name='emissionRadios']").click(function(){
 		   ChartHandler.reloadEmissionChart();
+		   
+		   var radios = document.getElementsByName('emissionRadios');
+		   var tb = document.getElementById('table_emission');
+		   for( var i = 1; i < tb.rows.length; i++ ) 
+			   tb.rows[i].bgColor = "white";
+			
+		   for( var i = 0; i < radios.length; i++ ) 
+		   { 
+			   if(radios[i].checked) 
+				   tb.rows[i+1].bgColor = '#1AE6E6';
+		   } 
 	   });
    });
    

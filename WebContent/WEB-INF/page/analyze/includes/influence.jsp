@@ -47,7 +47,7 @@
 
 <div class="seperator"></div>
 		
-<table class="table table-striped table-bordered table-condensed">
+<table id='table_influence' class="table table-bordered table-condensed">
 	<thead>
 		<tr bgcolor="#C1CDC1">
 			<td align="center" style="text-align:center;vertical-align:middle"></td>
