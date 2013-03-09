@@ -85,7 +85,7 @@ public class WriterConfig {
 					logger.debug("参数 -- name=" + paramName + ", pos=" + posStr + ", value=" + cellValue);
 					if(cell.getCellType() == HSSFCell.CELL_TYPE_FORMULA){
 						wCell.setFormula(true);
-						logger.error("参数 -- name=" + paramName + "对应的单元格时公式，不能编辑, pos=" + posStr + ", value=" + cellValue);
+						logger.error("参数 -- name=" + paramName + "对应的单元格是公式，不能编辑, pos=" + posStr + ", value=" + cellValue);
 					}
 					wCell.setDescription(paramName);
 					wCell.setParamName(paramName);
