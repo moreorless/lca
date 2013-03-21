@@ -24,7 +24,24 @@ import com.cnooc.lca.model.T_Cycle;
 			name : "煤电",
 			unit : "600MW",
 			totalConsumption : "G,121",
-			influences : {"温室" : "G,177", "xxx" : "G,177"},
+			consumptions : {
+				"电厂建设" : "B313",
+				"原料开采" : "B314",
+				"原料运输" : "B315",
+				"发电" :     "B316",
+				"电厂退役" : "B317",
+				"废弃物处理" : "B318"
+			},
+			influences : {"全球变暖" : "F227", "酸化" : "F238", "富营养化" : "F244", "粉尘" : "F245", "光化学臭氧" : "F253", "加权总计" : "F276"},
+			// 分工序的影响潜能（加权）
+			procInfluences : {
+				"电厂建设" : "D313",
+				"原料开采" : "D314",
+				"原料运输" : "D315",
+				"发电" :     "D316",
+				"电厂退役" : "D317",
+				"废弃物处理" : "D318"
+			},
 			emissions : {
 				"CO2" : {
 					"电厂建设" : {"建材生产安装":"G,122", "建材生产安装":"G,122"}
@@ -74,6 +91,18 @@ public class CommonTemplate implements ITemplate{
 	
 	
 	/**
+	 * 分工序的影响潜能（加权）
+	 * <p>key 统一后的工序, value 加权的影响潜能值</p>
+	 */
+	private Map<String, String> procInfluences;
+	
+	/**
+	 * <p>综合能耗集合</p>
+	 * <p>{统一后的工序,  值}</p>
+	 */
+	private Map<String, String> consumptions;
+	
+	/**
 	 * <p>排放集合</p>
 	 * <p>key 排放物名称(CO2)， value 电厂周期内对应的排放物集合</p>
 	 * <code>
@@ -106,6 +135,25 @@ public class CommonTemplate implements ITemplate{
 		cycle.setTotalConsumption(totalConsumption);
 		logger.debug("综合能耗=" + totalConsumption);
 		
+		logger.debug("读取分阶段的综合能耗数据");
+		if(consumptions != null){
+			Map<String, Double> consumptionMap = new LinkedHashMap<>();
+			Set<String> procNames = consumptions.keySet();
+			for(String procName : procNames){
+				String cellPos = consumptions.get(procName);
+				if(Strings.isEmpty(cellPos)) {
+					logger.warn("---工序--- " + procName + ", 未配置单元格位置");
+					continue;
+				}
+				double value = getCellValue(parser, getSheetIndex(), cellPos);
+				logger.debug("---工序--- " + procName + " : " + value);
+				consumptionMap.put(procName, value);
+			}
+			cycle.setConsumptionMap(consumptionMap);
+		}else{
+			logger.error("没有配置分阶段的综合能耗数据！！！");
+		}
+		
 		// 读取影响潜能
 		Map<String, Double> influenceMap = new LinkedHashMap<>();
 		Set<String> keySet = influences.keySet();
@@ -119,6 +167,26 @@ public class CommonTemplate implements ITemplate{
 			logger.debug("影响潜能 : " + infName + " = " + infValue);
 		}
 		cycle.setInfluenceMap(influenceMap);
+		
+		logger.debug("读取分阶段的影响潜能数据");
+		if(procInfluences != null){
+			Map<String, Double> procInfluenceMap = new LinkedHashMap<>();
+			Set<String> procNames = procInfluences.keySet();
+			for(String procName : procNames){
+				String cellPos = procInfluences.get(procName);
+				if(Strings.isEmpty(cellPos)) {
+					logger.warn("---工序--- " + procName + ", 未配置单元格位置");
+					continue;
+				}
+				double value = getCellValue(parser, getSheetIndex(), cellPos);
+				logger.debug("---工序--- " + procName + " : " + value);
+				procInfluenceMap.put(procName, value);
+			}
+			cycle.setProcInfluenceMap(procInfluenceMap);
+		}else{
+			logger.error("没有配置分阶段的综合能耗数据！！！");
+		}
+		
 		
 		// 读取排放数据 {排放物, {工序， 排放值}}
 		Map<String, Map<String, Double>> emissionMap = new LinkedHashMap<>();
@@ -238,4 +306,23 @@ public class CommonTemplate implements ITemplate{
 		this.emissions = emissions;
 	}
 
+	public Map<String, String> getProcInfluences() {
+		return procInfluences;
+	}
+
+	public void setProcInfluences(Map<String, String> procInfluences) {
+		this.procInfluences = procInfluences;
+	}
+
+	public Map<String, String> getConsumptions() {
+		return consumptions;
+	}
+
+	public void setConsumptions(Map<String, String> consumptions) {
+		this.consumptions = consumptions;
+	}
+
+	
+	
+	
 }

@@ -48,9 +48,19 @@ public class T_Cycle {
 	
 	
 	/**
-	 * 影响潜能集合
+	 * 影响潜能集合 <code>{影响潜能， 值}</code>
 	 */
 	private Map<String, Double> influenceMap;
+	
+	/**
+	 * 分阶段的影响潜能 <code>{工序名称， 影响潜能汇总}</code>
+	 */
+	private Map<String, Double> procInfluenceMap;
+	
+	/**
+	 * 综合能耗结合 <code>{工序， 能耗值}</code>
+	 */
+	private Map<String, Double> consumptionMap;
 	
 	/**
 	 * 排放集合  <code>{排放物, {工序， 排放值}}</code>
@@ -107,7 +117,20 @@ public class T_Cycle {
 	}
 	
 	
-
+	
+	
+	public Map<String, Double> getProcInfluenceMap() {
+		return procInfluenceMap;
+	}
+	public void setProcInfluenceMap(Map<String, Double> procInfluenceMap) {
+		this.procInfluenceMap = procInfluenceMap;
+	}
+	public Map<String, Double> getConsumptionMap() {
+		return consumptionMap;
+	}
+	public void setConsumptionMap(Map<String, Double> consumptionMap) {
+		this.consumptionMap = consumptionMap;
+	}
 	public Map<String, Map<String, Double>> getEmissionMap() {
 		return emissionMap;
 	}
