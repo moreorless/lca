@@ -30,7 +30,11 @@
 		<form action="${base}/cycle/saveConfig?cycletype=${param.cycletype}" class="form-horizontal" method="post">
 		  <fieldset>
 		    <legend style="font-size:16px;height:50px;line-height:50px;">
-		    	<label style="float:left;height:60px;line-height:60px;">自定义项目参数</label>  
+		    	<label style="float:left;height:60px;line-height:60px;">自定义项目参数</label>
+		    	
+		    	<div style="float:right">
+		    	<a href="#myModal" role="button" class="btn" data-toggle="modal">恢复初始值</a>
+		    </div>  
 		    </legend>
 		    
 		    <c:forEach items="${curCycleType.paramConfigure.sheets}" var="wSheet">
@@ -51,13 +55,29 @@
 		    <div class="control-group">
     			<div class="controls">
 				    <button type="submit" class="btn btn-primary">保存</button>
-				    <button type="button" class="btn" id="btn-restore">恢复初始值</button>
+				    
 				</div>
 			</div>
 		  </fieldset>
 		</form>
 	
 	</div>
+  	
+  	<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">恢复初始值</h3>
+  </div>
+  <div class="modal-body">
+    <p>恢复初始值后，自定义的参数项将会全部恢复初始值，确认执行该操作？</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+    <button class="btn btn-warning" id="btn-restore">执行初始化</button>
+  </div>
+</div>
+  	
   	
   	<%@ include file="/includes/footer.jsp" %>
    <script type="text/javascript" src="${base}/js/jquery.js"></script>
