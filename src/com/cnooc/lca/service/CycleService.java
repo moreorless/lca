@@ -112,6 +112,7 @@ public class CycleService {
 					CommonTemplate tp = ioc.get(CommonTemplate.class, cycleName);
 					// 设置tp对应的excel文件名
 					tp.setExcelName(excelName);
+					tp.setCode(cycleName);
 					
 					T_Cycle t_cycle = tp.createcycle();
 					cycleList.add(t_cycle);

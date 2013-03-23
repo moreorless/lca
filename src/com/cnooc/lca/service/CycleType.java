@@ -105,6 +105,19 @@ public class CycleType {
 	}
 
 	/**
+	 * 根据生命周期的编码获取生命周期
+	 * @return
+	 */
+	public T_Cycle getCycle(String cycleCode){
+		for(T_Cycle cycle : cycleList){
+			if(cycle.getCode().equals(cycleCode)){
+				return cycle;
+			}
+		}
+		return null;
+	}
+	
+	/**
 	 * 重新加载数据，一般在excel表格中的数据变化后调用
 	 * <p>该方法会重新读取excel文件，并更新内存中的数据</p>
 	 */
@@ -120,6 +133,7 @@ public class CycleType {
 			
 			// 设置tp对应的excel文件名
 			tp.setExcelName(excel);
+			tp.setCode(cycleName);
 			
 			T_Cycle t_cycle = tp.createcycle();
 			this.cycleList.add(t_cycle);

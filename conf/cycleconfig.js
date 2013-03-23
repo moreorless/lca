@@ -6,12 +6,14 @@ var ioc = {
 	        "electric" : {                         // 生命周期编码
 	                name : "发电",                 // 生命周期名称
 	                excel : "electricity.xls",     // 对应的excel文件
-	                cycleNameList : ["meidian_600", "hedian", "fengdian", 
+	                cycleNameList : ["meidian_600",
+	                                 "hedian", 
 	                                 "qidian_NGlianhe", "qidian_LNGlianhe", "qidian_NGrelian",
 	                                 "shuidian_dazhongxing", "shuidian_choushui",
-	                                 "SNG_NGlianhe", "SNG_NGrelian",
 	                                 "taiyangneng_guangfu", "taiyangneng_guangre",
-	                                 "youdian"
+	                                 "fengdian",
+	                                 "youdian",
+	                                 "SNG_NGlianhe", "SNG_NGrelian"
 	                                 ]    // 对应excel中的各个sheet
 
 	        },

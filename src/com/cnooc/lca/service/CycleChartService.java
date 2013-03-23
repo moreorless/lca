@@ -13,6 +13,7 @@ import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.lang.Strings;
 
 import com.cnooc.lca.model.InfluenceNames;
+import com.cnooc.lca.model.NameToUuidMap;
 import com.cnooc.lca.model.T_Cycle;
 
 import java.math.BigDecimal;
@@ -54,6 +55,43 @@ public class CycleChartService {
 	@Inject("refer:cycleService")
 	private CycleService cycleService;
 	
+	/**
+	 * 生成综合能耗的柱状图数据（选中发电方式，按工序分组统计）
+	 * @param cycleType
+	 * @param generatorCode
+	 * @return
+	 */
+	public String getConsumptionChartGroupByGenerator(CycleType cycleType, String generatorCode){
+		Document document = DocumentHelper.createDocument();
+		Element chartEle = document.addElement("chart");
+		Element seriesEle = chartEle.addElement("series");
+		Element graphsEle = chartEle.addElement("graphs");
+		Element consumptionGraphEle = graphsEle.addElement("graph").addAttribute("title", "能耗");
+		int i = 0;
+
+		colorIndex = 0;
+		
+		T_Cycle cycle = cycleType.getCycle(generatorCode);
+		Map<String, Double> consumptionMap = cycle.getConsumptionMap();
+		Iterator<String> iter = consumptionMap.keySet().iterator();
+		while(iter.hasNext()){
+			String name = iter.next();   			// 工序名字
+			String columnColor = getColorString();
+			
+			seriesEle.addElement("value").addAttribute("xid",""+i).addText(name);
+			
+			
+			BigDecimal bigDecimal = new BigDecimal(consumptionMap.get(name));
+			
+			consumptionGraphEle.addElement("value").addAttribute("xid", ""+i)
+				.addAttribute("color", columnColor)
+				.addText(bigDecimal.setScale(DEFAULT_SCALE, RoundingMode.HALF_UP).toString());
+			
+			i++;
+		}
+		
+		return document.asXML();
+	}
 	/**
 	 * 生成综合能耗的柱状图数据（使用dom4j）
 	 * @return xml string
@@ -141,7 +179,7 @@ public class CycleChartService {
 			String infName = DEFAULT_INF_NAME;
 
 			if(!Strings.isEmpty(infItem)){
-				infName = InfluenceNames.me().getInfluenceName(infItem);
+				infName = NameToUuidMap.me().getName(NameToUuidMap.Type.INFLUENCE, infItem);
 			}
 				
 			double influence = cycle.getInfluenceMap().get(infName);

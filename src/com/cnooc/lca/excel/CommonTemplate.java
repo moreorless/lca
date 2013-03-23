@@ -11,6 +11,7 @@ import org.nutz.lang.Strings;
 
 import com.cnooc.lca.excel.parser.ExcelParser;
 import com.cnooc.lca.model.InfluenceNames;
+import com.cnooc.lca.model.NameToUuidMap;
 import com.cnooc.lca.model.T_Cycle;
 
 /**
@@ -79,6 +80,11 @@ public class CommonTemplate implements ITemplate{
 	private String unit;
 	
 	/**
+	 * 发电方式的英文编码
+	 */
+	private String code;
+	
+	/**
 	 * 综合能耗
 	 */
 	private String totalConsumption;
@@ -125,6 +131,7 @@ public class CommonTemplate implements ITemplate{
 		cycle.setSheetIndex(this.getSheetIndex());
 		cycle.setName(this.getName());
 		cycle.setUnit(this.getUnit());
+		cycle.setCode(this.getCode());
 		
 		// 读取excel文件中的数据
 		ExcelParser parser = ExcelFactory.me().getParser(excelName);
@@ -148,6 +155,8 @@ public class CommonTemplate implements ITemplate{
 				double value = getCellValue(parser, getSheetIndex(), cellPos);
 				logger.debug("---工序--- " + procName + " : " + value);
 				consumptionMap.put(procName, value);
+				
+				NameToUuidMap.me().addName(NameToUuidMap.Type.PROCEDURE, procName);
 			}
 			cycle.setConsumptionMap(consumptionMap);
 		}else{
@@ -162,7 +171,7 @@ public class CommonTemplate implements ITemplate{
 			String infName = iter.next();
 			double infValue = getCellValue(parser, getSheetIndex(), influences.get(infName));
 			influenceMap.put(infName, infValue);
-			InfluenceNames.me().addInfluenceName(infName);
+			NameToUuidMap.me().addName(NameToUuidMap.Type.INFLUENCE, infName);
 			
 			logger.debug("影响潜能 : " + infName + " = " + infValue);
 		}
@@ -281,6 +290,15 @@ public class CommonTemplate implements ITemplate{
 
 	public void setUnit(String unit) {
 		this.unit = unit;
+	}
+
+	
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getTotalConsumption() {

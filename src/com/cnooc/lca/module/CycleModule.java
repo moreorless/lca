@@ -18,6 +18,7 @@ import com.cnooc.lca.excel.ExcelFactory;
 import com.cnooc.lca.excel.WriterConfig;
 import com.cnooc.lca.excel.parser.ExcelParser;
 import com.cnooc.lca.model.InfluenceNames;
+import com.cnooc.lca.model.NameToUuidMap;
 import com.cnooc.lca.model.T_Cycle;
 import com.cnooc.lca.service.CycleService;
 import com.cnooc.lca.service.CycleType;
@@ -63,7 +64,8 @@ public class CycleModule {
 		request.setAttribute("cycleList", cycleList);
 		
 		request.setAttribute("influnceNames", curCycleType.getInflunceNames());
-		request.setAttribute("influenceNameToUuid", InfluenceNames.me().getNameToUuidMap());
+		request.setAttribute("influenceNameToUuid", NameToUuidMap.me().getNameToUuidMap(NameToUuidMap.Type.INFLUENCE));
+		request.setAttribute("procNameToUuid", NameToUuidMap.me().getNameToUuidMap(NameToUuidMap.Type.PROCEDURE));
 		
 		request.setAttribute("procedureNames", cycleService.getProcedureList(cycleTypeCode));
 		

@@ -16,10 +16,16 @@
   	</c:import>
   	<div id="wrap" class="container">
 		<c:if test='${param.saveOk}'>
-		<div id="tip_area" style="height:40px;line-height:40px;" class="alert-success">保存成功</div>
+		<div class="alert alert-success">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<strong>保存成功</strong>
+		</div>
 		</c:if>
 		<c:if test='${param.restoreOk}'>
-		<div id="tip_area" style="height:40px;line-height:40px;" class="alert-success">恢复成功</div>
+		<div class="alert alert-success">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<strong>恢复初始值成功</strong>
+		</div>
 		</c:if>
 		<form action="${base}/cycle/saveConfig?cycletype=${param.cycletype}" class="form-horizontal" method="post">
 		  <fieldset>
@@ -63,7 +69,7 @@
    	$(document).ready(function(){
    		setTimeout(function(){
    			$("#tip_area").hide('slow');	
-   		}, 3000);
+   		}, 5000);
    		
    		$("#btn-restore").click(function(){
    			$.ajax({

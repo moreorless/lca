@@ -34,14 +34,20 @@ public class CycleChartModule {
 	
 	@Inject("refer:cycleService")
 	private CycleService cycleService;
-	
+
+	/**
+	 * 能耗统计图
+	 * @param cycleCode		生命周期编码(发电、交通燃料、天然气产业链)
+	 * @param generatorCode	发电方式编码
+	 * @return
+	 */
 	@At
 	@Ok("raw:xml")
-	public String consumption(@Param("cycletype") String cycleCode){
+	public String consumption(@Param("cycletype") String cycleCode, @Param("generatorCode") String generatorCode){
 		//return Files.read(demoDataPath + "consumption_data.xml");
 		
 		CycleType cycleType = cycleService.getCycleType(cycleCode);
-		return cycleChartService.getConsumptionChart(cycleType);
+		return cycleChartService.getConsumptionChartGroupByGenerator(cycleType, generatorCode);
 		
 	}
 	
@@ -59,7 +65,5 @@ public class CycleChartModule {
 		return cycleChartService.getInfluenceChart(cycleType, statItem);
 		
 	}
-	
-	
 	
 }

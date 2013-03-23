@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=utf-8" language="java" %>
 <%@ include file="/includes/taglibs.jsp"%>
 
-<div class="container-fluid">
+<div>
   <div class="row-fluid">
     <div class="span2">
       <div id="emission_sel_area">

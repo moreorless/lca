@@ -27,6 +27,11 @@ public class T_Cycle {
 	private String name;
 	
 	/**
+	 * 发电站编码（程序内部使用） 使用js配置文件中的对象名，如mei_600
+	 */
+	private String code;
+	
+	/**
 	 * 电站机组
 	 */
 	private String unit;
@@ -88,6 +93,13 @@ public class T_Cycle {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
 	}
 	public String getUnit() {
 		return unit;

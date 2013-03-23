@@ -71,13 +71,15 @@
 	   			<c:when test="${param.target == 'consumption'}">
 	   			setting_file = "${base}/common/amchart/stat/consumption_settings.xml";
 	   			data_file = "${base}/chart/consumption"  + "?cycletype=${param.cycletype}";
+	   			
+	   			var generatorCode = $("input:radio[name='consumptionRadios']:checked").val();
+	   			data_file += ("&generatorCode=" + generatorCode);
 	   			</c:when>
 	   			<c:when test="${param.target == 'emission'}">
 	   			setting_file = "${base}/common/amchart/stat/emission_settings.xml";
 	   			data_file = "${base}/chart/emission"  + "?cycletype=${param.cycletype}";
 	   			
 				var statItem = $("input[type='radio'][name='emissionRadios']:checked").val();
-	   			
 	   			data_file += ("&statItem=" + statItem);
 	   			</c:when>
 	   			<c:when test="${param.target == 'influence'}">
@@ -85,7 +87,6 @@
 	   			data_file = "${base}/chart/influence"  + "?cycletype=${param.cycletype}";
 	   			
 	   			var statItem = $("input[type='radio'][name='influenceRadios']:checked").val();
-	   			
 	   			data_file += ("&statItem=" + statItem);
 	   			</c:when>
 	   		</c:choose>
@@ -95,6 +96,18 @@
 			
 			this.so.addParam("wmode", "opaque");
 			this.so.write("amcharts");
+		},
+		
+		/**
+		* 重新加载综合能耗统计图
+		*/
+		reloadConsumptionChart : function(){
+			data_file = "${base}/chart/consumption"  + "?cycletype=${param.cycletype}";
+			
+			var generatorCode = $("input:radio[name='consumptionRadios']:checked").val();
+   			data_file += ("&generatorCode=" + generatorCode);
+   			this.so.addVariable("data_file", encodeURIComponent(data_file));
+   			this.so.write("amcharts");
 		},
 		/**
 		* 重新加载影响潜能统计图
@@ -130,35 +143,43 @@
    $(document).ready(function(){
 	   ChartHandler.init();
 	   
-	   $("input:radio[name='influenceRadios']").click(function(){
-		   ChartHandler.reloadInfluenceChart();
-		   
-		   var radios = document.getElementsByName('influenceRadios');
-		   var tb = document.getElementById('table_influence');
+	   /**
+	   * 根据选择的radio，联动高亮表格的对应行
+	   */
+	   function highlightTR(radioGroupName, tableId){
+		   var radios = document.getElementsByName(radioGroupName);
+		   if(radios.length < 1) return;
+		   var tb = document.getElementById(tableId);
+		   if(!tb) return;
 		   for( var i = 1; i < tb.rows.length; i++ ) 
 			   tb.rows[i].bgColor = "white";
 			
 		   for( var i = 0; i < radios.length; i++ ) 
 		   { 
-			   if(radios[i].checked) 
+			   if(radios[i].checked){
 				   tb.rows[i+1].bgColor = '#1AE6E6';
+				   break;
+			   } 
 		   } 
+	   }
+	   
+	   $("input:radio[name='consumptionRadios']").click(function(){
+		   ChartHandler.reloadConsumptionChart();
+		   highlightTR('consumptionRadios', 'table_consumption');
 	   });
+	   highlightTR('consumptionRadios', 'table_consumption');
+	   
+	   $("input:radio[name='influenceRadios']").click(function(){
+		   ChartHandler.reloadInfluenceChart();
+		   highlightTR('influenceRadios', 'table_influence');
+	   });
+	   highlightTR('influenceRadios', 'table_influence');
 	   
 	   $("input:radio[name='emissionRadios']").click(function(){
 		   ChartHandler.reloadEmissionChart();
-		   
-		   var radios = document.getElementsByName('emissionRadios');
-		   var tb = document.getElementById('table_emission');
-		   for( var i = 1; i < tb.rows.length; i++ ) 
-			   tb.rows[i].bgColor = "white";
-			
-		   for( var i = 0; i < radios.length; i++ ) 
-		   { 
-			   if(radios[i].checked) 
-				   tb.rows[i+1].bgColor = '#1AE6E6';
-		   } 
+		   highlightTR('emissionRadios', 'table_emission');
 	   });
+	   highlightTR('emissionRadios', 'table_emission');
    });
    
 	</script>
