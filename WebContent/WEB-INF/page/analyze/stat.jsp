@@ -21,16 +21,24 @@
   		<div>
   		<ul class="nav nav-pills" style="margin:10px 0 10px 0">
 		  <li <c:if test="${param.target == 'consumption' }">class="active"</c:if>>
-		    <a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=consumption">综合能耗统计</a>
+		    <a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=consumption&statBy=${param.statBy}">综合能耗统计</a>
 		  </li>
 		  <li <c:if test="${param.target == 'emission' }">class="active"</c:if>>
-		  	<a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=emission">碳排放统计</a>
+		  	<a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=emission&statBy=${param.statBy}">碳排放统计</a>
 		  </li>
 		  <li <c:if test="${param.target == 'influence' }">class="active"</c:if>>
-		  	<a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=influence">影响潜能统计</a>
+		  	<a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=influence&statBy=${param.statBy}">影响潜能统计</a>
 		  </li>
 		  
+		  <!-- 
 		  <li style="float:right;color:#005580"><b>${curCycleType.name}</b></li>
+		   -->
+		  <li style="float:right">
+		  <ul class="breadcrumb" style="margin:0">
+			  <li><a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=${param.target}&emissionType=${param.emissionType}&generatorCode=${param.generatorCode }&statBy=procedure">按工序统计</a> <span class="divider">/</span></li>
+			  <li><a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=${param.target}&emissionType=${param.emissionType}&generatorCode=${param.generatorCode }&statBy=generator">按发电方式统计</a></li>
+		  </ul>
+		  </li>
 		</ul>
 		</div>
   		<c:choose>
@@ -70,24 +78,21 @@
 			<c:choose>
 	   			<c:when test="${param.target == 'consumption'}">
 	   			setting_file = "${base}/common/amchart/stat/consumption_settings.xml";
-	   			data_file = "${base}/chart/consumption"  + "?cycletype=${param.cycletype}";
-	   			
-	   			var generatorCode = $("input:radio[name='consumptionRadios']:checked").val();
-	   			data_file += ("&generatorCode=" + generatorCode);
+	   			data_file = this.getConsumptionDataFile();
 	   			</c:when>
 	   			<c:when test="${param.target == 'emission'}">
+	   			<c:if test="${param.statBy == 'generator'}">
+	   			setting_file = "${base}/common/amchart/stat/emission_settings_stackcolumn.xml";
+	   			</c:if>
+	   			<c:if test="${param.statBy != 'generator'}">
 	   			setting_file = "${base}/common/amchart/stat/emission_settings.xml";
-	   			data_file = "${base}/chart/emission"  + "?cycletype=${param.cycletype}";
+	   			</c:if>
 	   			
-				var statItem = $("input[type='radio'][name='emissionRadios']:checked").val();
-	   			data_file += ("&statItem=" + statItem);
+	   			data_file = this.getEmissionDataFile();
 	   			</c:when>
 	   			<c:when test="${param.target == 'influence'}">
 	   			setting_file = "${base}/common/amchart/stat/influence_settings.xml";
-	   			data_file = "${base}/chart/influence"  + "?cycletype=${param.cycletype}";
-	   			
-	   			var statItem = $("input[type='radio'][name='influenceRadios']:checked").val();
-	   			data_file += ("&statItem=" + statItem);
+	   			data_file = this.getInfluenceDataFile();
 	   			</c:when>
 	   		</c:choose>
 			
@@ -97,40 +102,53 @@
 			this.so.addParam("wmode", "opaque");
 			this.so.write("amcharts");
 		},
-		
+		getConsumptionDataFile : function(){
+			var data_file = "${base}/chart/consumption"  + "?cycletype=${param.cycletype}&statBy=${param.statBy}";
+			var generatorCode = $("input:radio[name='generatorRadios']:checked").val();
+   			data_file += ("&generatorCode=" + generatorCode);
+   			return data_file;
+		},
 		/**
 		* 重新加载综合能耗统计图
 		*/
 		reloadConsumptionChart : function(){
-			data_file = "${base}/chart/consumption"  + "?cycletype=${param.cycletype}";
-			
-			var generatorCode = $("input:radio[name='consumptionRadios']:checked").val();
-   			data_file += ("&generatorCode=" + generatorCode);
+			var data_file = this.getConsumptionDataFile();
    			this.so.addVariable("data_file", encodeURIComponent(data_file));
    			this.so.write("amcharts");
+		},
+		getInfluenceDataFile : function(){
+			var data_file = "${base}/chart/influence"  + "?cycletype=${param.cycletype}&statBy=${param.statBy}";
+   			var generatorCode = $("input:radio[name='generatorRadios']:checked").val();
+   			data_file += ("&generatorCode=" + generatorCode);
+   			return data_file;
 		},
 		/**
 		* 重新加载影响潜能统计图
 		*/
 		reloadInfluenceChart : function(){
-   			data_file = "${base}/chart/influence"  + "?cycletype=${param.cycletype}";
+   			var data_file = this.getInfluenceDataFile();
    			
-   			var statItem = $("input:radio[name='influenceRadios']:checked").val();
-   			data_file += ("&statItem=" + statItem);
    			this.so.addVariable("data_file", encodeURIComponent(data_file));
    			
    			//document.getElementById('amcolumn').reloadData();
    			//document.getElementById('amcolumn').reloadAll();		// 只刷新数据未生效
    			this.so.write("amcharts");
 		},
+		getEmissionDataFile : function(){
+			var data_file = "${base}/chart/emission"  + "?cycletype=${param.cycletype}&statBy=${param.statBy}";
+   			
+   			var generatorCode = $("input:radio[name='generatorRadios']:checked").val();
+   			data_file += ("&generatorCode=" + generatorCode);
+   			
+   			var emissionType = $("#emission_sel").val();
+   			data_file += ("&emissionType=" + emissionType);
+   			return data_file;
+		},
 		/**
 		* 重新加载排放统计图
 		*/
 		reloadEmissionChart : function(){
-   			data_file = "${base}/chart/emission"  + "?cycletype=${param.cycletype}";
-   			
-   			var statItem = $("input:radio[name='emissionRadios']:checked").val();
-   			data_file += ("&statItem=" + statItem);
+   			var data_file = this.getEmissionDataFile();
    			this.so.addVariable("data_file", encodeURIComponent(data_file));
    			
    			//document.getElementById('amcolumn').reloadData();
@@ -163,23 +181,28 @@
 		   } 
 	   }
 	   
-	   $("input:radio[name='consumptionRadios']").click(function(){
-		   ChartHandler.reloadConsumptionChart();
-		   highlightTR('consumptionRadios', 'table_consumption');
+	   $("input:radio[name='generatorRadios']").click(function(){
+		   <c:choose>
+		   <c:when test="${param.target == 'consumption'}">
+			   ChartHandler.reloadConsumptionChart();
+		   </c:when>
+		   <c:when test="${param.target == 'emission'}">
+			   ChartHandler.reloadEmissionChart();
+		   </c:when>
+		   <c:when test="${param.target == 'influence'}">
+			   ChartHandler.reloadInfluenceChart();
+		   </c:when>
+		   </c:choose>
+		   highlightTR('generatorRadios', 'table_stat');
 	   });
-	   highlightTR('consumptionRadios', 'table_consumption');
+	   highlightTR('generatorRadios', 'table_stat');
 	   
-	   $("input:radio[name='influenceRadios']").click(function(){
-		   ChartHandler.reloadInfluenceChart();
-		   highlightTR('influenceRadios', 'table_influence');
-	   });
-	   highlightTR('influenceRadios', 'table_influence');
 	   
-	   $("input:radio[name='emissionRadios']").click(function(){
-		   ChartHandler.reloadEmissionChart();
-		   highlightTR('emissionRadios', 'table_emission');
+	   // 排放类型切换的事件处理
+	   $('#emission_sel').change(function(){
+		   var generatorCode = $("input:radio[name='generatorRadios']:checked").val();
+		   window.location = "${base}/cycle/stat?cycletype=${param.cycletype}&target=${param.target}&statBy=${param.statBy}&emissionType=" + $('#emission_sel').val() + '&generatorCode=' + generatorCode;
 	   });
-	   highlightTR('emissionRadios', 'table_emission');
    });
    
 	</script>

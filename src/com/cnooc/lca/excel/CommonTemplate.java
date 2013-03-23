@@ -3,6 +3,7 @@ package com.cnooc.lca.excel;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -10,8 +11,8 @@ import org.apache.log4j.Logger;
 import org.nutz.lang.Strings;
 
 import com.cnooc.lca.excel.parser.ExcelParser;
-import com.cnooc.lca.model.InfluenceNames;
 import com.cnooc.lca.model.NameToUuidMap;
+import com.cnooc.lca.model.ProcedureMap;
 import com.cnooc.lca.model.T_Cycle;
 
 /**
@@ -85,6 +86,11 @@ public class CommonTemplate implements ITemplate{
 	private String code;
 	
 	/**
+	 * 生命周期类型
+	 */
+	private String cycleType;
+	
+	/**
 	 * 综合能耗
 	 */
 	private String totalConsumption;
@@ -145,7 +151,9 @@ public class CommonTemplate implements ITemplate{
 		logger.debug("读取分阶段的综合能耗数据");
 		if(consumptions != null){
 			Map<String, Double> consumptionMap = new LinkedHashMap<>();
-			Set<String> procNames = consumptions.keySet();
+			
+			// procNames 使用系统配置的工序名称，为了保证顺序一致
+			List<String> procNames = ProcedureMap.me().getProcedureList().get(cycleType);
 			for(String procName : procNames){
 				String cellPos = consumptions.get(procName);
 				if(Strings.isEmpty(cellPos)) {
@@ -180,7 +188,8 @@ public class CommonTemplate implements ITemplate{
 		logger.debug("读取分阶段的影响潜能数据");
 		if(procInfluences != null){
 			Map<String, Double> procInfluenceMap = new LinkedHashMap<>();
-			Set<String> procNames = procInfluences.keySet();
+			// procNames 使用系统配置的工序名称，为了保证顺序一致
+			List<String> procNames = ProcedureMap.me().getProcedureList().get(cycleType);
 			for(String procName : procNames){
 				String cellPos = procInfluences.get(procName);
 				if(Strings.isEmpty(cellPos)) {
@@ -199,6 +208,8 @@ public class CommonTemplate implements ITemplate{
 		
 		// 读取排放数据 {排放物, {工序， 排放值}}
 		Map<String, Map<String, Double>> emissionMap = new LinkedHashMap<>();
+		Map<String, Double> totalProcValueMap = new HashMap<>();	// 排放的分阶段合计(CO2+CH4)
+
 		Set<String> emiNameSet = emissions.keySet();
 		for(String emiName : emiNameSet){
 			logger.debug("读取排放物数据 --- " + emiName);
@@ -207,8 +218,11 @@ public class CommonTemplate implements ITemplate{
 			
 			// 第一层为 统一后的阶段
 			Map<String, Map<String, String>> unitedProcMap = emissions.get(emiName);
-			Set<String> unitedProcNames = unitedProcMap.keySet();
-			for(String unitedProcName : unitedProcNames ){
+			
+			// procNames 使用系统配置的工序名称，为了保证顺序一致
+			List<String> procNames = ProcedureMap.me().getProcedureList().get(cycleType);
+			
+			for(String unitedProcName : procNames ){
 				// 第二层为原始的阶段 
 				Map<String, String> origProcMap = unitedProcMap.get(unitedProcName);
 				Set<String> origProcNames = origProcMap.keySet();
@@ -229,9 +243,19 @@ public class CommonTemplate implements ITemplate{
 				}
 				logger.debug("合并工序--- " + unitedProcName + " = " + unitedProcValue);
 				aEmissionMap.put(unitedProcName, unitedProcValue);
+				
+				if(totalProcValueMap.containsKey(unitedProcName)){
+					totalProcValueMap.put(unitedProcName, totalProcValueMap.get(unitedProcName) + unitedProcValue);
+				}else{
+					totalProcValueMap.put(unitedProcName, unitedProcValue);
+				}
 			}
+			
 			emissionMap.put(emiName, aEmissionMap);
 		}
+		
+		emissionMap.put("total", totalProcValueMap);
+		
 		cycle.setEmissionMap(emissionMap);
 		
 		return cycle;
@@ -299,6 +323,14 @@ public class CommonTemplate implements ITemplate{
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	public String getCycleType() {
+		return cycleType;
+	}
+
+	public void setCycleType(String cycleType) {
+		this.cycleType = cycleType;
 	}
 
 	public String getTotalConsumption() {

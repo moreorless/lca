@@ -15,6 +15,7 @@ import org.nutz.ioc.loader.json.JsonLoader;
 import org.nutz.mapl.Mapl;
 
 import com.cnooc.lca.excel.CommonTemplate;
+import com.cnooc.lca.model.ProcedureMap;
 import com.cnooc.lca.model.T_Cycle;
 
 /**
@@ -90,8 +91,6 @@ public class CycleService {
 		JsonLoader reader = new JsonLoader(CYCLE_CONFIG_FILE);
 		Map configMap = reader.getMap().get("cycleconfig");
 
-		Map procedureConfig = reader.getMap().get("defaultProcedures");
-		
 		for(String code : (Set<String>)configMap.keySet()){
 			CycleType cycleType = (CycleType)Mapl.maplistToObj(configMap.get(code), CycleType.class);
 			cycleType.setCode(code);
@@ -113,6 +112,7 @@ public class CycleService {
 					// 设置tp对应的excel文件名
 					tp.setExcelName(excelName);
 					tp.setCode(cycleName);
+					tp.setCycleType(code);
 					
 					T_Cycle t_cycle = tp.createcycle();
 					cycleList.add(t_cycle);
@@ -158,11 +158,11 @@ public class CycleService {
 	 * 加载系统内的工序配置
 	 */
 	public void loadDefaultProcedures(){
-		
-		
 		// 解析cycleconfig.js
 		JsonLoader reader = new JsonLoader(CYCLE_CONFIG_FILE);
 		Map procedureConfig = reader.getMap().get("defaultProcedures");
+		
+		ProcedureMap.me().setProcedureList(procedureConfig);
 		
 		this.procedureList = procedureConfig;
 	}

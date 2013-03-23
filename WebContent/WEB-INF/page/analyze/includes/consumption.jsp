@@ -2,45 +2,42 @@
 <%@ include file="/includes/taglibs.jsp"%>
  
 <div>
+<%-- 按工序统计 --%>
+<c:if test="${ param.statBy  != 'generator' }">
   <div class="row-fluid">
     <div class="span2">
-      <div>
+      <div id="generator_sel_area">
       	<div class="control-group">
 		    <div class="controls">
 				
 				<c:forEach items="${cycleList}" var="cycle"  varStatus="stat">
 					<label class="radio">
-					<input type="radio" name="consumptionRadios" value="${cycle.code}" <c:if test="${stat.first}">checked</c:if>>
+					<input type="radio" name="generatorRadios" value="${cycle.code}" <c:if test="${stat.first}">checked</c:if>>
 						${cycle.name}<c:if test="${fn:length(cycle.unit) > 0}">(${cycle.unit})</c:if>
 					</label>
 				</c:forEach>
 		    </div>
 		  </div>
       	
-      	<!-- 
-	      <div class="control-group">
-			    <div class="controls">
-					
-					<c:forEach items="${procNameToUuid}" var="proc">
-						<label class="radio">
-						<input type="radio" name="classifyRadios" value="${proc.value}">
-							${proc.key}
-						</label>
-					</c:forEach>
-			    </div>
-			  </div>
-		   -->
       </div>
     </div>
     <div class="span10">
       <div id="amcharts" style="text-align:center">You need to upgrade your Flash Player</div>
     </div>
   </div>
+  </c:if>
+  
+  <%--按发电方式统计 --%>
+<c:if test="${param.statBy == 'generator' }">
+  <div class="row-fluid">
+	<div id="amcharts" style="text-align:center">You need to upgrade your Flash Player</div>
+	</div>
+</c:if>
 </div>
 
 <div class="seperator"></div>
 		
-<table id='table_consumption'  class="table table-bordered table-condensed">
+<table id='table_stat'  class="table table-bordered table-condensed">
 	<thead>
 		<tr bgcolor="#C1CDC1">
 			<td align="center" style="text-align:center;vertical-align:middle"></td>

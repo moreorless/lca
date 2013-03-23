@@ -33,6 +33,7 @@
                 	<a href="${base}/cycle/config?cycletype=${param.cycletype}"><img src="${base}/images/config_16.png" width="16" height="16"/>&nbsp;自定义项目</a></li>
               </ul>
               
+            <div style="float:right;width:100px;height:40px;line-height:40px;padding-left:10px;"><b>${curCycleType.name}</b></div>
 			<div class="btn-group" style="float:right">
 				  <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#">
 				    	生命周期选择
@@ -49,7 +50,6 @@
 				  	</c:forEach>
 	              </ul>
 			</div>
-              
             </div><!--/.nav-collapse -->
           </div>
         </div>

@@ -12,7 +12,6 @@ import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.lang.Strings;
 
-import com.cnooc.lca.model.InfluenceNames;
 import com.cnooc.lca.model.NameToUuidMap;
 import com.cnooc.lca.model.T_Cycle;
 
@@ -140,13 +139,101 @@ public class CycleChartService {
 		return document.asXML();
 	}
 	
+	
+	/**
+	 * 生成影响潜能的柱状图数据（选中发电方式，按工序分组统计）
+	 * @param cycleType
+	 * @param generatorCode
+	 * @return
+	 */
+	public String getInfluenceChartGroupByGenerator(CycleType cycleType, String generatorCode){
+		Document document = DocumentHelper.createDocument();
+		Element chartEle = document.addElement("chart");
+		Element seriesEle = chartEle.addElement("series");
+		Element graphsEle = chartEle.addElement("graphs");
+		Element consumptionGraphEle = graphsEle.addElement("graph").addAttribute("title", "影响潜能");
+		int i = 0;
+
+		colorIndex = 0;
+		
+		T_Cycle cycle = cycleType.getCycle(generatorCode);
+		Map<String, Double> influenceMap = cycle.getProcInfluenceMap();
+		Iterator<String> iter = influenceMap.keySet().iterator();
+		while(iter.hasNext()){
+			String name = iter.next();   			// 工序名字
+			String columnColor = getColorString();
+			
+			seriesEle.addElement("value").addAttribute("xid",""+i).addText(name);
+			
+			
+			BigDecimal bigDecimal = new BigDecimal(influenceMap.get(name));
+			
+			consumptionGraphEle.addElement("value").addAttribute("xid", ""+i)
+				.addAttribute("color", columnColor)
+				.addText(bigDecimal.setScale(DEFAULT_SCALE, RoundingMode.HALF_UP).toString());
+			
+			i++;
+		}
+		
+		return document.asXML();
+	}
+	
 	/**
 	 * 生成影响潜能的统计图数据
 	 * @param cycleType
 	 * @param infItem
 	 * @return
 	 */
-	public String getInfluenceChart(CycleType cycleType, String infItem){
+	public String getInfluenceChart(CycleType cycleType){
+List<T_Cycle> cycleList = cycleType.getCycleList();
+		
+		Document document = DocumentHelper.createDocument();
+		Element chartEle = document.addElement("chart");
+		Element seriesEle = chartEle.addElement("series");
+		Element graphsEle = chartEle.addElement("graphs");
+		Element consumptionGraphEle = graphsEle.addElement("graph").addAttribute("title", "能耗");
+		int i = 0;
+		
+		Iterator<T_Cycle> iter = cycleList.iterator();
+		
+		Map<String, String> colorMap = new HashMap<>();	// 不用类型的颜色映射
+		colorIndex = 0;
+		
+		while(iter.hasNext()){
+			T_Cycle cycle = iter.next();
+			
+			String name = cycle.getName();   		// 生命周期名字
+			String columnColor = "";
+			if(colorMap.containsKey(name)){			// 相同发电类型、不同机组使用同样的颜色。
+				columnColor = colorMap.get(name);
+			}else{
+				columnColor = getColorString();
+				colorMap.put(name, columnColor);
+			}
+			
+			if(!Strings.isEmpty(cycle.getUnit())) name += ("(" + cycle.getUnit() + ")");
+			seriesEle.addElement("value").addAttribute("xid",""+i).addText(name);
+			
+			
+			BigDecimal bigDecimal = new BigDecimal(cycle.getTotalInfluence());
+			
+			consumptionGraphEle.addElement("value").addAttribute("xid", ""+i)
+				.addAttribute("color", columnColor)
+				.addText(bigDecimal.setScale(DEFAULT_SCALE, RoundingMode.HALF_UP).toString());
+			
+			i++;
+		}
+		
+		return document.asXML();
+	}
+	
+	/**
+	 * 生成影响潜能的统计图数据
+	 * @param cycleType
+	 * @param infItem
+	 * @return
+	 */
+	public String getInfluenceChart_ByType(CycleType cycleType, String infItem){
 		List<T_Cycle> cycleList = cycleType.getCycleList();
 		
 		Document document = DocumentHelper.createDocument();
@@ -194,6 +281,39 @@ public class CycleChartService {
 		return document.asXML();
 	}
 	
+	
+	public String getEmissionChartGroupByGenerator(CycleType cycleType, String generatorCode, String emissionType){
+		Document document = DocumentHelper.createDocument();
+		Element chartEle = document.addElement("chart");
+		Element seriesEle = chartEle.addElement("series");
+		Element graphsEle = chartEle.addElement("graphs");
+		Element consumptionGraphEle = graphsEle.addElement("graph").addAttribute("title", "碳排放");
+		int i = 0;
+
+		colorIndex = 0;
+		
+		T_Cycle cycle = cycleType.getCycle(generatorCode);
+		Map<String, Double> emissionMap = cycle.getEmissionMap().get(emissionType);
+		Iterator<String> iter = emissionMap.keySet().iterator();
+		while(iter.hasNext()){
+			String name = iter.next();   			// 工序名字
+			String columnColor = getColorString();
+			
+			seriesEle.addElement("value").addAttribute("xid",""+i).addText(name);
+			
+			
+			BigDecimal bigDecimal = new BigDecimal(emissionMap.get(name));
+			
+			consumptionGraphEle.addElement("value").addAttribute("xid", ""+i)
+				.addAttribute("color", columnColor)
+				.addText(bigDecimal.setScale(DEFAULT_SCALE, RoundingMode.HALF_UP).toString());
+			
+			i++;
+		}
+		
+		return document.asXML();
+	}
+	
 	/**
 	 * 生成排放的统计图
 	 * @return
@@ -231,6 +351,7 @@ public class CycleChartService {
 				if("total".equals(statItem)){
 					emissionValue = cycle.getTotalEmission();		// 总排放
 				}else{
+					//String procName = NameToUuidMap.me().getName(NameToUuidMap.Type.PROCEDURE, "");
 					emissionValue = cycle.getMergedEmissionMap().get(statItem);
 				}
 				

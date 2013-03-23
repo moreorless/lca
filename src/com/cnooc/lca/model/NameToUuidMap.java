@@ -1,6 +1,6 @@
 package com.cnooc.lca.model;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -40,12 +40,12 @@ public class NameToUuidMap {
 	/**
 	 * 名称与uuid的映射
 	 */
-	private Map<Type, Map<String, String>> nameToUuidMap = new HashMap<>();
+	private Map<Type, Map<String, String>> nameToUuidMap = new LinkedHashMap<>();
 	
 	/**
 	 * uuid与名称的映射
 	 */
-	private Map<Type, Map<String, String>> uuidToNameMap = new HashMap<>();
+	private Map<Type, Map<String, String>> uuidToNameMap = new LinkedHashMap<>();
 	
 	private Set<Type> containedTypes = new HashSet<>();
 	/**
@@ -54,8 +54,8 @@ public class NameToUuidMap {
 	 */
 	public void addName(Type type, String name){
 		if(!containedTypes.contains(type)){
-			nameToUuidMap.put(type, new HashMap<String, String>());
-			uuidToNameMap.put(type, new HashMap<String, String>());
+			nameToUuidMap.put(type, new LinkedHashMap<String, String>());
+			uuidToNameMap.put(type, new LinkedHashMap<String, String>());
 			containedTypes.add(type);
 		}
 		

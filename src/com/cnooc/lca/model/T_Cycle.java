@@ -51,6 +51,10 @@ public class T_Cycle {
 	 */
 	private double totalEmission;
 	
+	/**
+	 * 总影响潜能
+	 */
+	private double totalInfluence;
 	
 	/**
 	 * 影响潜能集合 <code>{影响潜能， 值}</code>
@@ -157,8 +161,14 @@ public class T_Cycle {
 	public void setTotalEmission(double totalEmission) {
 		this.totalEmission = totalEmission;
 	}
-
 	
+	public double getTotalInfluence() {
+		mergeInfluence();
+		return totalInfluence;
+	}
+	public void setTotalInfluence(double totalInfluence) {
+		this.totalInfluence = totalInfluence;
+	}
 	public WritableExcel getParamConfigure() {
 		return paramConfigure;
 	}
@@ -172,9 +182,6 @@ public class T_Cycle {
 		return mergedEmissionMap;
 	}
 	
-	
-	
-	
 	private void mergeEmissions(){
 		if(_emissionMerged){
 			return;
@@ -184,6 +191,8 @@ public class T_Cycle {
 		
 		this.mergedEmissionMap = new LinkedHashMap<>();
 		for(String emissionName : this.emissionMap.keySet()){
+			if(emissionName.equals("total")) continue;		// 跳过合并项
+			
 			Map<String, Double> procMap = emissionMap.get(emissionName);
 			double mergedValue = 0;
 			for(Double v : procMap.values()){
@@ -196,19 +205,29 @@ public class T_Cycle {
 		_emissionMerged = true;
 	}
 	
+	private boolean _influenceMerged = false;
+	private void mergeInfluence(){
+		if(_influenceMerged) return;
+		this.totalInfluence = 0;
+		for(String key : procInfluenceMap.keySet()){
+			totalInfluence += procInfluenceMap.get(key);
+		}
+		_influenceMerged = true;
+	}
+	
 	public void setMergedEmissionMap(Map<String, Double> mergedEmissionMap) {
 		this.mergedEmissionMap = mergedEmissionMap;
 	}
-	/**
-	 * 从各个工序计算综合能耗
-	 * @return
-	 */
-	public void calcTotalConsumption(){
-		this.totalConsumption = 0;
-		Iterator<T_Procedure> iter = this.procedures.iterator();
-		while(iter.hasNext()){
-			this.totalConsumption += iter.next().getTotalConsumption();
-		}
-	}
+//	/**
+//	 * 从各个工序计算综合能耗
+//	 * @return
+//	 */
+//	public void calcTotalConsumption(){
+//		this.totalConsumption = 0;
+//		Iterator<T_Procedure> iter = this.procedures.iterator();
+//		while(iter.hasNext()){
+//			this.totalConsumption += iter.next().getTotalConsumption();
+//		}
+//	}
 	
 }

@@ -31,8 +31,6 @@
 		  <fieldset>
 		    <legend style="font-size:16px;height:50px;line-height:50px;">
 		    	<label style="float:left;height:60px;line-height:60px;">自定义项目参数</label>  
-		    	<label style="float:right; color:#005580;height:60px;line-height:60px;"><b>${curCycleType.name}</b></label>
-		    
 		    </legend>
 		    
 		    <c:forEach items="${curCycleType.paramConfigure.sheets}" var="wSheet">
