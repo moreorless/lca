@@ -76,18 +76,18 @@
 			<c:forEach items="${procNameToUuid}" var="proc">
 			<td style="text-align:center;vertical-align:middle"><b>${proc.key}</b></td>
 			</c:forEach>
-			<td>总计</td>
+			<td style="text-align:center;vertical-align:middle"><b>总计</b></td>
 		</tr>
 	</thead>
 	<tbody>
 		<c:forEach items="${cycleList}" var="cycle">
 		<tr>
-			<td style="text-align:center; min-width:50px">${cycle.name}<c:if test="${fn:length(cycle.unit) > 0}">(${cycle.unit})</c:if></td>
+			<td style="text-align:center; min-width:50px"><b>${cycle.name}<c:if test="${fn:length(cycle.unit) > 0}">(${cycle.unit})</c:if></b></td>
 			<c:forEach items="${procNameToUuid}" var="proc">
-			<td style="text-align:center; min-width:50px"><fmt:formatNumber value="${cycle.emissionMap[curEmissionType][proc.key]}" pattern="#.###" minFractionDigits="3"  /></td>
+			<td style="text-align:center; min-width:50px"><fmt:formatNumber value="${cycle.emissionMap[curEmissionType][proc.key]}" pattern="#.##E0" minFractionDigits="2"  /></td>
 			</c:forEach>
 
-			<td><fmt:formatNumber value="${cycle.totalEmission}" pattern="#.###" minFractionDigits="3"  /></td>
+			<td style="text-align:center; min-width:50px"><fmt:formatNumber value="${cycle.totalEmission}" pattern="#.##E0" minFractionDigits="2" /></td>
 		</tr>
 		</c:forEach>
 	</tbody>

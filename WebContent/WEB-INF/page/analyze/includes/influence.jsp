@@ -54,7 +54,7 @@
 			<c:forEach items="${procNameToUuid}" var="proc">
 			<td style="text-align:center;vertical-align:middle"><b>${proc.key}</b></td>
 			</c:forEach>
-			<td>总计</td>
+			<td style="text-align:center;vertical-align:middle"><b>总计</b></td>
 		</tr>
 	</thead>
 	<tbody >
@@ -65,7 +65,7 @@
 			<td style="text-align:center; min-width:50px"><fmt:formatNumber value="${cycle.procInfluenceMap[proc.key]}" pattern="#.##E0" minFractionDigits="2" /></td>
 			</c:forEach>
 
-			<td><fmt:formatNumber value="${cycle.totalInfluence}" pattern="#.##E0" minFractionDigits="2" /></td>
+			<td style="text-align:center; min-width:50px"><fmt:formatNumber value="${cycle.totalInfluence}" pattern="#.##E0" minFractionDigits="2" /></td>
 		</tr>
 		</c:forEach>
 		
