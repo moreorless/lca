@@ -62,10 +62,10 @@
 		<tr>
 			<td style="text-align:center; min-width:50px">${cycle.name}<c:if test="${fn:length(cycle.unit) > 0}">(${cycle.unit})</c:if></td>
 			<c:forEach items="${procNameToUuid}" var="proc">
-			<td style="text-align:center; min-width:50px"><fmt:formatNumber value="${cycle.procInfluenceMap[proc.key]}" pattern="#.###" minFractionDigits="3"  /></td>
+			<td style="text-align:center; min-width:50px"><fmt:formatNumber value="${cycle.procInfluenceMap[proc.key]}" pattern="#.##E0" minFractionDigits="2" /></td>
 			</c:forEach>
 
-			<td><fmt:formatNumber value="${cycle.totalInfluence}" pattern="#.###" minFractionDigits="3"  /></td>
+			<td><fmt:formatNumber value="${cycle.totalInfluence}" pattern="#.##E0" minFractionDigits="2" /></td>
 		</tr>
 		</c:forEach>
 		

@@ -8,7 +8,7 @@
 	<c:set var="curEmissionType" value="${param.emissionType}"></c:set>
 </c:if>
 
-<c:if test="${fn:length(param.generatorCode) == 0}">
+<c:if test="${fn:length(param.generatorCode) == 0 || param.generatorCode == 'undifined'}">
 	<c:set var="curGeneratorCode" value="${cycleList[0].code}"></c:set>
 </c:if>
 <c:if test="${fn:length(param.generatorCode) > 0}">

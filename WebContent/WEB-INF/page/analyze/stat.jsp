@@ -105,7 +105,9 @@
 		getConsumptionDataFile : function(){
 			var data_file = "${base}/chart/consumption"  + "?cycletype=${param.cycletype}&statBy=${param.statBy}";
 			var generatorCode = $("input:radio[name='generatorRadios']:checked").val();
-   			data_file += ("&generatorCode=" + generatorCode);
+			if(generatorCode){		// 页面没有发电方式选择框时，该值为undefined
+	   			data_file += ("&generatorCode=" + generatorCode);   
+			}
    			return data_file;
 		},
 		/**
@@ -119,7 +121,9 @@
 		getInfluenceDataFile : function(){
 			var data_file = "${base}/chart/influence"  + "?cycletype=${param.cycletype}&statBy=${param.statBy}";
    			var generatorCode = $("input:radio[name='generatorRadios']:checked").val();
-   			data_file += ("&generatorCode=" + generatorCode);
+   			if(generatorCode){		// 页面没有发电方式选择框时，该值为undefined
+	   			data_file += ("&generatorCode=" + generatorCode);   
+			}
    			return data_file;
 		},
 		/**
@@ -138,7 +142,9 @@
 			var data_file = "${base}/chart/emission"  + "?cycletype=${param.cycletype}&statBy=${param.statBy}";
    			
    			var generatorCode = $("input:radio[name='generatorRadios']:checked").val();
-   			data_file += ("&generatorCode=" + generatorCode);
+   			if(generatorCode){		// 页面没有发电方式选择框时，该值为undefined
+	   			data_file += ("&generatorCode=" + generatorCode);   
+			}
    			
    			var emissionType = $("#emission_sel").val();
    			data_file += ("&emissionType=" + emissionType);
@@ -200,8 +206,12 @@
 	   
 	   // 排放类型切换的事件处理
 	   $('#emission_sel').change(function(){
+		   var wLocation = "${base}/cycle/stat?cycletype=${param.cycletype}&target=${param.target}&statBy=${param.statBy}&emissionType=" + $('#emission_sel').val();
 		   var generatorCode = $("input:radio[name='generatorRadios']:checked").val();
-		   window.location = "${base}/cycle/stat?cycletype=${param.cycletype}&target=${param.target}&statBy=${param.statBy}&emissionType=" + $('#emission_sel').val() + '&generatorCode=' + generatorCode;
+		   if(generatorCode){		// 页面没有发电方式选择框时，该值为undefined
+	   			wLocation += ("&generatorCode=" + generatorCode);   
+			}
+		   window.location = wLocation;
 	   });
    });
    

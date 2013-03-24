@@ -79,12 +79,9 @@ public class CycleChartService {
 			
 			seriesEle.addElement("value").addAttribute("xid",""+i).addText(name);
 			
-			
-			BigDecimal bigDecimal = new BigDecimal(consumptionMap.get(name));
-			
 			consumptionGraphEle.addElement("value").addAttribute("xid", ""+i)
 				.addAttribute("color", columnColor)
-				.addText(bigDecimal.setScale(DEFAULT_SCALE, RoundingMode.HALF_UP).toString());
+				.addText(fixDecimal(consumptionMap.get(name)));
 			
 			i++;
 		}
@@ -127,11 +124,9 @@ public class CycleChartService {
 			seriesEle.addElement("value").addAttribute("xid",""+i).addText(name);
 			
 			
-			BigDecimal bigDecimal = new BigDecimal(cycle.getTotalConsumption());
-			
 			consumptionGraphEle.addElement("value").addAttribute("xid", ""+i)
 				.addAttribute("color", columnColor)
-				.addText(bigDecimal.setScale(DEFAULT_SCALE, RoundingMode.HALF_UP).toString());
+				.addText(fixDecimal(cycle.getTotalConsumption()));
 			
 			i++;
 		}
@@ -165,12 +160,9 @@ public class CycleChartService {
 			
 			seriesEle.addElement("value").addAttribute("xid",""+i).addText(name);
 			
-			
-			BigDecimal bigDecimal = new BigDecimal(influenceMap.get(name));
-			
 			consumptionGraphEle.addElement("value").addAttribute("xid", ""+i)
 				.addAttribute("color", columnColor)
-				.addText(bigDecimal.setScale(DEFAULT_SCALE, RoundingMode.HALF_UP).toString());
+				.addText(fixDecimal(influenceMap.get(name)));
 			
 			i++;
 		}
@@ -185,7 +177,7 @@ public class CycleChartService {
 	 * @return
 	 */
 	public String getInfluenceChart(CycleType cycleType){
-List<T_Cycle> cycleList = cycleType.getCycleList();
+		List<T_Cycle> cycleList = cycleType.getCycleList();
 		
 		Document document = DocumentHelper.createDocument();
 		Element chartEle = document.addElement("chart");
@@ -214,12 +206,9 @@ List<T_Cycle> cycleList = cycleType.getCycleList();
 			if(!Strings.isEmpty(cycle.getUnit())) name += ("(" + cycle.getUnit() + ")");
 			seriesEle.addElement("value").addAttribute("xid",""+i).addText(name);
 			
-			
-			BigDecimal bigDecimal = new BigDecimal(cycle.getTotalInfluence());
-			
 			consumptionGraphEle.addElement("value").addAttribute("xid", ""+i)
 				.addAttribute("color", columnColor)
-				.addText(bigDecimal.setScale(DEFAULT_SCALE, RoundingMode.HALF_UP).toString());
+				.addText(fixDecimal(cycle.getTotalInfluence()));
 			
 			i++;
 		}
@@ -302,11 +291,10 @@ List<T_Cycle> cycleList = cycleType.getCycleList();
 			seriesEle.addElement("value").addAttribute("xid",""+i).addText(name);
 			
 			
-			BigDecimal bigDecimal = new BigDecimal(emissionMap.get(name));
 			
 			consumptionGraphEle.addElement("value").addAttribute("xid", ""+i)
 				.addAttribute("color", columnColor)
-				.addText(bigDecimal.setScale(DEFAULT_SCALE, RoundingMode.HALF_UP).toString());
+				.addText(fixDecimal(emissionMap.get(name)));
 			
 			i++;
 		}
@@ -347,13 +335,7 @@ List<T_Cycle> cycleList = cycleType.getCycleList();
 			xid = 1;
 			for(T_Cycle cycle : cycleList){
 				
-				double emissionValue = 0;
-				if("total".equals(statItem)){
-					emissionValue = cycle.getTotalEmission();		// 总排放
-				}else{
-					//String procName = NameToUuidMap.me().getName(NameToUuidMap.Type.PROCEDURE, "");
-					emissionValue = cycle.getMergedEmissionMap().get(statItem);
-				}
+				double emissionValue = cycle.getEmissionMap().get(statItem).get(procedure);
 				
 				graphEle.addElement("value").addAttribute("xid", xid + "").addText(fixDecimal(emissionValue));
 				xid++;

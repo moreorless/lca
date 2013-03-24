@@ -32,7 +32,7 @@
 		    <legend style="font-size:16px;height:50px;line-height:50px;">
 		    	<label style="float:left;height:60px;line-height:60px;">自定义项目参数</label>
 		    	
-		    	<div style="float:right">
+		    	<div style="float:right;margin-top:20px">
 		    	<a href="#myModal" role="button" class="btn" data-toggle="modal">恢复初始值</a>
 		    </div>  
 		    </legend>
