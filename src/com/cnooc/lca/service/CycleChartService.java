@@ -12,6 +12,7 @@ import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.lang.Strings;
 
+import com.cnooc.lca.model.Contant;
 import com.cnooc.lca.model.NameToUuidMap;
 import com.cnooc.lca.model.T_Cycle;
 
@@ -229,7 +230,7 @@ public class CycleChartService {
 		Element chartEle = document.addElement("chart");
 		Element seriesEle = chartEle.addElement("series");
 		Element graphsEle = chartEle.addElement("graphs");
-		Element consumptionGraphEle = graphsEle.addElement("graph").addAttribute("title", "能耗");
+		Element consumptionGraphEle = graphsEle.addElement("graph").addAttribute("title", "影响潜能");
 		int i = 0;
 		
 		Iterator<T_Cycle> iter = cycleList.iterator();
@@ -271,6 +272,62 @@ public class CycleChartService {
 	}
 	
 	
+	/**
+	 * 按发电方式统计所有排放类型在各阶段的对比复合直线图
+	 * @param cycleType
+	 * @param generatorCode
+	 * @return
+	 */
+	public String getEmissionClusteredChartByGenerator(CycleType cycleType, String generatorCode){
+		Document document = DocumentHelper.createDocument();
+		Element chartEle = document.addElement("chart");
+		Element seriesEle = chartEle.addElement("series");
+		Element graphsEle = chartEle.addElement("graphs");
+		
+		int xid = 0;
+
+		T_Cycle cycle = cycleType.getCycle(generatorCode);
+		
+		String[] emissionTypes = new String[]{"CO2", "CH4", "N2O"};
+		
+		List<String> procedures = cycleService.getProcedureList(cycleType.getCode());
+		for(String procedure : procedures){
+			seriesEle.addElement("value").addAttribute("xid","" + xid).addText(procedure);
+			xid++;
+		}
+		
+		colorIndex = 0;
+		for(String emissionType : emissionTypes){
+			
+			Map<String, Double> emissionMap = cycle.getEmissionMap().get(emissionType);
+			Iterator<String> iter = emissionMap.keySet().iterator();
+			
+			Element consumptionGraphEle = graphsEle.addElement("graph").addAttribute("title", emissionType)
+					.addAttribute("gid", emissionType).addAttribute("color", getColorString());
+			
+			int weight = Contant.getEmisstionWeight(emissionType);
+			
+			xid = 0;
+			while(iter.hasNext()){
+				String name = iter.next();   			// 工序名字
+				
+				consumptionGraphEle.addElement("value").addAttribute("xid", "" + xid)
+				.addText(fixDecimal(emissionMap.get(name) * weight));
+				
+				xid++;
+			}
+		}
+		
+		return document.asXML();
+	}
+	
+	/**
+	 * 按发电方式统计指定排放类型在各阶段的对比直线图
+	 * @param cycleType
+	 * @param generatorCode		发电方式
+	 * @param emissionType		排放类型(CO2 CH4 N2O)
+	 * @return
+	 */
 	public String getEmissionChartGroupByGenerator(CycleType cycleType, String generatorCode, String emissionType){
 		Document document = DocumentHelper.createDocument();
 		Element chartEle = document.addElement("chart");

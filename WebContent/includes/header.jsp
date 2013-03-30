@@ -16,7 +16,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="brand" id="logo_bar" href="#">中海油碳理层分析系统</a>
+            <a class="brand" id="logo_bar" href="#">中海油碳里程分析系统</a>
             <div class="nav-collapse collapse">
               <ul class="nav">
                 <li <c:if test="${param.currentNav == 'statistic'}">class="active"</c:if>>

@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
   	<link rel = "Shortcut Icon" href="${base }/favicon.ico" />
-    <title>中海油碳理层分析系统</title>
+    <title>中海油碳里程分析系统</title>
     <link type="text/css" rel="stylesheet" href="${base}/css/bootstrap.css" />
     <link type="text/css" rel="stylesheet" href="${base}/css/index.css"/>
     <link type="text/css" rel="stylesheet" href="${base}/css/stat.css"/>
@@ -81,11 +81,17 @@
 	   			data_file = this.getConsumptionDataFile();
 	   			</c:when>
 	   			<c:when test="${param.target == 'emission'}">
+	   			
 	   			<c:if test="${param.statBy == 'generator'}">
-	   			setting_file = "${base}/common/amchart/stat/emission_settings_stackcolumn.xml";
+	   				setting_file = "${base}/common/amchart/stat/emission_settings_stackcolumn.xml";
 	   			</c:if>
+
+
 	   			<c:if test="${param.statBy != 'generator'}">
-	   			setting_file = "${base}/common/amchart/stat/emission_settings.xml";
+					setting_file = "${base}/common/amchart/stat/emission_settings_clustered.xml";	<%-- 默认横向堆积 --%>
+					<c:if test="${param.chartType == 'stackcolumn'}">
+					setting_file = "${base}/common/amchart/stat/emission_settings_stackcolumn.xml";
+					</c:if>
 	   			</c:if>
 	   			
 	   			data_file = this.getEmissionDataFile();
@@ -124,6 +130,12 @@
    			if(generatorCode){		// 页面没有发电方式选择框时，该值为undefined
 	   			data_file += ("&generatorCode=" + generatorCode);   
 			}
+   			
+   			var infItem = $("input:radio[name='influenceRadios']:checked").val();
+   			if(infItem){
+	   			data_file += ("&infItem=" + infItem);
+   			}
+   			
    			return data_file;
 		},
 		/**
@@ -147,7 +159,9 @@
 			}
    			
    			var emissionType = $("#emission_sel").val();
-   			data_file += ("&emissionType=" + emissionType);
+   			if(emissionType){
+	   			data_file += ("&emissionType=" + emissionType);
+   			}
    			return data_file;
 		},
 		/**
@@ -205,14 +219,44 @@
 	   
 	   
 	   // 排放类型切换的事件处理
-	   $('#emission_sel').change(function(){
-		   var wLocation = "${base}/cycle/stat?cycletype=${param.cycletype}&target=${param.target}&statBy=${param.statBy}&emissionType=" + $('#emission_sel').val();
+	   $('#emission_sel, #chartType_sel').change(function(){
+		   var wLocation = "${base}/cycle/stat?cycletype=${param.cycletype}&target=${param.target}&statBy=${param.statBy}";
+
+		   var emissionType =$('#emission_sel').val();
+		   if(emissionType){
+			   wLocation += ("&emissionType=" + emissionType);   
+		   }
+		   
 		   var generatorCode = $("input:radio[name='generatorRadios']:checked").val();
 		   if(generatorCode){		// 页面没有发电方式选择框时，该值为undefined
 	   			wLocation += ("&generatorCode=" + generatorCode);   
 			}
+		   
+		   var chartType = $("#chartType_sel").val();
+		   if(chartType){
+			   wLocation += ("&chartType=" + chartType);
+		   }
+		   
 		   window.location = wLocation;
 	   });
+	   
+		   
+	   // 影响潜能切换的事件处理
+	   $("input:radio[name='influenceRadios']").click(function(){
+		   ChartHandler.reloadInfluenceChart();
+
+		   var radios = document.getElementsByName('influenceRadios');
+		   var tb = document.getElementById('table_influence');
+		   for( var i = 1; i < tb.rows.length; i++ ) 
+			   tb.rows[i].bgColor = "white";
+
+		   for( var i = 0; i < radios.length; i++ ) 
+		   {
+			   if(radios[i].checked) 
+				   tb.rows[i+1].bgColor = '#1AE6E6';
+		   } 
+	   });
+	   
    });
    
 	</script>

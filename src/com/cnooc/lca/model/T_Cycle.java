@@ -199,7 +199,21 @@ public class T_Cycle {
 				mergedValue += v;
 			}
 			this.mergedEmissionMap.put(emissionName, mergedValue);
-			this.totalEmission += mergedValue;
+			
+			// 总排放的计算公式改为CO2+CH4*25+N2O*298
+			switch (emissionName) {
+			case "CO2":
+				this.totalEmission += mergedValue;
+				break;
+			case "CH4":
+				this.totalEmission += mergedValue * Contant.EMISSION_WEIGHT_CH4;
+				break;
+			case "N2O":
+				this.totalEmission += mergedValue * Contant.EMISSION_WEIGHT_N2O;
+				break;
+			default:
+				break;
+			}
 		}
 		
 		_emissionMerged = true;

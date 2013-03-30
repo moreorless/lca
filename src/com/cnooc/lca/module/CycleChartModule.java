@@ -75,7 +75,11 @@ public class CycleChartModule {
 		if(StatBy_GENERATOR.equals(statBy)){
 			return cycleChartService.getEmissionChart(cycleType, emissionType);
 		}
-		return cycleChartService.getEmissionChartGroupByGenerator(cycleType, generatorCode, emissionType);
+		// return cycleChartService.getEmissionChartGroupByGenerator(cycleType, generatorCode, emissionType);
+		
+		// 改为统计复合统计图
+		return cycleChartService.getEmissionClusteredChartByGenerator(cycleType, generatorCode);
+					
 	}
 	/**
 	 * 影响潜能统计
@@ -85,11 +89,12 @@ public class CycleChartModule {
 	 */
 	@At
 	@Ok("raw:xml")
-	public String influence(@Param("cycletype") String cycleCode, @Param("generatorCode") String generatorCode, @Param("statBy") String statBy){
+	public String influence(@Param("cycletype") String cycleCode, @Param("generatorCode") String generatorCode,
+			@Param("statBy") String statBy, @Param("infItem") String infItem){
 		CycleType cycleType = cycleService.getCycleType(cycleCode);
 		
 		if(StatBy_GENERATOR.equals(statBy)){
-			return cycleChartService.getInfluenceChart(cycleType);
+			return cycleChartService.getInfluenceChart_ByType(cycleType, infItem);
 		}
 		return cycleChartService.getInfluenceChartGroupByGenerator(cycleType, generatorCode);
 		

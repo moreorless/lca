@@ -1,12 +1,20 @@
 <%@ page contentType="text/html;charset=utf-8" language="java" %>
 <%@ include file="/includes/taglibs.jsp"%>
 
-<c:if test="${param.emissionType==null}">
+<c:if test="${param.emissionType==null || param.emissionType==''}">
 	<c:set var="curEmissionType" value="total"></c:set>
 </c:if>
-<c:if test="${param.emissionType!=null }">
+<c:if test="${param.emissionType!=null && param.emissionType!=''}">
 	<c:set var="curEmissionType" value="${param.emissionType}"></c:set>
 </c:if>
+
+<c:if test="${param.chartType==null}">
+	<c:set var="chartType" value="clustered"></c:set>
+</c:if>
+<c:if test="${param.chartType!=null}">
+	<c:set var="chartType" value="${param.chartType}"></c:set>
+</c:if>
+
 
 <c:if test="${fn:length(param.generatorCode) == 0 || param.generatorCode == 'undifined'}">
 	<c:set var="curGeneratorCode" value="${cycleList[0].code}"></c:set>
@@ -21,10 +29,9 @@
 <c:if test="${ param.statBy  != 'generator' }">
   <div class="row-fluid">
     <div class="span2">
-		<select id="emission_sel" style="width:100%">
-			<option value="CO2" <c:if test="${curEmissionType == 'CO2'}">selected</c:if>>CO2</option>
-			<option value="CH4" <c:if test="${curEmissionType == 'CH4'}">selected</c:if>>CH4</option>
-			<option value="total" <c:if test="${curEmissionType == 'total'}">selected</c:if>>总计</option>
+    	<select id="chartType_sel" style="width:100%">
+			<option value="stackcolumn" <c:if test="${chartType == 'stackcolumn'}">selected</c:if>>纵向堆积</option>
+			<option value="clustered" <c:if test="${chartType == 'clustered'}">selected</c:if>>横向堆积</option>
 		</select>
 	
       <div id="generator_sel_area">
@@ -54,6 +61,7 @@
 		<select id="emission_sel" style="width:100%">
 			<option value="CO2" <c:if test="${curEmissionType == 'CO2'}">selected</c:if>>CO2</option>
 			<option value="CH4" <c:if test="${curEmissionType == 'CH4'}">selected</c:if>>CH4</option>
+			<option value="N2O" <c:if test="${curEmissionType == 'N2O'}">selected</c:if>>N2O</option>
 			<option value="total" <c:if test="${curEmissionType == 'total'}">selected</c:if>>总计</option>
 		</select>
     </div>

@@ -69,7 +69,7 @@
     <border_color></border_color>                             <!-- [#000000] (hex color code) -->                                        
     <border_alpha></border_alpha>                             <!-- [0] (0 - 100) -->                                            
     <margins>                                                 <!-- plot area margins -->
-      <left>70</left>                                         <!-- [60](Number) --> 
+      <left>80</left>                                         <!-- [60](Number) --> 
       <top>40</top>                                           <!-- [60](Number) --> 
       <right>50</right>                                       <!-- [60](Number) -->
       <bottom>80</bottom>                                     <!-- [80](Number) -->

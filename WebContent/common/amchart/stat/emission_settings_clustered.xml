@@ -26,7 +26,7 @@
   <colors></colors>                                           <!-- [#FF6600,#FCD202,#B0DE09,#0D8ECF,#2A0CD0,#CD0D74,#CC0000,#00CC00,#0000CC,#DDDDDD,#999999,#333333,#990000] Colors of graphs. if the graph color is not set, color from this array will be used -->
   
   <column>
-    <type>stacked</type>                                 <!-- [clustered] (clustered, stacked, 100% stacked, 3d column) -->
+    <type>clustered</type>                                 <!-- [clustered] (clustered, stacked, 100% stacked, 3d column) -->
     <width>50</width>                                         <!-- [80] (0 - 100) width of column (in percents)  -->
     <spacing>0</spacing>                                      <!-- [5] (Number) space between columns of one category axis value, in pixels. Negative values can be used. -->
     <grow_time>1</grow_time>                                  <!-- [0] (Number) grow time in seconds. Leave 0 to appear instantly -->
@@ -36,7 +36,7 @@
     <border_color></border_color>                             <!-- [#FFFFFF] (hex color code) -->
     <border_alpha></border_alpha>                             <!-- [0] (Number) -->
     <data_labels>
-      <![CDATA[{value}]]>                                 <!-- [] ({title} {value} {series} {percents} {start} {difference} {total}) You can format any data label: {title} will be replaced with real title, {value} - with value and so on. You can add your own text or html code too. -->
+      <![CDATA[]]>                                 <!-- [] ({title} {value} {series} {percents} {start} {difference} {total}) You can format any data label: {title} will be replaced with real title, {value} - with value and so on. You can add your own text or html code too. -->
     </data_labels>
     <data_labels_text_color>#FFFFFF</data_labels_text_color>  <!-- [text_color] (hex color code) --> 
     <data_labels_text_size></data_labels_text_size>           <!-- [text_size] (Number) -->
