@@ -19,8 +19,9 @@ var ioc = {
 	        },
 	        "transport" : {
 	                name : "交通燃料",
-	                excel : "China TLCAM LNG2.xlsx",
-	                cycleNameList : []
+	                excel : "China TLCAM LNG2.xls",
+	                cycleNameList : ["transport_qiyou", "transport_chaiyou", "transport_diandong",
+	                                 "transport_lng", "transport_jiachun"]
 	        },
 	        "gas" : {
 	                name : "天然气产业链",

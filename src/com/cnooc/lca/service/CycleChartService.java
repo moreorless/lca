@@ -256,7 +256,7 @@ public class CycleChartService {
 			String infName = DEFAULT_INF_NAME;
 
 			if(!Strings.isEmpty(infItem)){
-				infName = NameToUuidMap.me().getName(NameToUuidMap.Type.INFLUENCE, infItem);
+				infName = cycleType.getNameToUuidMap().getName(NameToUuidMap.Type.INFLUENCE, infItem);
 			}
 				
 			double influence = cycle.getInfluenceMap().get(infName);
@@ -363,7 +363,7 @@ public class CycleChartService {
 	 * 生成排放的统计图
 	 * @return
 	 */
-	public String getEmissionChart(CycleType cycleType, String statItem){
+	public String getEmissionChart(CycleType cycleType, String emissionType){
 	
 		List<T_Cycle> cycleList = cycleType.getCycleList();
 		
@@ -387,18 +387,39 @@ public class CycleChartService {
 		List<String> procedureList = cycleService.getProcedureList(cycleType.getCode());
 		
 		int gid = 1;
-		for(String procedure : procedureList){
-			Element graphEle = graphsEle.addElement("graph").addAttribute("gid", gid+"").addAttribute("title", procedure);
+		
+		if(procedureList.size() > 1){
+			for(String procedure : procedureList){
+				Element graphEle = graphsEle.addElement("graph").addAttribute("gid", gid+"").addAttribute("title", procedure);
+				xid = 1;
+				for(T_Cycle cycle : cycleList){
+					
+					double emissionValue = cycle.getEmissionMap().get(emissionType).get(procedure);
+					
+					graphEle.addElement("value").addAttribute("xid", xid + "").addText(fixDecimal(emissionValue));
+					xid++;
+				}
+				gid++;
+			}
+		}else{
+			// 没有工序数据，则直接取总计
+			Element graphEle = graphsEle.addElement("graph").addAttribute("gid", gid+"").addAttribute("title", "总计");
 			xid = 1;
+			colorIndex = 0;
 			for(T_Cycle cycle : cycleList){
+				double emissionValue = 0;
+				if("total".equals(emissionType)){
+					emissionValue = cycle.getTotalEmission();
+				}else{
+					emissionValue = cycle.getTotalEmissionMap().get(emissionType);
+				}
 				
-				double emissionValue = cycle.getEmissionMap().get(statItem).get(procedure);
-				
-				graphEle.addElement("value").addAttribute("xid", xid + "").addText(fixDecimal(emissionValue));
+				graphEle.addElement("value").addAttribute("xid", xid + "").addText(fixDecimal(emissionValue))
+				.addAttribute("color", getColorString());
 				xid++;
 			}
-			gid++;
 		}
+		
 		
 		return document.asXML();
 	}

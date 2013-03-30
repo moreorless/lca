@@ -58,12 +58,27 @@
 <c:if test="${param.statBy == 'generator' }">
 	<div class="row-fluid">
 	<div class="span2">
+		<%--
 		<select id="emission_sel" style="width:100%">
 			<option value="CO2" <c:if test="${curEmissionType == 'CO2'}">selected</c:if>>CO2</option>
 			<option value="CH4" <c:if test="${curEmissionType == 'CH4'}">selected</c:if>>CH4</option>
 			<option value="N2O" <c:if test="${curEmissionType == 'N2O'}">selected</c:if>>N2O</option>
 			<option value="total" <c:if test="${curEmissionType == 'total'}">selected</c:if>>总计</option>
 		</select>
+		 --%>
+		 <label class="radio">
+			  <input type="radio" name="emission_radios" value="CO2"<c:if test="${curEmissionType == 'CO2'}">checked</c:if>></input>CO2
+		 </label>
+		 <label class="radio">
+			   <input type="radio" name="emission_radios" value="CH4"<c:if test="${curEmissionType == 'CH4'}">checked</c:if>></input>CH4
+		</label>
+		<label class="radio">	   
+			   <input type="radio" name="emission_radios" value="N2O"<c:if test="${curEmissionType == 'N2O'}">checked</c:if>></input>N2O
+		</label>
+		<label class="radio">
+			   <input type="radio" name="emission_radios" value="total"<c:if test="${curEmissionType == 'total'}">checked</c:if>></input>总计
+		</label>
+		 
     </div>
     <div class="span10">
     <c:if test="${ param.statBy  != 'generator' }">

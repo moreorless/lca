@@ -112,9 +112,9 @@ public class CycleService {
 					// 设置tp对应的excel文件名
 					tp.setExcelName(excelName);
 					tp.setCode(cycleName);
-					tp.setCycleType(code);
+					tp.setCycleType(cycleType.getCode());
 					
-					T_Cycle t_cycle = tp.createcycle();
+					T_Cycle t_cycle = tp.createcycle(cycleType);
 					cycleList.add(t_cycle);
 				}catch (Exception e) {
 					logger.error("加载生命周期项目出错：" + cycleName, e);

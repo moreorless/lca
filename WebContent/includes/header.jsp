@@ -16,16 +16,16 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="brand" id="logo_bar" href="#">中海油碳里程分析系统</a>
+            <a class="brand" id="logo_bar" href="${base}">中海油碳里程分析系统</a>
             <div class="nav-collapse collapse">
               <ul class="nav">
                 <li <c:if test="${param.currentNav == 'statistic'}">class="active"</c:if>>
                 	<c:if test="${param.target == null }">
-                	<a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=consumption">
+                	<a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=consumption&statBy=generator">
                 	<img src="${base}/images/stat.png" width="16" height="16"/>&nbsp;行业数据分析</a>
                 	</c:if>
                 	<c:if test="${param.target != null }">
-                	<a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=${param.target}">
+                	<a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=${param.target}&statBy=generator">
                 	<img src="${base}/images/stat.png" width="16" height="16"/>&nbsp;行业数据分析</a>
                 	</c:if>
                 </li>
@@ -42,7 +42,9 @@
 				  <ul class="dropdown-menu">
 				  	<c:forEach items="${session_cycletype_list}" var="cycletype">
 				  		<c:if test="${param.currentNav == 'statistic' }">
-					  	   <li><a href="${base}/cycle/stat?&cycletype=${cycletype.code}&target=${param.target}">${cycletype.name}</a></li>
+					  	   <li>
+					  	   <a href="${base}/cycle/stat?&cycletype=${cycletype.code}&target=${param.target}&statBy=generator">${cycletype.name}</a>
+					  	   </li>
 				  		</c:if>
 				  		<c:if test="${param.currentNav == 'config' }">
 					  	   <li><a href="${base}/cycle/config?&cycletype=${cycletype.code}">${cycletype.name}</a></li>

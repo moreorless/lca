@@ -26,17 +26,32 @@
 		  <li <c:if test="${param.target == 'emission' }">class="active"</c:if>>
 		  	<a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=emission&statBy=${param.statBy}">碳排放统计</a>
 		  </li>
+		  
+		  <c:if test="${param.cycletype=='electric'}">
 		  <li <c:if test="${param.target == 'influence' }">class="active"</c:if>>
 		  	<a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=influence&statBy=${param.statBy}">影响潜能统计</a>
 		  </li>
+		  </c:if>
 		  
 		  <!-- 
 		  <li style="float:right;color:#005580"><b>${curCycleType.name}</b></li>
 		   -->
 		  <li style="float:right">
 		  <ul class="breadcrumb" style="margin:0">
-			  <li><a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=${param.target}&emissionType=${param.emissionType}&generatorCode=${param.generatorCode }&statBy=procedure">按工序统计</a> <span class="divider">/</span></li>
-			  <li><a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=${param.target}&emissionType=${param.emissionType}&generatorCode=${param.generatorCode }&statBy=generator">按发电方式统计</a></li>
+		  	  <c:if test="${param.cycletype == 'electric'}">
+			  <li><a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=${param.target}&emissionType=${param.emissionType}&generatorCode=${param.generatorCode }&statBy=procedure">
+			  	按阶段统计
+			  	</a> 
+			  		<span class="divider">/</span></li>
+			  </c:if>
+			  <li><a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=${param.target}&emissionType=${param.emissionType}&generatorCode=${param.generatorCode }&statBy=generator">
+			  	<c:if test="${param.cycletype == 'electric'}">
+			  	按发电方式统计
+			  	</c:if>
+			  	<c:if test="${param.cycletype == 'transport'}">
+			  	按交通燃料统计
+			  	</c:if>
+			  	</a></li>
 		  </ul>
 		  </li>
 		</ul>
@@ -158,10 +173,20 @@
 	   			data_file += ("&generatorCode=" + generatorCode);   
 			}
    			
-   			var emissionType = $("#emission_sel").val();
-   			if(emissionType){
-	   			data_file += ("&emissionType=" + emissionType);
+   			if($('#emission_sel')){
+	   			var emissionType = $("#emission_sel").val();
+	   			if(emissionType){
+		   			data_file += ("&emissionType=" + emissionType);
+	   			}
    			}
+   			
+   			if($('#emission_radios')){
+   				var emissionType = $("input:radio[name='emission_radios']:checked").val();
+   	   			if(emissionType){
+   		   			data_file += ("&emissionType=" + emissionType);
+   	   			}
+   			}
+   			
    			return data_file;
 		},
 		/**
@@ -219,18 +244,25 @@
 	   
 	   
 	   // 排放类型切换的事件处理
-	   $('#emission_sel, #chartType_sel').change(function(){
+	   $('#emission_sel, #chartType_sel, input:radio[name="emission_radios"]').change(function(){
 		   var wLocation = "${base}/cycle/stat?cycletype=${param.cycletype}&target=${param.target}&statBy=${param.statBy}";
 
 		   var emissionType =$('#emission_sel').val();
 		   if(emissionType){
 			   wLocation += ("&emissionType=" + emissionType);   
 		   }
+		   if($('#emission_radios')){
+  				var emissionType = $("input:radio[name='emission_radios']:checked").val();
+  	   			if(emissionType){
+  	   				wLocation += ("&emissionType=" + emissionType);
+  	   			}
+  			}
 		   
 		   var generatorCode = $("input:radio[name='generatorRadios']:checked").val();
 		   if(generatorCode){		// 页面没有发电方式选择框时，该值为undefined
 	   			wLocation += ("&generatorCode=" + generatorCode);   
 			}
+		   
 		   
 		   var chartType = $("#chartType_sel").val();
 		   if(chartType){

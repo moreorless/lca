@@ -63,10 +63,10 @@ public class CycleModule {
 		request.setAttribute("cycleList", cycleList);
 		
 		request.setAttribute("influnceNames", curCycleType.getInflunceNames());
-		request.setAttribute("influenceNameToUuid", NameToUuidMap.me().getNameToUuidMap(NameToUuidMap.Type.INFLUENCE));
+		request.setAttribute("influenceNameToUuid", curCycleType.getNameToUuidMap().getNameToUuidMap(NameToUuidMap.Type.INFLUENCE));
 		
 		
-		request.setAttribute("procNameToUuid", NameToUuidMap.me().getNameToUuidMap(NameToUuidMap.Type.PROCEDURE));
+		request.setAttribute("procNameToUuid", curCycleType.getNameToUuidMap().getNameToUuidMap(NameToUuidMap.Type.PROCEDURE));
 		
 		request.setAttribute("procedureNames", cycleService.getProcedureList(cycleTypeCode));
 		

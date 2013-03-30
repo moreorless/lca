@@ -29,13 +29,8 @@ public class NameToUuidMap {
 	}
 	
 	
-	private NameToUuidMap(){}
+	public NameToUuidMap(){}
 	
-	private static NameToUuidMap _instance = new NameToUuidMap();
-	
-	public static NameToUuidMap me(){
-		return _instance;
-	}
 	
 	/**
 	 * 名称与uuid的映射

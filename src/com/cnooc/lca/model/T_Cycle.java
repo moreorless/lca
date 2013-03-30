@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.cnooc.lca.excel.parser.WritableExcel;
+import com.cnooc.lca.service.CycleType;
 
 
 /**
@@ -14,6 +15,19 @@ import com.cnooc.lca.excel.parser.WritableExcel;
  *
  */
 public class T_Cycle {
+
+	public T_Cycle(CycleType cycleType){
+		this.cycleType = cycleType;
+	}
+	
+	private CycleType cycleType;
+	
+	public CycleType getCycleType() {
+		return cycleType;
+	}
+	public void setCycleType(CycleType cycleType) {
+		this.cycleType = cycleType;
+	}
 
 	/**
 	 * excel表页序号，从0开始
@@ -50,6 +64,12 @@ public class T_Cycle {
 	 * 总排放
 	 */
 	private double totalEmission;
+	
+	/**
+	 * 排放的分类汇总，交通燃料统计时，没有分阶段的统计项，所以，先用一个总的统计值
+	 * <p>{CO2, xx} {CH4, xx}</p>
+	 */
+	private Map<String, Double> totalEmissionMap;
 	
 	/**
 	 * 总影响潜能
@@ -162,6 +182,15 @@ public class T_Cycle {
 		this.totalEmission = totalEmission;
 	}
 	
+	
+	
+	
+	public Map<String, Double> getTotalEmissionMap() {
+		return totalEmissionMap;
+	}
+	public void setTotalEmissionMap(Map<String, Double> totalEmissionMap) {
+		this.totalEmissionMap = totalEmissionMap;
+	}
 	public double getTotalInfluence() {
 		mergeInfluence();
 		return totalInfluence;
@@ -190,30 +219,30 @@ public class T_Cycle {
 		this.totalEmission = 0;   // 所有排放的求和
 		
 		this.mergedEmissionMap = new LinkedHashMap<>();
-		for(String emissionName : this.emissionMap.keySet()){
-			if(emissionName.equals("total")) continue;		// 跳过合并项
+		
+		if(this.emissionMap != null){
 			
-			Map<String, Double> procMap = emissionMap.get(emissionName);
-			double mergedValue = 0;
-			for(Double v : procMap.values()){
-				mergedValue += v;
+			for(String emissionName : this.emissionMap.keySet()){
+				if(emissionName.equals("total")) continue;		// 跳过合并项
+				
+				Map<String, Double> procMap = emissionMap.get(emissionName);
+				double mergedValue = 0;
+				for(Double v : procMap.values()){
+					mergedValue += v;
+				}
+				this.mergedEmissionMap.put(emissionName, mergedValue);
+				
+				// 总排放的计算公式改为CO2+CH4*25+N2O*298
+				int weight = Contant.getEmisstionWeight(emissionName);
+				this.totalEmission += mergedValue*weight;
 			}
-			this.mergedEmissionMap.put(emissionName, mergedValue);
-			
-			// 总排放的计算公式改为CO2+CH4*25+N2O*298
-			switch (emissionName) {
-			case "CO2":
-				this.totalEmission += mergedValue;
-				break;
-			case "CH4":
-				this.totalEmission += mergedValue * Contant.EMISSION_WEIGHT_CH4;
-				break;
-			case "N2O":
-				this.totalEmission += mergedValue * Contant.EMISSION_WEIGHT_N2O;
-				break;
-			default:
-				break;
+		}else if(this.totalEmissionMap != null){	// 如果分阶段的排放未配置，则使用汇总的排放配置
+			for(String emissionName : this.totalEmissionMap.keySet()){
+				if(emissionName.equals("total")) continue;		// 跳过合并项
+				int weight = Contant.getEmisstionWeight(emissionName);
+				this.totalEmission += this.totalEmissionMap.get(emissionName) * weight;
 			}
+			this.totalEmissionMap.put("total", totalEmission);
 		}
 		
 		_emissionMerged = true;
@@ -232,6 +261,9 @@ public class T_Cycle {
 	public void setMergedEmissionMap(Map<String, Double> mergedEmissionMap) {
 		this.mergedEmissionMap = mergedEmissionMap;
 	}
+	
+	
+	
 //	/**
 //	 * 从各个工序计算综合能耗
 //	 * @return

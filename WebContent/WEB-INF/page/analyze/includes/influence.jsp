@@ -35,7 +35,7 @@
 	<div class="span2">
 		<c:forEach items="${influnceNames }" var="influnceName" varStatus="stat">
 			<label class="radio">
-			  <input type="radio" name="influenceRadios" value="${influenceNameToUuid[influnceName]}"<c:if test="${stat.last}">checked</c:if>>
+			  <input type="radio" name="influenceRadios" value="${influenceNameToUuid[influnceName]}"<c:if test="${stat.last}">checked</c:if> />
 			   ${influnceName }
 			</label>
 		</c:forEach>

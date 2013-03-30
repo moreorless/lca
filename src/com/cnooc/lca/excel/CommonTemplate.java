@@ -14,6 +14,7 @@ import com.cnooc.lca.excel.parser.ExcelParser;
 import com.cnooc.lca.model.NameToUuidMap;
 import com.cnooc.lca.model.ProcedureMap;
 import com.cnooc.lca.model.T_Cycle;
+import com.cnooc.lca.service.CycleType;
 
 /**
  * 通用excel文档解析类
@@ -114,6 +115,7 @@ public class CommonTemplate implements ITemplate{
 	 */
 	private Map<String, String> consumptions;
 	
+	
 	/**
 	 * <p>排放集合</p>
 	 * <p>key 排放物名称(CO2)， value 电厂周期内对应的排放物集合</p>
@@ -131,14 +133,26 @@ public class CommonTemplate implements ITemplate{
 	private Map<String, Map<String, Map<String, String>>> emissions;
 	
 	
+	/**
+	 * 排放的分类汇总 
+	 * <p>key 排放物名称, value 汇总</p>
+	 */
+	private Map<String, String> totalEmissionMap;
+	
+	
 	@Override
-	public T_Cycle createcycle() {
-		T_Cycle cycle = new T_Cycle();
+	public T_Cycle createcycle(CycleType cycleType) {
+		T_Cycle cycle = new T_Cycle(cycleType);
 		cycle.setSheetIndex(this.getSheetIndex());
 		cycle.setName(this.getName());
 		cycle.setUnit(this.getUnit());
 		cycle.setCode(this.getCode());
 		
+		// procNames 使用系统配置的工序名称，为了保证顺序一致
+		List<String> procNames = ProcedureMap.me().getProcedureList().get(cycleType.getCode());
+		
+		NameToUuidMap nameToUuidMap = new NameToUuidMap();
+		cycleType.setNameToUuidMap(nameToUuidMap);
 		// 读取excel文件中的数据
 		ExcelParser parser = ExcelFactory.me().getParser(excelName);
 		logger.debug("读取生命周期数据：,  excel=" + excelName + ", sheet=" + sheetIndex + ", " + this.name + "(" + unit + ")");
@@ -152,8 +166,7 @@ public class CommonTemplate implements ITemplate{
 		if(consumptions != null){
 			Map<String, Double> consumptionMap = new LinkedHashMap<>();
 			
-			// procNames 使用系统配置的工序名称，为了保证顺序一致
-			List<String> procNames = ProcedureMap.me().getProcedureList().get(cycleType);
+			
 			for(String procName : procNames){
 				String cellPos = consumptions.get(procName);
 				if(Strings.isEmpty(cellPos)) {
@@ -164,32 +177,35 @@ public class CommonTemplate implements ITemplate{
 				logger.debug("---工序--- " + procName + " : " + value);
 				consumptionMap.put(procName, value);
 				
-				NameToUuidMap.me().addName(NameToUuidMap.Type.PROCEDURE, procName);
+				cycleType.getNameToUuidMap().addName(NameToUuidMap.Type.PROCEDURE, procName);
 			}
 			cycle.setConsumptionMap(consumptionMap);
 		}else{
 			logger.error("没有配置分阶段的综合能耗数据！！！");
 		}
 		
-		// 读取影响潜能
-		Map<String, Double> influenceMap = new LinkedHashMap<>();
-		Set<String> keySet = influences.keySet();
-		Iterator<String> iter = keySet.iterator();
-		while(iter.hasNext()){
-			String infName = iter.next();
-			double infValue = getCellValue(parser, getSheetIndex(), influences.get(infName));
-			influenceMap.put(infName, infValue);
-			NameToUuidMap.me().addName(NameToUuidMap.Type.INFLUENCE, infName);
-			
-			logger.debug("影响潜能 : " + infName + " = " + infValue);
+		if(influences != null){
+			// 读取影响潜能
+			Map<String, Double> influenceMap = new LinkedHashMap<>();
+			Set<String> keySet = influences.keySet();
+			Iterator<String> iter = keySet.iterator();
+			while(iter.hasNext()){
+				String infName = iter.next();
+				double infValue = getCellValue(parser, getSheetIndex(), influences.get(infName));
+				influenceMap.put(infName, infValue);
+				cycleType.getNameToUuidMap().addName(NameToUuidMap.Type.INFLUENCE, infName);
+				
+				logger.debug("影响潜能 : " + infName + " = " + infValue);
+			}
+			cycle.setInfluenceMap(influenceMap);
+		}else{
+			logger.error("没有配置分类影响潜能数据！！！");
 		}
-		cycle.setInfluenceMap(influenceMap);
 		
 		logger.debug("读取分阶段的影响潜能数据");
 		if(procInfluences != null){
 			Map<String, Double> procInfluenceMap = new LinkedHashMap<>();
 			// procNames 使用系统配置的工序名称，为了保证顺序一致
-			List<String> procNames = ProcedureMap.me().getProcedureList().get(cycleType);
 			for(String procName : procNames){
 				String cellPos = procInfluences.get(procName);
 				if(Strings.isEmpty(cellPos)) {
@@ -205,58 +221,76 @@ public class CommonTemplate implements ITemplate{
 			logger.error("没有配置分阶段的综合能耗数据！！！");
 		}
 		
-		
-		// 读取排放数据 {排放物, {工序， 排放值}}
-		Map<String, Map<String, Double>> emissionMap = new LinkedHashMap<>();
-		Map<String, Double> totalProcValueMap = new HashMap<>();	// 排放的分阶段合计(CO2+CH4)
-
-		Set<String> emiNameSet = emissions.keySet();
-		for(String emiName : emiNameSet){
-			logger.debug("读取排放物数据 --- " + emiName);
+		if(emissions != null){
+			// 读取排放数据 {排放物, {工序， 排放值}}
+			Map<String, Map<String, Double>> emissionMap = new LinkedHashMap<>();
+			Map<String, Double> totalProcValueMap = new HashMap<>();	// 排放的分阶段合计(CO2+CH4)
 			
-			Map<String, Double> aEmissionMap = new LinkedHashMap<>();
-			
-			// 第一层为 统一后的阶段
-			Map<String, Map<String, String>> unitedProcMap = emissions.get(emiName);
-			
-			// procNames 使用系统配置的工序名称，为了保证顺序一致
-			List<String> procNames = ProcedureMap.me().getProcedureList().get(cycleType);
-			
-			for(String unitedProcName : procNames ){
-				// 第二层为原始的阶段 
-				Map<String, String> origProcMap = unitedProcMap.get(unitedProcName);
-				Set<String> origProcNames = origProcMap.keySet();
+			Set<String> emiNameSet = emissions.keySet();
+			for(String emiName : emiNameSet){
+				logger.debug("读取排放物数据 --- " + emiName);
 				
-				double unitedProcValue = 0; 
-				for(String origProcName : origProcNames){
-					if(Strings.isEmpty(origProcName)) continue;
+				Map<String, Double> aEmissionMap = new LinkedHashMap<>();
+				
+				// 第一层为 统一后的阶段
+				Map<String, Map<String, String>> unitedProcMap = emissions.get(emiName);
+				
+				for(String unitedProcName : procNames ){
+					// 第二层为原始的阶段 
+					Map<String, String> origProcMap = unitedProcMap.get(unitedProcName);
+					Set<String> origProcNames = origProcMap.keySet();
 					
-					String cellPos = origProcMap.get(origProcName);
-					if(Strings.isEmpty(cellPos)) {
-						logger.warn("---原始工序--- " + origProcName + ", 未配置单元格位置");
-						continue;
+					double unitedProcValue = 0; 
+					for(String origProcName : origProcNames){
+						if(Strings.isEmpty(origProcName)) continue;
+						
+						String cellPos = origProcMap.get(origProcName);
+						if(Strings.isEmpty(cellPos)) {
+							logger.warn("---原始工序--- " + origProcName + ", 未配置单元格位置");
+							continue;
+						}
+						
+						double origProcValue = getCellValue(parser, getSheetIndex(), cellPos);
+						unitedProcValue += origProcValue;
+						logger.debug("---原始工序--- " + origProcName + " = " + origProcValue);
 					}
+					logger.debug("合并工序--- " + unitedProcName + " = " + unitedProcValue);
+					aEmissionMap.put(unitedProcName, unitedProcValue);
 					
-					double origProcValue = getCellValue(parser, getSheetIndex(), cellPos);
-					unitedProcValue += origProcValue;
-					logger.debug("---原始工序--- " + origProcName + " = " + origProcValue);
+					if(totalProcValueMap.containsKey(unitedProcName)){
+						totalProcValueMap.put(unitedProcName, totalProcValueMap.get(unitedProcName) + unitedProcValue);
+					}else{
+						totalProcValueMap.put(unitedProcName, unitedProcValue);
+					}
 				}
-				logger.debug("合并工序--- " + unitedProcName + " = " + unitedProcValue);
-				aEmissionMap.put(unitedProcName, unitedProcValue);
 				
-				if(totalProcValueMap.containsKey(unitedProcName)){
-					totalProcValueMap.put(unitedProcName, totalProcValueMap.get(unitedProcName) + unitedProcValue);
-				}else{
-					totalProcValueMap.put(unitedProcName, unitedProcValue);
-				}
+				emissionMap.put(emiName, aEmissionMap);
 			}
 			
-			emissionMap.put(emiName, aEmissionMap);
+			emissionMap.put("total", totalProcValueMap);
+			
+			cycle.setEmissionMap(emissionMap);
+		}else{
+			logger.error("没有配置分阶段的排放数据！！！");
 		}
 		
-		emissionMap.put("total", totalProcValueMap);
-		
-		cycle.setEmissionMap(emissionMap);
+		// 读取排放的分类汇总，支持交通燃料暂时没有分阶段统计的情况。
+		if(totalEmissionMap != null){
+			Map<String, Double> emissionValueMap = new LinkedHashMap<>();
+			for(String emissionName : totalEmissionMap.keySet()){
+				String cellPos = totalEmissionMap.get(emissionName);
+				if(Strings.isEmpty(cellPos)) {
+					logger.warn("---排放--- " + emissionName + ", 未配置单元格位置");
+					continue;
+				}
+				double emissionValue = getCellValue(parser, getSheetIndex(), cellPos);
+				emissionValueMap.put(emissionName, emissionValue);
+				logger.warn("---排放--- " + emissionName + "=" + emissionValue);
+			}
+			cycle.setTotalEmissionMap(emissionValueMap);
+		}else{
+			logger.error("没有配置分类排放汇总数据！！！");
+		}
 		
 		return cycle;
 	}
@@ -370,6 +404,14 @@ public class CommonTemplate implements ITemplate{
 
 	public void setConsumptions(Map<String, String> consumptions) {
 		this.consumptions = consumptions;
+	}
+
+	public Map<String, String> getTotalEmissionMap() {
+		return totalEmissionMap;
+	}
+
+	public void setTotalEmissionMap(Map<String, String> totalEmissionMap) {
+		this.totalEmissionMap = totalEmissionMap;
 	}
 
 	

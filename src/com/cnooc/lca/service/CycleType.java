@@ -11,6 +11,7 @@ import com.cnooc.lca.excel.CommonTemplate;
 import com.cnooc.lca.excel.ExcelFactory;
 import com.cnooc.lca.excel.parser.ExcelParser;
 import com.cnooc.lca.excel.parser.WritableExcel;
+import com.cnooc.lca.model.NameToUuidMap;
 import com.cnooc.lca.model.T_Cycle;
 
 /**
@@ -52,6 +53,11 @@ public class CycleType {
 	 */
 	private WritableExcel paramConfigure;
 	
+	
+	/**
+	 * 保存生命周期中的名称映射
+	 */
+	private NameToUuidMap nameToUuidMap;
 
 	public String getCode() {
 		return code;
@@ -117,6 +123,15 @@ public class CycleType {
 		return null;
 	}
 	
+	
+	public NameToUuidMap getNameToUuidMap() {
+		return nameToUuidMap;
+	}
+
+	public void setNameToUuidMap(NameToUuidMap nameToUuidMap) {
+		this.nameToUuidMap = nameToUuidMap;
+	}
+
 	/**
 	 * 重新加载数据，一般在excel表格中的数据变化后调用
 	 * <p>该方法会重新读取excel文件，并更新内存中的数据</p>
@@ -134,8 +149,9 @@ public class CycleType {
 			// 设置tp对应的excel文件名
 			tp.setExcelName(excel);
 			tp.setCode(cycleName);
+			tp.setCycleType(this.getCode());
 			
-			T_Cycle t_cycle = tp.createcycle();
+			T_Cycle t_cycle = tp.createcycle(this);
 			this.cycleList.add(t_cycle);
 		}
 	}
@@ -146,7 +162,9 @@ public class CycleType {
 	 */
 	public Set<String> getInflunceNames(){
 		Set<String> infNameSet = new LinkedHashSet<>();
+		
 		for(T_Cycle t_cycle : cycleList){
+			if(t_cycle.getInfluenceMap() == null) continue;
 			Set<String> theInfNameSet = t_cycle.getInfluenceMap().keySet();
 			infNameSet.addAll(theInfNameSet);
 		}
