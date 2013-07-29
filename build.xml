@@ -1,0 +1,21 @@
+<project name="lca" default="deploy-debug" basedir="." xmlns:prop="antlib:it.haefelinger.flaka.prop">
+
+	<property file="build.properties" />
+	
+	<!-- 发布任务 -->
+	<target name="deploy-debug">
+		<echo>创建${catalina.home}/webapps/lca</echo>
+		<mkdir dir="${catalina.home}/webapps/lca"/>
+		<copy todir="${catalina.home}/webapps/lca/" preservelastmodified="true">
+			<fileset dir="${basedir}/WebContent/"></fileset>
+		</copy>
+		<copy todir="${catalina.home}/webapps/lca/WEB-INF/classes" preservelastmodified="true">
+			<fileset dir="${basedir}/build/classes"></fileset>
+		</copy>
+	</target>
+	
+	<!-- 清理任务 -->
+	<target name="clean">
+		<delete dir="${catalina.home}/webapps/lca"></delete>
+	</target>
+</project>

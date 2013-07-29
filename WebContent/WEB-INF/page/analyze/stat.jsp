@@ -77,6 +77,8 @@
    <script type="text/javascript" src="${base}/js/jquery.js"></script>
    <script type="text/javascript" src="${base}/js/bootstrap.js"></script>
    <script type="text/javascript" src="${base}/amchart/swfobject.js"></script>
+   <script type="text/javascript" src="${base }/js/commons/flashutil/swfobject.js"></script>
+   
    
    <script type="text/javascript">
    
