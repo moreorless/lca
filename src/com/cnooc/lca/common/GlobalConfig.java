@@ -20,6 +20,11 @@ public class GlobalConfig {
 	public static Locale defaultLocale;
 	
 	/**
+	 * 调试模式开关
+	 */
+	public static boolean debugMode = false;
+	
+	/**
 	 * 保存可定制的系统变量，类型不限
 	 */
 	private static Map<String, Object> ctx = Collections.synchronizedMap(new LinkedHashMap<String, Object>());

@@ -15,4 +15,10 @@ public class DemoModule {
 	public void chart(){
 		
 	}
+	
+	@At
+	@Ok("jsp:page.demo.highcharts")
+	public void highcharts(){
+		
+	}
 }

@@ -41,17 +41,14 @@
 			<value xid="10">8.7</value>			
 		</graph>
 		<graph title="Three" fill_alpha="60" line_width="2" bullet="round" color="#0D8ECF">
-			<value xid="0">3.1</value>
-			<value xid="1">2.3</value>
-			<value xid="2">2.3</value>
+			
 			<value xid="3">2.8</value>
 			<value xid="4">1.1</value>
 			<value xid="5">1.7</value>
 			<value xid="6">1.8</value>
 			<value xid="7">2.3</value>
 			<value xid="8">1.3</value>
-			<value xid="9">1.3</value>
-			<value xid="10">0.7</value>			
+				
 		</graph>		
 	</graphs>
 </chart>
