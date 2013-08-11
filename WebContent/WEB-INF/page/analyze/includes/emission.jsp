@@ -29,7 +29,7 @@
 <c:if test="${ param.statBy  != 'generator' }">
   <div class="row-fluid">
     <div class="span2">
-    	<select id="chartType_sel" style="width:100%">
+    	<select id="chartType_sel" style="width:100%;display:none;">
 			<option value="stackcolumn" <c:if test="${chartType == 'stackcolumn'}">selected</c:if>>纵向堆积</option>
 			<option value="clustered" <c:if test="${chartType == 'clustered'}">selected</c:if>>横向堆积</option>
 		</select>
@@ -48,8 +48,8 @@
       </div>
     </div>
     <div class="span10">
-      <div style="height:40px"></div>
-      <div id="amcharts" style="text-align:center">You need to upgrade your Flash Player</div>
+      <div style="height:40px;display:none;"></div>
+      <div id="charts-containter" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
     </div>
   </div>
 </c:if>
@@ -84,7 +84,7 @@
     <c:if test="${ param.statBy  != 'generator' }">
       <div style="height:40px"></div>
       </c:if>
-      <div id="amcharts" style="text-align:center">You need to upgrade your Flash Player</div>
+      <div id="charts-containter" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
     </div>
 	</div>
 </c:if>

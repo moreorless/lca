@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="span10">
-      <div id="amcharts" style="text-align:center">You need to upgrade your Flash Player</div>
+      <div id="charts-containter" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
     </div>
   </div>
   </c:if>
@@ -30,8 +30,8 @@
   <%--按发电方式统计 --%>
 <c:if test="${param.statBy == 'generator' }">
   <div class="row-fluid">
-	<div id="amcharts" style="text-align:center">You need to upgrade your Flash Player</div>
-	</div>
+	<div id="charts-containter" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+  </div>
 </c:if>
 </div>
 

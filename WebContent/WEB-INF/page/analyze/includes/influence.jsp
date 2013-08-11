@@ -24,7 +24,10 @@
    <!-- div style="float:left;color:#005580"><b>环境影响潜值单位:kg-eq</b></div-->
 	</div>
     <div class="span10">
+      <%--
       <div id="amcharts" style="text-align:center">You need to upgrade your Flash Player</div>
+      --%>
+      <div id="charts-containter" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
     </div>
   </div>
 </c:if>
@@ -42,7 +45,7 @@
 	
 	</div>
 	<div class="span10">
-	<div id="amcharts" style="text-align:center">You need to upgrade your Flash Player</div>
+	<div id="charts-containter" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
 	</div>
 	</div>
 </c:if>

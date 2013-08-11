@@ -38,7 +38,7 @@
 		   -->
 		  <li style="float:right">
 		  <ul class="breadcrumb" style="margin:0">
-		  	  <c:if test="${param.cycletype == 'electric'}">
+		  	  <c:if test="${param.cycletype == 'electric' || param.cycletype == 'transport'}">
 			  <li><a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=${param.target}&emissionType=${param.emissionType}&generatorCode=${param.generatorCode }&statBy=procedure">
 			  	按阶段统计
 			  	</a> 
@@ -76,73 +76,122 @@
   <%@ include file="/includes/footer.jsp" %>
    <script type="text/javascript" src="${base}/js/jquery.js"></script>
    <script type="text/javascript" src="${base}/js/bootstrap.js"></script>
-   <script type="text/javascript" src="${base}/amchart/swfobject.js"></script>
-   <script type="text/javascript" src="${base }/js/commons/flashutil/swfobject.js"></script>
-   
+   <script type="text/javascript" src="${base}/js/highcharts/highcharts.js"></script>   
    
    <script type="text/javascript">
    
    var ChartHandler = {
-		swfPath : "${base}/amchart/amcolumn_1.6.0.1/amcolumn/amcolumn.swf",
-		setting_file : "${base}/common/amchart/stat/amcolumn_settings.xml",
-		data_file : "${base}/common/amchart/stat/amcolumn_data.xml",
-		so : null,
+		chartOptions : null,
 		init : function(){
-			
-			this.so = new SWFObject(this.swfPath, "amcolumn", "100%", "340", "8", "#FFFFFF");
-			this.so.addVariable("path", "${base}/amchart/");
-			
+			var chartTitle = '';
+			var yAxisTitle = '';
 			<c:choose>
 	   			<c:when test="${param.target == 'consumption'}">
-	   			setting_file = "${base}/common/amchart/stat/consumption_settings.xml";
-	   			data_file = this.getConsumptionDataFile();
+	   				chartTitle = '综合能耗统计(kg/kwh)';
 	   			</c:when>
 	   			<c:when test="${param.target == 'emission'}">
-	   			
-	   			<c:if test="${param.statBy == 'generator'}">
-	   				setting_file = "${base}/common/amchart/stat/emission_settings_stackcolumn.xml";
-	   			</c:if>
-
-
-	   			<c:if test="${param.statBy != 'generator'}">
-					setting_file = "${base}/common/amchart/stat/emission_settings_clustered.xml";	<%-- 默认横向堆积 --%>
-					<c:if test="${param.chartType == 'stackcolumn'}">
-					setting_file = "${base}/common/amchart/stat/emission_settings_stackcolumn.xml";
-					</c:if>
-	   			</c:if>
-	   			
-	   			data_file = this.getEmissionDataFile();
+	   				chartTitle = '碳排放统计';
 	   			</c:when>
 	   			<c:when test="${param.target == 'influence'}">
-	   			setting_file = "${base}/common/amchart/stat/influence_settings.xml";
-	   			data_file = this.getInfluenceDataFile();
+	   				chartTitle = '影响潜能统计';
 	   			</c:when>
 	   		</c:choose>
 			
-			this.so.addVariable("settings_file", encodeURIComponent(setting_file));
-			this.so.addVariable("data_file", encodeURIComponent(data_file));
-			
-			this.so.addParam("wmode", "opaque");
-			this.so.write("amcharts");
+			this.chartOptions = {
+				chart: {
+	                type: 'column'
+	            },
+	            title: {
+	                text: chartTitle,
+	                align : 'left',
+	                x : 50,
+	                style : {
+	                	color: '#3E576F',
+	                	fontSize: '14px',
+	                	fontWeight:'bold'
+	                }
+	            },
+	            xAxis: {
+	                categories: []
+	            },
+	            yAxis: {
+	                min: 0,
+	                title: {
+	                    text: yAxisTitle
+	                },
+	                stackLabels: {
+	                    enabled: false,
+	                    style: {
+	                        fontWeight: 'bold',
+	                        color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+	                    }
+	                }
+	            },
+	            legend: {
+	                align: 'right',
+	                x: -10,
+	                verticalAlign: 'top',
+	                y: 20,
+	                floating: true,
+	                backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColorSolid) || 'white',
+	                borderColor: '#CCC',
+	                borderWidth: 1,
+	                shadow: false,
+	                credits : {
+	                    enabled: false
+	                }
+	            },
+	            tooltip: {
+	                formatter: function() {
+	                    return '<b>'+ this.x +'</b><br/>'+
+	                        this.series.name +': '+ this.y +'<br/>'+
+	                        'Total: '+ this.point.stackTotal;
+	                }
+	            },
+	            plotOptions: {
+	                column: {
+	                    stacking: 'normal',
+	                    dataLabels: {
+	                        enabled: false,
+	                        color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
+	                    }
+	                }
+	            },
+	            series: []
+			};
 		},
 		getConsumptionDataFile : function(){
-			var data_file = "${base}/chart/consumption"  + "?cycletype=${param.cycletype}&statBy=${param.statBy}";
+			var data_file = "${base}/highcharts/consumption"  + "?cycletype=${param.cycletype}&statBy=${param.statBy}";
 			var generatorCode = $("input:radio[name='generatorRadios']:checked").val();
 			if(generatorCode){		// 页面没有发电方式选择框时，该值为undefined
 	   			data_file += ("&generatorCode=" + generatorCode);   
 			}
    			return data_file;
 		},
+		
+		reloadChart : function(dataPath){
+			$.ajax({
+				url : dataPath,
+				dataType : 'json',
+				success : function(chartObj){
+					ChartHandler.chartOptions.xAxis.categories = chartObj.xAxis;
+					ChartHandler.chartOptions.series= chartObj.series;
+					$("#charts-containter").highcharts(ChartHandler.chartOptions);
+				},
+				error : function(){
+					console.log("统计图错误");
+				}
+			});
+		},
 		/**
 		* 重新加载综合能耗统计图
 		*/
 		reloadConsumptionChart : function(){
-			var data_file = this.getConsumptionDataFile();
-   			this.so.addVariable("data_file", encodeURIComponent(data_file));
-   			this.so.write("amcharts");
+			var dataPath = this.getConsumptionDataFile();
+			this.reloadChart(dataPath);
 		},
 		getInfluenceDataFile : function(){
-			var data_file = "${base}/chart/influence"  + "?cycletype=${param.cycletype}&statBy=${param.statBy}";
+			var data_file = "${base}/highcharts/influence"  + "?cycletype=${param.cycletype}&statBy=${param.statBy}";
    			var generatorCode = $("input:radio[name='generatorRadios']:checked").val();
    			if(generatorCode){		// 页面没有发电方式选择框时，该值为undefined
 	   			data_file += ("&generatorCode=" + generatorCode);   
@@ -159,16 +208,12 @@
 		* 重新加载影响潜能统计图
 		*/
 		reloadInfluenceChart : function(){
-   			var data_file = this.getInfluenceDataFile();
+   			var dataPath = this.getInfluenceDataFile();
    			
-   			this.so.addVariable("data_file", encodeURIComponent(data_file));
-   			
-   			//document.getElementById('amcolumn').reloadData();
-   			//document.getElementById('amcolumn').reloadAll();		// 只刷新数据未生效
-   			this.so.write("amcharts");
+   			this.reloadChart(dataPath);
 		},
 		getEmissionDataFile : function(){
-			var data_file = "${base}/chart/emission"  + "?cycletype=${param.cycletype}&statBy=${param.statBy}";
+			var data_file = "${base}/highcharts/emission"  + "?cycletype=${param.cycletype}&statBy=${param.statBy}";
    			
    			var generatorCode = $("input:radio[name='generatorRadios']:checked").val();
    			if(generatorCode){		// 页面没有发电方式选择框时，该值为undefined
@@ -195,12 +240,9 @@
 		* 重新加载排放统计图
 		*/
 		reloadEmissionChart : function(){
-   			var data_file = this.getEmissionDataFile();
-   			this.so.addVariable("data_file", encodeURIComponent(data_file));
+   			var dataPath = this.getEmissionDataFile();
    			
-   			//document.getElementById('amcolumn').reloadData();
-   			//document.getElementById('amcolumn').reloadAll();		// 只刷新数据未生效
-   			this.so.write("amcharts");
+   			this.reloadChart(dataPath);
 		}
 		
    };
@@ -228,7 +270,7 @@
 		   } 
 	   }
 	   
-	   $("input:radio[name='generatorRadios']").click(function(){
+	   function loadChart(){
 		   <c:choose>
 		   <c:when test="${param.target == 'consumption'}">
 			   ChartHandler.reloadConsumptionChart();
@@ -240,8 +282,14 @@
 			   ChartHandler.reloadInfluenceChart();
 		   </c:when>
 		   </c:choose>
+	   }
+	   
+	   $("input:radio[name='generatorRadios']").click(function(){
+		   loadChart();
 		   highlightTR('generatorRadios', 'table_stat');
 	   });
+	   
+	   loadChart();
 	   highlightTR('generatorRadios', 'table_stat');
 	   
 	   
