@@ -73,9 +73,23 @@
   	
   	</div>
   	
+  	<div class="modal hide fade" id="config-modal">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	    <h3>自定义项目参数</h3>
+	  </div>
+	  <div class="modal-body">
+	    <iframe id="listFrame" src="${base}/cycle/config?cycletype=${param.cycletype}" frameBorder="0" border="0" width="100%" height="100%"></iframe>
+	  </div>
+	</div>
+  	
   <%@ include file="/includes/footer.jsp" %>
    <script type="text/javascript" src="${base}/js/jquery.js"></script>
    <script type="text/javascript" src="${base}/js/bootstrap.js"></script>
+   
+   <script type="text/javascript" src="${base}/js/bootstrap-modalmanager.js"></script>
+   <script type="text/javascript" src="${base}/js/bootstrap-modal.js"></script>
+   
    <script type="text/javascript" src="${base}/js/highcharts/highcharts.js"></script>   
    
    <script type="text/javascript">
@@ -87,10 +101,10 @@
 			var yAxisTitle = '';
 			<c:choose>
 	   			<c:when test="${param.target == 'consumption'}">
-	   				chartTitle = '综合能耗统计(kg/kwh)';
+	   				chartTitle = '综合能耗统计(kgce/kwh)';
 	   			</c:when>
 	   			<c:when test="${param.target == 'emission'}">
-	   				chartTitle = '碳排放统计';
+	   				chartTitle = '碳排放统计(g/kwh)';
 	   			</c:when>
 	   			<c:when test="${param.target == 'influence'}">
 	   				chartTitle = '影响潜能统计';
@@ -247,7 +261,18 @@
 		
    };
    
+   var ParamDialog = {
+		close : function(){
+			$('#config-modal').modal('hide');
+		}
+   }
+   
    $(document).ready(function(){
+	   
+	   $('#header-btn-param-config').click(function(){
+		   $('#config-modal').modal({width:'95%', height:($(window).height() - 40) + 'px', modalOverflow:true, top:'20px'});
+	   });
+	   
 	   ChartHandler.init();
 	   
 	   /**

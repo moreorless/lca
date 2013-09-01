@@ -8,13 +8,17 @@
     <link type="text/css" rel="stylesheet" href="${base}/css/index.css"/>
 	<style type="text/css">
 		.seperator{height:20px;}
+		#wrap {padding:5px 10px}
+		.alert {margin-bottom : 0}
 	</style>
   </head>
   <body>
+  	<%--
   	<c:import url="/includes/header.jsp">
   		<c:param name="currentNav">config</c:param>
   	</c:import>
-  	<div id="wrap" class="container">
+  	 --%>
+  	<div id="wrap">
 		<c:if test='${param.saveOk}'>
 		<div class="alert alert-success">
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -27,18 +31,31 @@
 			<strong>恢复初始值成功</strong>
 		</div>
 		</c:if>
-		<form action="${base}/cycle/saveConfig?cycletype=${param.cycletype}" class="form-horizontal" method="post">
-		  <fieldset>
-		    <legend style="font-size:16px;height:50px;line-height:50px;">
-		    	<label style="float:left;height:60px;line-height:60px;">自定义项目参数</label>
-		    	
-		    	<div style="float:right;margin-top:20px">
-		    	<a href="#myModal" role="button" class="btn" data-toggle="modal">恢复初始值</a>
-		    </div>  
-		    </legend>
-		    
+		<form action="${base}/cycle/saveConfig?cycletype=${param.cycletype}" class="form-horizontal" method="post" id="myForm">
+		    <div class="control-group">
+		    	<label class="control-label">
+		    		<b>
+		    			<c:choose>
+		    				<c:when test="${param.cycletype=='electric'}">发电方式选择</c:when>
+		    				<c:when test="${param.cycletype=='transport'}">交通燃料选择</c:when>
+		    				<c:when test="${param.cycletype=='gas'}"></c:when>
+		    			</c:choose>
+		    		</b>
+		    	</label>
+				<div class="controls">
+			    <select id="sheet-selector">
+			    	<c:forEach items="${curCycleType.paramConfigure.sheets}" var="wSheet">
+			    	<option value="${wSheet.index}">${wSheet.name}</option>
+			    	</c:forEach>
+			    </select>
+		    	</div>
+		    </div>
+		    <div id="param-box">
 		    <c:forEach items="${curCycleType.paramConfigure.sheets}" var="wSheet">
-		    	<label class="label label-info">${wSheet.name}</label>
+		    	<%--
+		    		<label class="label label-info">${wSheet.name}</label>
+		    	 --%>
+		    	<div id="sheet_${wSheet.index}" style="display:none">
 		    	<c:forEach items="${wSheet.cells}" var="wCell">
 		    		<div class="control-group<c:if test="${wCell.formula }"> error</c:if><c:if test="${!wCell.formula }"> </c:if>">
 				    	<label class="control-label" for="inputEmail"><b>${wCell.paramName}</b></label>
@@ -50,15 +67,15 @@
 				    	</div>
 				    </div>		
 		    	</c:forEach>
+		    	</div>
 		    </c:forEach>
-		    
+		    </div>
 		    <div class="control-group">
     			<div class="controls">
-				    <button type="submit" class="btn btn-primary">保存</button>
-				    
+    				<a href="javascript://" id="btn-save" class="btn btn-primary">保存</a>
+    				<a href="javascript://" id="btn-cancel" class="btn">取消</a>
 				</div>
 			</div>
-		  </fieldset>
 		</form>
 	
 	</div>
@@ -78,8 +95,9 @@
   </div>
 </div>
   	
-  	
+  	<%--
   	<%@ include file="/includes/footer.jsp" %>
+    --%>
    <script type="text/javascript" src="${base}/js/jquery.js"></script>
    <script type="text/javascript" src="${base}/js/bootstrap.js"></script>
 
@@ -92,6 +110,8 @@
    		$("#btn-restore").click(function(){
    			$.ajax({
    				url : '${base}/cycle/restoreExcel',
+   				type : 'post',
+   				dataType : 'json',
    				success : function(){
    					window.location = '${base}/cycle/config?cycletype=${param.cycletype}&restoreOk=true';
    				},
@@ -99,6 +119,31 @@
    					
    				}
    			});
+   		});
+   		
+   		$('#btn-save').click(function(){
+   			$.ajax({
+   				url : '${base}/cycle/saveConfig?cycletype=${param.cycletype}',
+   				type : 'post',
+   				dataType : 'json',
+   				data : $("#myForm").serialize(),
+   				success : function(){
+   					window.parent.location.reload();
+   				},
+   				error : function(){
+   					alert('保存参数出错');
+   				}
+   			});
+   			
+   		});
+   		$('#btn-cancel').click(function(){
+   			window.parent.ParamDialog.close();
+   		});
+   		
+   		$('#sheet_' + $('#sheet-selector').val()).show();
+   		$('#sheet-selector').change(function(){
+   			$('#param-box').children().hide();
+   			$('#sheet_' + $(this).val()).show();
    		});
    		
    	});

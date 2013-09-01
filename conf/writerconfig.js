@@ -7,16 +7,20 @@ var ioc = {
 			     { index : 1,     			    // sheet序号，0表示第一页
 			       name : '煤电',               // sheet名称 
 	               params : {"年运行时间(小时)":"E6", "总发电量":"E7"}  // 参数名与位置的映射
-	             }
+	             },
+	             { index : 2,     			  
+				       name : '核电',          
+		               params : {"使用年限":"D5"}
+		             }
 	            ]
 	        },
 	        "transport" : {
-	        	excel : "China TLCAM LNG2.xls",					    
+	        	excel : "transport.xls",					    
 	             sheets : []
-	        },
+	        }/*,
 	        "gas" : {
 	        	excel : "gas.xls",					    
 	             sheets : []
-    		}
+    		}*/
 		}
 };

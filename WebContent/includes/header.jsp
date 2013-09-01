@@ -30,20 +30,20 @@
                 	</c:if>
                 </li>
                 <li <c:if test="${param.currentNav == 'config'}">class="active"</c:if>>
+                	<%-- 
                 	<a href="${base}/cycle/config?cycletype=${param.cycletype}"><img src="${base}/images/config_16.png" width="16" height="16"/>&nbsp;自定义项目</a></li>
+                	--%>
+                	<a href="javascript://" id="header-btn-param-config"><img src="${base}/images/config_16.png" width="16" height="16"/>&nbsp;自定义项目</a></li>
               </ul>
               
-            <div style="float:right;width:100px;height:40px;line-height:40px;padding-left:10px;"><b>${curCycleType.name}</b></div>
 			<div class="btn-group" style="float:right">
-				  <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#">
-				    	生命周期选择
-				    <span class="caret"></span>
+				  <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#">选择<span class="caret"></span>
 				  </a>
 				  <ul class="dropdown-menu">
 				  	<c:forEach items="${session_cycletype_list}" var="cycletype">
 				  		<c:if test="${param.currentNav == 'statistic' }">
 					  	   <li>
-					  	   <a href="${base}/cycle/stat?&cycletype=${cycletype.code}&target=${param.target}&statBy=generator">${cycletype.name}</a>
+					  	   <a href="${base}/cycle/stat?&cycletype=${cycletype.code}&target=consumption&statBy=generator">${cycletype.name}</a>
 					  	   </li>
 				  		</c:if>
 				  		<c:if test="${param.currentNav == 'config' }">
@@ -52,6 +52,7 @@
 				  	</c:forEach>
 	              </ul>
 			</div>
+			<div style="float:right;height:40px;line-height:40px;padding-left:10px;"><b>${curCycleType.name}生命周期&nbsp;&nbsp;&nbsp;&nbsp;</b></div>
             </div><!--/.nav-collapse -->
           </div>
         </div>

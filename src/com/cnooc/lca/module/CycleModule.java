@@ -11,6 +11,7 @@ import org.nutz.ioc.annotation.InjectName;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.mvc.annotation.At;
+import org.nutz.mvc.annotation.Fail;
 import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.Param;
 
@@ -95,7 +96,9 @@ public class CycleModule {
 	}
 	
 	@At
-	@Ok("redirect:/cycle/config?saveOk=true&cycletype=${p.cycletype}")
+	// @Ok("redirect:/cycle/config?saveOk=true&cycletype=${p.cycletype}")
+	@Ok("json")
+	@Fail("json")
 	public void saveConfig(Ioc ioc, HttpServletRequest request, @Param("cycletype") String cycleTypeCode, @Param("::params.")Map<String, String> paramMap){
 		
 		CycleType curCycleType = cycleService.getCycleType(cycleTypeCode);
