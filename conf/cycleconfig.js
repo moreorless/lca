@@ -18,7 +18,7 @@ var ioc = {
 			name : "交通燃料",
 			excel : "transport.xls",
 			cycleNameList : [ "transport_qiyou", "transport_chaiyou",
-					"transport_diandong", "transport_lng",
+					"transport_diandong", "transport_locallng", "transport_foreignlng",
 					"transport_yumiyichun", "transport_shengwuchaiyou",
 					"transport_cng" ]
 		}

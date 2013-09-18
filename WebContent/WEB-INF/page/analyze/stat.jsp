@@ -1,98 +1,111 @@
-<%@ page contentType="text/html;charset=utf-8" language="java" %>
-<%@ include file="/includes/taglibs.jsp" %>
+<%@ page contentType="text/html;charset=utf-8" language="java"%>
+<%@ include file="/includes/taglibs.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-  	<link rel = "Shortcut Icon" href="${base }/favicon.ico" />
-    <title>中海油碳里程分析系统</title>
-    <link type="text/css" rel="stylesheet" href="${base}/css/bootstrap.css" />
-    <link type="text/css" rel="stylesheet" href="${base}/css/index.css"/>
-    <link type="text/css" rel="stylesheet" href="${base}/css/stat.css"/>
-	<style type="text/css">
-		.seperator{height:10px;}
-	</style>
-  </head>
-  <body>
-  	<c:import url="/includes/header.jsp">
-  		<c:param name="currentNav">statistic</c:param>
-  	</c:import>
-  	
-  	<div id="wrap" class="container">
-  		<div>
-  		<ul class="nav nav-pills" style="margin:10px 0 10px 0">
-		  <li <c:if test="${param.target == 'consumption' }">class="active"</c:if>>
-		    <a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=consumption&statBy=${param.statBy}">综合能耗统计</a>
-		  </li>
-		  <li <c:if test="${param.target == 'emission' }">class="active"</c:if>>
-		  	<a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=emission&statBy=${param.statBy}">碳排放统计</a>
-		  </li>
-		  
-		  <c:if test="${param.cycletype=='electric'}">
-		  <li <c:if test="${param.target == 'influence' }">class="active"</c:if>>
-		  	<a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=influence&statBy=${param.statBy}">影响潜能统计</a>
-		  </li>
-		  </c:if>
-		  
-		  <!-- 
+<head>
+<link rel="Shortcut Icon" href="${base }/favicon.ico" />
+<title>中海油碳里程分析系统</title>
+<link type="text/css" rel="stylesheet" href="${base}/css/bootstrap.css" />
+<link type="text/css" rel="stylesheet" href="${base}/css/index.css" />
+<link type="text/css" rel="stylesheet" href="${base}/css/stat.css" />
+<style type="text/css">
+.seperator {
+	height: 10px;
+}
+</style>
+</head>
+<body>
+	<c:import url="/includes/header.jsp">
+		<c:param name="currentNav">statistic</c:param>
+	</c:import>
+
+	<div id="wrap" class="container">
+		<div>
+			<ul class="nav nav-pills" style="margin: 10px 0 10px 0">
+				<li
+					<c:if test="${param.target == 'consumption' }">class="active"</c:if>>
+					<a
+					href="${base}/cycle/stat?cycletype=${param.cycletype}&target=consumption&statBy=${param.statBy}">综合能耗统计</a>
+				</li>
+				<li
+					<c:if test="${param.target == 'emission' }">class="active"</c:if>>
+					<a
+					href="${base}/cycle/stat?cycletype=${param.cycletype}&target=emission&statBy=${param.statBy}">碳排放统计</a>
+				</li>
+
+				<c:if test="${param.cycletype=='electric'}">
+					<li
+						<c:if test="${param.target == 'influence' }">class="active"</c:if>>
+						<a
+						href="${base}/cycle/stat?cycletype=${param.cycletype}&target=influence&statBy=${param.statBy}">影响潜能统计</a>
+					</li>
+				</c:if>
+
+				<!-- 
 		  <li style="float:right;color:#005580"><b>${curCycleType.name}</b></li>
 		   -->
-		  <li style="float:right">
-		  <ul class="breadcrumb" style="margin:0">
-		  	  <c:if test="${param.cycletype == 'electric' || param.cycletype == 'transport'}">
-			  <li><a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=${param.target}&emissionType=${param.emissionType}&generatorCode=${param.generatorCode }&statBy=procedure">
-			  	按阶段统计
-			  	</a> 
-			  		<span class="divider">/</span></li>
-			  </c:if>
-			  <li><a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=${param.target}&emissionType=${param.emissionType}&generatorCode=${param.generatorCode }&statBy=generator">
-			  	<c:if test="${param.cycletype == 'electric'}">
+				<li style="float: right">
+					<ul class="breadcrumb" style="margin: 0">
+						<c:if
+							test="${param.cycletype == 'electric' || param.cycletype == 'transport'}">
+							<li><a
+								href="${base}/cycle/stat?cycletype=${param.cycletype}&target=${param.target}&emissionType=${param.emissionType}&generatorCode=${param.generatorCode }&statBy=procedure">
+									按阶段统计 </a> <span class="divider">/</span></li>
+						</c:if>
+						<li><a
+							href="${base}/cycle/stat?cycletype=${param.cycletype}&target=${param.target}&emissionType=${param.emissionType}&generatorCode=${param.generatorCode }&statBy=generator">
+								<c:if test="${param.cycletype == 'electric'}">
 			  	按发电方式统计
-			  	</c:if>
-			  	<c:if test="${param.cycletype == 'transport'}">
+			  	</c:if> <c:if test="${param.cycletype == 'transport'}">
 			  	按交通燃料统计
 			  	</c:if>
-			  	</a></li>
-		  </ul>
-		  </li>
-		</ul>
+						</a></li>
+					</ul>
+				</li>
+			</ul>
 		</div>
-  		<c:choose>
-   			<c:when test="${param.target == 'consumption'}">
-		  		<c:import url="/WEB-INF/page/analyze/includes/consumption.jsp">
-		  		</c:import>
-   			</c:when>
-   			<c:when test="${param.target == 'emission'}">
+		<c:choose>
+			<c:when test="${param.target == 'consumption'}">
+				<c:import url="/WEB-INF/page/analyze/includes/consumption.jsp">
+				</c:import>
+			</c:when>
+			<c:when test="${param.target == 'emission'}">
 				<c:import url="/WEB-INF/page/analyze/includes/emission.jsp">
-		  		</c:import>
-   			</c:when>
-   			<c:when test="${param.target == 'influence'}">
-   				<c:import url="/WEB-INF/page/analyze/includes/influence.jsp">
-		  		</c:import>
-   			</c:when>
-   		</c:choose>
-  	
-  	</div>
-  	
-  	<div class="modal hide fade" id="config-modal">
-	  <div class="modal-header">
-	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	    <h3>自定义项目参数</h3>
-	  </div>
-	  <div class="modal-body">
-	    <iframe id="listFrame" src="${base}/cycle/config?cycletype=${param.cycletype}" frameBorder="0" border="0" width="100%" height="100%"></iframe>
-	  </div>
+				</c:import>
+			</c:when>
+			<c:when test="${param.target == 'influence'}">
+				<c:import url="/WEB-INF/page/analyze/includes/influence.jsp">
+				</c:import>
+			</c:when>
+		</c:choose>
+
 	</div>
-  	
-  <%@ include file="/includes/footer.jsp" %>
-   <script type="text/javascript" src="${base}/js/jquery.js"></script>
-   <script type="text/javascript" src="${base}/js/bootstrap.js"></script>
-   
-   <script type="text/javascript" src="${base}/js/bootstrap-modalmanager.js"></script>
-   <script type="text/javascript" src="${base}/js/bootstrap-modal.js"></script>
-   
-   <script type="text/javascript" src="${base}/js/highcharts/highcharts.js"></script>   
-   
-   <script type="text/javascript">
+
+	<div class="modal hide fade" id="config-modal">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"
+				aria-hidden="true">&times;</button>
+			<h3>自定义项目参数</h3>
+		</div>
+		<div class="modal-body">
+			<iframe id="listFrame"
+				src="${base}/cycle/config?cycletype=${param.cycletype}"
+				frameBorder="0" border="0" width="100%" height="100%"></iframe>
+		</div>
+	</div>
+
+	<%@ include file="/includes/footer.jsp"%>
+	<script type="text/javascript" src="${base}/js/jquery.js"></script>
+	<script type="text/javascript" src="${base}/js/bootstrap.js"></script>
+
+	<script type="text/javascript"
+		src="${base}/js/bootstrap-modalmanager.js"></script>
+	<script type="text/javascript" src="${base}/js/bootstrap-modal.js"></script>
+
+	<script type="text/javascript"
+		src="${base}/js/highcharts/highcharts.js"></script>
+
+	<script type="text/javascript">
    
    var ChartHandler = {
 		chartOptions : null,
@@ -267,10 +280,13 @@
 		}
    }
    
+
    $(document).ready(function(){
 	   
 	   $('#header-btn-param-config').click(function(){
-		   $('#config-modal').modal({width:'95%', height:($(window).height() - 40) + 'px', modalOverflow:true, top:'20px'});
+		   $('#config-modal').modal(
+				    {width:'55%', height:($(window).height() - 40) + 'px', modalOverflow:true, top:'20px'});
+		  //{width:'65%', height:($(window).height() - 40) + 'px', modalOverflow:true, top:'20px', backdrop:true});
 	   });
 	   
 	   ChartHandler.init();
@@ -367,5 +383,5 @@
    });
    
 	</script>
-  </body>
+</body>
 </html>

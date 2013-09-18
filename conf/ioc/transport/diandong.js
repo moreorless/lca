@@ -4,7 +4,7 @@ var ioc = {
 		fields  : {
 			sheetIndex : 2,
 			name : "电动车",
-			unit : "网电",
+			unit : "",
 			totalConsumption : "J142",
 			consumptions : {
 				"原料开采" : "E142",

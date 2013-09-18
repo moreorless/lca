@@ -1,10 +1,10 @@
 var ioc = {
-	transport_lng : {
+	transport_locallng : {
 		type : "com.cnooc.lca.excel.CommonTemplate",
 		fields  : {
 			sheetIndex : 2,
-			name : "LNG车",
-			unit : "国产",
+			name : "国产LNG车",
+			unit : "",
 			totalConsumption : "J61",
 			consumptions : {
 				"原料开采" : "E61",
