@@ -1,6 +1,5 @@
 package com.cnooc.lca.model;
 
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +53,11 @@ public class T_Cycle {
 	 * 工序集合
 	 */
 	private List<T_Procedure> procedures;
+	
+	/**
+	 * 工序序号集合(阶段1序号|阶段2序号1,阶段2序号2|...|阶段n序号)
+	 */
+	private String procedureIndexStr;
 	
 	/**
 	 * 综合能耗
@@ -138,6 +142,12 @@ public class T_Cycle {
 		this.procedures = procedures;
 	}
 	
+	public String getProcedureIndexStr() {
+		return procedureIndexStr;
+	}
+	public void setProcedureIndexStr(String procedureIndexStr) {
+		this.procedureIndexStr = procedureIndexStr;
+	}
 	public double getTotalConsumption() {
 		return totalConsumption;
 	}
@@ -252,10 +262,12 @@ public class T_Cycle {
 	private void mergeInfluence(){
 		if(_influenceMerged) return;
 		this.totalInfluence = 0;
-		for(String key : procInfluenceMap.keySet()){
-			totalInfluence += procInfluenceMap.get(key);
+		if(procInfluenceMap != null){
+			for(String key : procInfluenceMap.keySet()){
+				totalInfluence += procInfluenceMap.get(key);
+			}
+			_influenceMerged = true;
 		}
-		_influenceMerged = true;
 	}
 	
 	public void setMergedEmissionMap(Map<String, Double> mergedEmissionMap) {

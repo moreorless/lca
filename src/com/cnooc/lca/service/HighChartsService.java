@@ -128,6 +128,8 @@ public class HighChartsService {
 		if(procedureList.size() > 1){
 			for(String procedure : procedureList){
 				for(T_Cycle cycle : cycleList){
+					if(cycle.getEmissionMap() == null || cycle.getEmissionMap().get(emissionType) == null) continue;
+					
 					double emissionValue = cycle.getEmissionMap().get(emissionType).get(procedure);
 					serieMap.get(procedure).getData().add((fixDecimal(emissionValue)));
 				}

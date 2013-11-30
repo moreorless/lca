@@ -64,10 +64,14 @@ public class CycleModule {
 		request.setAttribute("cycleList", cycleList);
 		
 		request.setAttribute("influnceNames", curCycleType.getInflunceNames());
-		request.setAttribute("influenceNameToUuid", curCycleType.getNameToUuidMap().getNameToUuidMap(NameToUuidMap.Type.INFLUENCE));
+		if(curCycleType.getNameToUuidMap() != null){
+			request.setAttribute("influenceNameToUuid", curCycleType.getNameToUuidMap().getNameToUuidMap(NameToUuidMap.Type.INFLUENCE));
+		}
 		
 		
-		request.setAttribute("procNameToUuid", curCycleType.getNameToUuidMap().getNameToUuidMap(NameToUuidMap.Type.PROCEDURE));
+		if(curCycleType.getNameToUuidMap() != null){
+			request.setAttribute("procNameToUuid", curCycleType.getNameToUuidMap().getNameToUuidMap(NameToUuidMap.Type.PROCEDURE));
+		}
 		
 		request.setAttribute("procedureNames", cycleService.getProcedureList(cycleTypeCode));
 		
@@ -139,6 +143,13 @@ public class CycleModule {
 		
 		cycleService.loadCycleTypeList();				// 重新加载配置文件
 		writerConfig.load();
+	}
+	
+	@At	
+	@Ok("json")
+	public List<T_Cycle> listCycles(@Param("cycletype") String cycleTypeCode){
+		CycleType curCycleType = cycleService.getCycleType(cycleTypeCode);
+		return curCycleType.getCycleList();
 	}
 	
 }

@@ -15,6 +15,7 @@ import org.nutz.ioc.loader.json.JsonLoader;
 import org.nutz.mapl.Mapl;
 
 import com.cnooc.lca.excel.CommonTemplate;
+import com.cnooc.lca.excel.ProcedureTemplate;
 import com.cnooc.lca.model.ProcedureMap;
 import com.cnooc.lca.model.T_Cycle;
 
@@ -95,35 +96,52 @@ public class CycleService {
 			CycleType cycleType = (CycleType)Mapl.maplistToObj(configMap.get(code), CycleType.class);
 			cycleType.setCode(code);
 			
-			
 			logger.debug(code);
 			logger.debug( " ----  name = " + cycleType.getName());
 			logger.debug( " ----  excel = " + cycleType.getExcel());
 			logger.debug(" --- cycleNameList = " + cycleType.getCycleNameList());
 			
-			String excelName = cycleType.getExcel();
-			List<String> cycleNameList = cycleType.getCycleNameList();
-			// 加载各个生命周期(mei_600, hedian, ...)
-			List<T_Cycle> cycleList = new LinkedList<>();
-			
-			for(String cycleName : cycleNameList){
-				try{
-					CommonTemplate tp = ioc.get(CommonTemplate.class, cycleName);
-					// 设置tp对应的excel文件名
-					tp.setExcelName(excelName);
-					tp.setCode(cycleName);
-					tp.setCycleType(cycleType.getCode());
-					
-					T_Cycle t_cycle = tp.createcycle(cycleType);
-					cycleList.add(t_cycle);
-				}catch (Exception e) {
-					logger.error("加载生命周期项目出错：" + cycleName, e);
-				}
+			// 使用生命周期模板加载
+			if(cycleType.getTemplateType().equals(CycleType.TP_TYPE_COMMON)){
+				String excelName = cycleType.getExcel();
 				
+				List<String> cycleNameList = cycleType.getCycleNameList();
+				// 加载各个生命周期(mei_600, hedian, ...)
+				List<T_Cycle> cycleList = new LinkedList<>();
+				
+				// 加载各个生命周期
+				for(String cycleName : cycleNameList){
+					try{
+						CommonTemplate tp = ioc.get(CommonTemplate.class, cycleName);
+						// 设置tp对应的excel文件名
+						tp.setExcelName(excelName);
+						tp.setCode(cycleName);
+						tp.setCycleType(cycleType.getCode());
+						
+						T_Cycle t_cycle = tp.createcycle(cycleType);
+						cycleList.add(t_cycle);
+					}catch (Exception e) {
+						logger.error("加载生命周期项目出错：" + cycleName, e);
+					}
+					
+				}
+				cycleType.setCycleList(cycleList);
+				
+				cycleTypeList.add(cycleType);
 			}
-			cycleType.setCycleList(cycleList);
-			
-			cycleTypeList.add(cycleType);
+			// 使用各阶段基础数据配置模板
+			else if(cycleType.getTemplateType().equals(CycleType.TP_TYPE_PROCEDURE)){
+				String templateName = cycleType.getTemplateName();
+				ProcedureTemplate tp = ioc.get(ProcedureTemplate.class, templateName);
+				
+				tp.setExcelName(cycleType.getExcel());
+				
+				List<T_Cycle> cycleList = tp.loadCycles(cycleType);
+				if(cycleList != null){
+					cycleType.setCycleList(cycleList);
+					cycleTypeList.add(cycleType);
+				}
+			}
 		}
 		
 	}

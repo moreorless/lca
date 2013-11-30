@@ -40,11 +40,22 @@ public class CycleType {
 	 */
 	private String excel;
 	
+	public static String TP_TYPE_COMMON = "common";			
+	public static String TP_TYPE_PROCEDURE = "procedure";	
 	/**
-	 * 该类型下的生命周期列表
+	 * 生命周期模板类型，可选值common,procedure
+	 */
+	private String templateType;
+	
+	/**
+	 * 该类型下的生命周期列表，templateType=common时使用
 	 */
 	private List<String> cycleNameList;
 	
+	/**
+	 * 模板名称，templateType=procedure时使用
+	 */
+	private String templateName;
 	
 	private List<T_Cycle> cycleList;
 	
@@ -81,6 +92,23 @@ public class CycleType {
 
 	public void setExcel(String excel) {
 		this.excel = excel;
+	}
+
+	
+	public String getTemplateType() {
+		return templateType;
+	}
+
+	public void setTemplateType(String templateType) {
+		this.templateType = templateType;
+	}
+
+	public String getTemplateName() {
+		return templateName;
+	}
+
+	public void setTemplateName(String templateName) {
+		this.templateName = templateName;
 	}
 
 	public List<String> getCycleNameList() {
