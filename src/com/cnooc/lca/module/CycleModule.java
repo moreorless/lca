@@ -16,6 +16,8 @@ import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.Param;
 
 import com.cnooc.lca.excel.ExcelFactory;
+import com.cnooc.lca.excel.ProcedureParam;
+import com.cnooc.lca.excel.ProcedureTemplate;
 import com.cnooc.lca.excel.WriterConfig;
 import com.cnooc.lca.excel.parser.ExcelParser;
 import com.cnooc.lca.model.NameToUuidMap;
@@ -151,5 +153,24 @@ public class CycleModule {
 		CycleType curCycleType = cycleService.getCycleType(cycleTypeCode);
 		return curCycleType.getCycleList();
 	}
+	
+	/**
+	 * 天然气产业链视图
+	 */
+	@At
+	@Ok("jsp:page.gas.view")
+	public void gasView(HttpServletRequest request, Ioc ioc){
+		CycleType cycleType = cycleService.getCycleType("gas");
+		
+		String templateName = cycleType.getTemplateName();
+		ProcedureTemplate tp = ioc.get(ProcedureTemplate.class, templateName);
+		
+		List<ProcedureParam> procedures = tp.getProcedures();
+		
+		request.setAttribute("curCycleType", cycleType);
+		request.setAttribute("procedures", procedures);
+		
+	}
+	
 	
 }

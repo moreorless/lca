@@ -6,6 +6,11 @@ public class ProcedureParamItem {
 	private String consumption;
 	private String emission;
 	private String depends;
+	
+	private double consumptionValue;
+	
+	private double emissionValue;
+	
 	public String getName() {
 		return name;
 	}
@@ -30,6 +35,20 @@ public class ProcedureParamItem {
 	public void setDepends(String depends) {
 		this.depends = depends;
 	}
+	public double getConsumptionValue() {
+		return consumptionValue;
+	}
+	public void setConsumptionValue(double consumptionValue) {
+		this.consumptionValue = consumptionValue;
+	}
+	public double getEmissionValue() {
+		return emissionValue;
+	}
+	public void setEmissionValue(double emissionValue) {
+		this.emissionValue = emissionValue;
+	}
+	
+	
 	
 	
 }

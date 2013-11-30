@@ -43,7 +43,12 @@
 				  	<c:forEach items="${session_cycletype_list}" var="cycletype">
 				  		<c:if test="${param.currentNav == 'statistic' }">
 					  	   <li>
-					  	   <a href="${base}/cycle/stat?&cycletype=${cycletype.code}&target=consumption&statBy=generator">${cycletype.name}</a>
+					  	   <c:if test="${cycletype.code != 'gas' }">
+					  	   <a href="${base}/cycle/stat?cycletype=${cycletype.code}&target=consumption&statBy=generator">${cycletype.name}</a>
+					  	   </c:if>
+					  	   <c:if test="${cycletype.code == 'gas' }">
+					  	   <a href="${base}/cycle/gasView?cycletype=${cycletype.code}&target=consumption&statBy=generator">${cycletype.name}</a>
+					  	   </c:if>
 					  	   </li>
 				  		</c:if>
 				  		<c:if test="${param.currentNav == 'config' }">

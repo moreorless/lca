@@ -82,6 +82,20 @@ public class ProcedureTemplate{
 		// 加载生命周期配置文件
 		String confFile = getCycleConfigFile(cycleType);
 		
+		
+		// 从excel表加载参数值
+		Iterator<ProcedureParam> iter = procedures.iterator();
+		while(iter.hasNext()){
+			ProcedureParam procParam = iter.next();
+			for(ProcedureParamItem pItem : procParam.getItems()){
+				double _cvalue = getCellValue(parser, pItem.getConsumption());
+				double _evalue = getCellValue(parser, pItem.getEmission());
+				pItem.setConsumptionValue(_cvalue);
+				pItem.setEmissionValue(_evalue);
+			}
+		}
+		
+		
 		try{
 			BufferedReader br = new BufferedReader(new InputStreamReader(  
 					new FileInputStream(confFile)));  
@@ -109,9 +123,8 @@ public class ProcedureTemplate{
 					String[] indexStr = strArr[i].split(",");
 					for(String index : indexStr){
 						ProcedureParamItem pItem = procParam.getItems().get(Integer.parseInt(index));
-						
-						comsumptionValue += getCellValue(parser, pItem.getConsumption());
-						emissionValue += getCellValue(parser, pItem.getEmission());
+						comsumptionValue += pItem.getConsumptionValue();
+						emissionValue += pItem.getEmissionValue();
 					}
 					
 					consumptionMap.put(procParam.getName(), comsumptionValue);
