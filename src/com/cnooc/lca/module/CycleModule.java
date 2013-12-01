@@ -1,10 +1,21 @@
 package com.cnooc.lca.module;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
 import org.nutz.ioc.Ioc;
 import org.nutz.ioc.annotation.InjectName;
@@ -15,6 +26,7 @@ import org.nutz.mvc.annotation.Fail;
 import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.Param;
 
+import com.cnooc.lca.common.GlobalConfig;
 import com.cnooc.lca.excel.ExcelFactory;
 import com.cnooc.lca.excel.ProcedureParam;
 import com.cnooc.lca.excel.ProcedureTemplate;
@@ -170,6 +182,125 @@ public class CycleModule {
 		request.setAttribute("curCycleType", cycleType);
 		request.setAttribute("procedures", procedures);
 		
+	}
+	
+	/**
+	 * 复制文件夹
+	 * 
+	 * @param oldPath
+	 * @param newPath
+	 */
+	public void copyFolder(String oldPath, String newPath) {
+		try {
+			(new File(newPath)).mkdirs(); // 如果文件夹不存在 则建立新文件夹
+			File a = new File(oldPath);
+			String[] file = a.list();
+			File temp = null;
+			for (int i = 0; i < file.length; i++) {
+				if (oldPath.endsWith(File.separator)) {
+					temp = new File(oldPath + file[i]);
+				} else {
+					temp = new File(oldPath + File.separator + file[i]);
+				}
+				if (temp.isFile()) {
+					FileInputStream input = new FileInputStream(temp);
+					FileOutputStream output = new FileOutputStream(newPath
+							+ "/" + (temp.getName()).toString());
+					byte[] b = new byte[1024 * 5];
+					int len;
+					while ((len = input.read(b)) != -1) {
+						output.write(b, 0, len);
+					}
+					output.flush();
+					output.close();
+					input.close();
+				}
+				if (temp.isDirectory()) {// 如果是子文件夹
+					copyFolder(oldPath + "/" + file[i], newPath + "/" + file[i]);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("复制整个文件夹内容操作出错");
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 备份bak文件夹，按照时间创建目录
+	 */
+	public void backupBakFolder() {
+
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy_mm_dd_hh_mm_ss");
+		Date curDate = new Date(System.currentTimeMillis());// 获取当前时间
+		String str = formatter.format(curDate);
+
+		String bakHistoryPath = GlobalConfig.getContextValue("web.dir")
+				+ File.separator + "upload" + File.separator + "bak_history"
+				+ File.separator + str;
+
+		String bakPath = GlobalConfig.getContextValue("web.dir")
+				+ File.separator + "upload" + File.separator + "bak";
+
+		copyFolder(bakPath, bakHistoryPath);
+	}
+
+	@At
+	// @Ok("redirect:/cycle/config?saveOk=true&cycletype=${p.cycletype}")
+	@Ok("json")
+	@Fail("json")
+	public void uploadDataFiles(Ioc ioc, HttpServletRequest request,
+			@Param("cycletype") String cycleTypeCode,
+			@Param("::params.") Map<String, String> paramMap) {
+
+		CycleType curCycleType = cycleService.getCycleType(cycleTypeCode);
+		String excelFileName = curCycleType.getExcel();
+
+		File file = new File(GlobalConfig.getContextValue("web.dir")
+				+ File.separator + "upload" + File.separator + "bak"
+				+ File.separator + excelFileName);
+		if (file.exists())
+			file.delete();
+
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		try {
+			List items = upload.parseRequest(request);
+			Iterator itr = items.iterator();
+			while (itr.hasNext()) {
+				FileItem item = (FileItem) itr.next();
+				if (item.isFormField()) {
+					System.out.println("表单参数名:" + item.getFieldName()
+							+ "，表单参数值:" + item.getString("UTF-8"));
+				} else {
+					if (item.getName() != null && !item.getName().equals("")) {
+						System.out.println("上传文件的大小:" + item.getSize());
+						System.out.println("上传文件的类型:" + item.getContentType());
+						// item.getName()返回上传文件在客户端的完整路径名称
+						System.out.println("上传文件的名称:" + item.getName());
+
+						item.write(file);
+						request.setAttribute("upload.message", "上传文件成功！");
+					} else {
+						request.setAttribute("upload.message", "没有选择上传文件！");
+					}
+				}
+			}
+		} catch (FileUploadException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+			request.setAttribute("upload.message", "上传文件失败！");
+		}
+
+		restoreExcel();
+		backupBakFolder();
+
 	}
 	
 	
