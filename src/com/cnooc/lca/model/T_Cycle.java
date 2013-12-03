@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.cnooc.lca.excel.ProcedureParamItem;
 import com.cnooc.lca.excel.parser.WritableExcel;
 import com.cnooc.lca.service.CycleType;
 
@@ -53,6 +54,11 @@ public class T_Cycle {
 	 * 工序集合
 	 */
 	private List<T_Procedure> procedures;
+	
+	/**
+	 * 天然气产业链使用的阶段列表
+	 */
+	private List<ProcedureParamItem[]> procedureParamItemList;
 	
 	/**
 	 * 工序序号集合(阶段1序号|阶段2序号1,阶段2序号2|...|阶段n序号)
@@ -142,12 +148,20 @@ public class T_Cycle {
 		this.procedures = procedures;
 	}
 	
+	public List<ProcedureParamItem[]> getProcedureParamItemList() {
+		return procedureParamItemList;
+	}
+	public void setProcedureParamItemList(
+			List<ProcedureParamItem[]> procedureParamItemList) {
+		this.procedureParamItemList = procedureParamItemList;
+	}
 	public String getProcedureIndexStr() {
 		return procedureIndexStr;
 	}
 	public void setProcedureIndexStr(String procedureIndexStr) {
 		this.procedureIndexStr = procedureIndexStr;
 	}
+	
 	public double getTotalConsumption() {
 		return totalConsumption;
 	}

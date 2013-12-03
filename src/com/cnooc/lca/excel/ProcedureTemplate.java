@@ -115,18 +115,24 @@ public class ProcedureTemplate{
 				Map<String, Double> consumptionMap = new HashMap<>();
 				Map<String, Map<String, Double>> emissionMap = new HashMap<>();
 				
+				List<ProcedureParamItem[]> procedureParamItemList = new LinkedList<>();
 				for(int i = 1; i < strArr.length; i++){
 					Double comsumptionValue = 0d;
 					Double emissionValue = 0d;
 					
 					ProcedureParam procParam = procedures.get(i - 1);
 					String[] indexStr = strArr[i].split(",");
-					for(String index : indexStr){
-						ProcedureParamItem pItem = procParam.getItems().get(Integer.parseInt(index));
+					
+					ProcedureParamItem[] paramItems = new ProcedureParamItem[indexStr.length];
+					for(int index = 0; index < indexStr.length; index++){
+						ProcedureParamItem pItem = procParam.getItems().get(Integer.parseInt(indexStr[index]));
 						comsumptionValue += pItem.getConsumptionValue();
 						emissionValue += pItem.getEmissionValue();
+						
+						paramItems[index] = pItem;
 					}
 					
+					procedureParamItemList.add(paramItems);
 					consumptionMap.put(procParam.getName(), comsumptionValue);
 					
 					// 排放沿用原来的结构
@@ -139,7 +145,7 @@ public class ProcedureTemplate{
 					}
 				}
 				
-				
+				cycle.setProcedureParamItemList(procedureParamItemList);
 				cycle.setConsumptionMap(consumptionMap);
 				cycle.setEmissionMap(emissionMap);
 				cycleList.add(cycle);
@@ -213,7 +219,7 @@ public class ProcedureTemplate{
 	}
 
 	private String getCycleConfigFile(CycleType cycleType){
-		return GlobalConfig.getContextValue("conf.dir") + File.separator + cycleType.getCode() + ".properties";
+		return GlobalConfig.getContextValue("conf.dir") + File.separator + cycleType.getCode() + ".txt";
 	}
 	
 	

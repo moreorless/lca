@@ -4,7 +4,7 @@ import java.util.List;
 public class ProcedureParam {
 
 	private String name;
-	private boolean multipul;
+	private boolean multiple;
 	private List<ProcedureParamItem> items;
 	public String getName() {
 		return name;
@@ -12,11 +12,11 @@ public class ProcedureParam {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public boolean isMultipul() {
-		return multipul;
+	public boolean isMultiple() {
+		return multiple;
 	}
-	public void setMultipul(boolean multipul) {
-		this.multipul = multipul;
+	public void setMultiple(boolean multiple) {
+		this.multiple = multiple;
 	}
 	public List<ProcedureParamItem> getItems() {
 		return items;

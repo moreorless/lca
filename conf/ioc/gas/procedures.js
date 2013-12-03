@@ -10,7 +10,7 @@ var ioc = {
 					{	type : "com.cnooc.lca.excel.ProcedureParam",
 						fields : {
 							name : "开采",
-							multipul : false,			// 是否允许多选
+							multiple : false,			// 是否允许多选
 							items : [
 							    {
 							    	type : "com.cnooc.lca.excel.ProcedureParamItem",
@@ -36,7 +36,7 @@ var ioc = {
 					{	type : "com.cnooc.lca.excel.ProcedureParam",
 						fields : {
 							name : "制备",
-							multipul : false,			// 是否允许多选
+							multiple : false,			// 是否允许多选
 							items : [
 							    {
 							    	type : "com.cnooc.lca.excel.ProcedureParamItem",
@@ -62,7 +62,7 @@ var ioc = {
 					{	type : "com.cnooc.lca.excel.ProcedureParam",
 						fields : {
 							name : "运输",
-							multipul : true,			// 是否允许多选
+							multiple : true,			// 是否允许多选
 							items : [
 							    {
 							    	type : "com.cnooc.lca.excel.ProcedureParamItem",
@@ -88,7 +88,7 @@ var ioc = {
 					{	type : "com.cnooc.lca.excel.ProcedureParam",
 						fields : {
 							name : "利用",
-							multipul : false,			// 是否允许多选
+							multiple : false,			// 是否允许多选
 							items : [
 							    {
 							    	type : "com.cnooc.lca.excel.ProcedureParamItem",
