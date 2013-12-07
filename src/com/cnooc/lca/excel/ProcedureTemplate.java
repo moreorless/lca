@@ -101,54 +101,13 @@ public class ProcedureTemplate{
 					new FileInputStream(confFile)));  
 			
 			for (String line = br.readLine(); line != null; line = br.readLine()) {  
-				System.out.println(line);  
-				T_Cycle cycle = new T_Cycle(cycleType);
 				String[] strArr = line.split("\\|");
 				String cycleName = strArr[0];
-				cycle.setName(cycleName);
-				
+
 				int sepIndex = line.indexOf("|");
 				String procedureIndexStr = line.substring(sepIndex + 1);
-				cycle.setProcedureIndexStr(procedureIndexStr);
 				
-				// 解析生命周期中的各个阶段，计算综合能耗和排放
-				Map<String, Double> consumptionMap = new HashMap<>();
-				Map<String, Map<String, Double>> emissionMap = new HashMap<>();
-				
-				List<ProcedureParamItem[]> procedureParamItemList = new LinkedList<>();
-				for(int i = 1; i < strArr.length; i++){
-					Double comsumptionValue = 0d;
-					Double emissionValue = 0d;
-					
-					ProcedureParam procParam = procedures.get(i - 1);
-					String[] indexStr = strArr[i].split(",");
-					
-					ProcedureParamItem[] paramItems = new ProcedureParamItem[indexStr.length];
-					for(int index = 0; index < indexStr.length; index++){
-						ProcedureParamItem pItem = procParam.getItems().get(Integer.parseInt(indexStr[index]));
-						comsumptionValue += pItem.getConsumptionValue();
-						emissionValue += pItem.getEmissionValue();
-						
-						paramItems[index] = pItem;
-					}
-					
-					procedureParamItemList.add(paramItems);
-					consumptionMap.put(procParam.getName(), comsumptionValue);
-					
-					// 排放沿用原来的结构
-					if(emissionMap.containsKey("total")){
-						emissionMap.get("total").put(procParam.getName(), emissionValue);
-					}else{
-						Map<String, Double> totleMap = new HashMap<>();
-						totleMap.put(procParam.getName(), emissionValue);
-						emissionMap.put("total", totleMap);
-					}
-				}
-				
-				cycle.setProcedureParamItemList(procedureParamItemList);
-				cycle.setConsumptionMap(consumptionMap);
-				cycle.setEmissionMap(emissionMap);
-				cycleList.add(cycle);
+				cycleList.add(createCycle(cycleType, cycleName, procedureIndexStr));
 				
 			}  
 			br.close(); 
@@ -156,8 +115,53 @@ public class ProcedureTemplate{
 			e.printStackTrace();
 		}
 		
-		
 		return cycleList;
+	}
+	
+	public T_Cycle createCycle(CycleType cycleType, String cycleName, String procedureIndexStr){
+		T_Cycle cycle = new T_Cycle(cycleType);
+		cycle.setName(cycleName);
+		cycle.setProcedureIndexStr(procedureIndexStr);
+		
+		// 解析生命周期中的各个阶段，计算综合能耗和排放
+		Map<String, Double> consumptionMap = new HashMap<>();
+		Map<String, Map<String, Double>> emissionMap = new HashMap<>();
+		
+		List<ProcedureParamItem[]> procedureParamItemList = new LinkedList<>();
+		String[] strArr = procedureIndexStr.split("\\|");
+		for(int i = 0; i < strArr.length; i++){
+			Double comsumptionValue = 0d;
+			Double emissionValue = 0d;
+			
+			ProcedureParam procParam = procedures.get(i);
+			String[] indexStr = strArr[i].split(",");
+			
+			ProcedureParamItem[] paramItems = new ProcedureParamItem[indexStr.length];
+			for(int index = 0; index < indexStr.length; index++){
+				ProcedureParamItem pItem = procParam.getItems().get(Integer.parseInt(indexStr[index]));
+				comsumptionValue += pItem.getConsumptionValue();
+				emissionValue += pItem.getEmissionValue();
+				
+				paramItems[index] = pItem;
+			}
+			
+			procedureParamItemList.add(paramItems);
+			consumptionMap.put(procParam.getName(), comsumptionValue);
+			
+			// 排放沿用原来的结构
+			if(emissionMap.containsKey("total")){
+				emissionMap.get("total").put(procParam.getName(), emissionValue);
+			}else{
+				Map<String, Double> totleMap = new HashMap<>();
+				totleMap.put(procParam.getName(), emissionValue);
+				emissionMap.put("total", totleMap);
+			}
+		}
+		
+		cycle.setProcedureParamItemList(procedureParamItemList);
+		cycle.setConsumptionMap(consumptionMap);
+		cycle.setEmissionMap(emissionMap);
+		return cycle;
 	}
 	
 	private double getCellValue(ExcelParser parser, String cellPos){
@@ -218,7 +222,7 @@ public class ProcedureTemplate{
 		}
 	}
 
-	private String getCycleConfigFile(CycleType cycleType){
+	public String getCycleConfigFile(CycleType cycleType){
 		return GlobalConfig.getContextValue("conf.dir") + File.separator + cycleType.getCode() + ".txt";
 	}
 	

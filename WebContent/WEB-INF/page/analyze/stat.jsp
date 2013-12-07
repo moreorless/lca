@@ -385,7 +385,7 @@
 
 								for ( var i = 0; i < radios.length; i++) {
 									if (radios[i].checked) {
-										tb.rows[i + 1].bgColor = '#1AE6E6';
+										tb.rows[i + 1].bgColor = '#0088cc';
 										break;
 									}
 								}
@@ -468,7 +468,7 @@
 
 												for ( var i = 0; i < radios.length; i++) {
 													if (radios[i].checked)
-														tb.rows[i + 1].bgColor = '#1AE6E6';
+														tb.rows[i + 1].bgColor = '#0088cc';
 												}
 											});
 

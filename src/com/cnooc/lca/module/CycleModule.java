@@ -21,6 +21,7 @@ import org.nutz.ioc.Ioc;
 import org.nutz.ioc.annotation.InjectName;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
+import org.nutz.lang.Files;
 import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.Fail;
 import org.nutz.mvc.annotation.Ok;
@@ -183,6 +184,55 @@ public class CycleModule {
 		request.setAttribute("procedures", procedures);
 		
 	}
+	@At
+	@Ok("jsp:page.gas.stat")
+	public void gasStat(){
+		
+	}
+	/**
+	 * 添加天然气
+	 * @param request
+	 * @param ioc
+	 * @param name
+	 * @param procedureIndexStr
+	 */
+	@At
+	@Ok("jsp:page.gas.view")
+	public void insertGasCycle(HttpServletRequest request, Ioc ioc, @Param("name") String name,
+			@Param("procedureIndexStr") String procedureIndexStr){
+		
+		// 写入gas.txt
+		CycleType cycleType = cycleService.getCycleType("gas");
+		String templateName = cycleType.getTemplateName();
+		ProcedureTemplate tp = ioc.get(ProcedureTemplate.class, templateName);
+		
+		T_Cycle cycle = tp.createCycle(cycleType, name, procedureIndexStr);
+		cycleType.getCycleList().add(cycle);
+		
+		tp.saveCycleConfig(cycleType);
+		
+		List<ProcedureParam> procedures = tp.getProcedures();
+		request.setAttribute("curCycleType", cycleType);
+		request.setAttribute("procedures", procedures);
+		request.setAttribute("selectedCycleIndex", cycleType.getCycleList().size() - 1 );
+	}
+
+	@At
+	@Ok("jsp:page.gas.view")
+	public void delGasCycle(HttpServletRequest request, Ioc ioc, @Param("rowIndex") int rowIndex){
+		CycleType cycleType = cycleService.getCycleType("gas");
+		ProcedureTemplate tp = ioc.get(ProcedureTemplate.class, cycleType.getTemplateName());
+		if(cycleType.getCycleList().size() > rowIndex){
+			cycleType.getCycleList().remove(rowIndex);
+			tp.saveCycleConfig(cycleType);
+		}
+		
+		
+		List<ProcedureParam> procedures = tp.getProcedures();
+		request.setAttribute("curCycleType", cycleType);
+		request.setAttribute("procedures", procedures);
+	}
+	
 	
 	/**
 	 * 复制文件夹

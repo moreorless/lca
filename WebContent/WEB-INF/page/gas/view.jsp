@@ -70,10 +70,13 @@
 				</c:forEach>
 				</div>
 				<div class="row-fluid">
-					<form class="form-inline" style='margin-bottom:10px'>
-					<input type="text"/>
-					<button class="btn" type="button">保存</button>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn" type="button">方案对比</button>
+					<form class="form-inline" style='margin-bottom:10px' 
+						action="${base}/cycle/insertGasCycle?cycletype=${param.cycletype}&target=${param.target}" method="post">
+					<input type="text" name="name"/>
+					<input type="hidden" name="procedureIndexStr" id="input-procedureIndexStr"/>
+					<button class="btn" type="submit" id="btn-save">添加方案</button>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button class="btn" type="button" id="btn-analyze">方案对比</button>
 					</form>
 				</div>
 			</div>
@@ -82,7 +85,7 @@
 			</div>
 		</div>
 		<div class="row-fluid">
-			<table class="table table-hover">
+			<table class="table">
 				<thead>
 					<tr>
 						<th width="200px">方案名称</th>
@@ -93,8 +96,8 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${curCycleType.cycleList}" var="cycle">
-						<tr>
+					<c:forEach items="${curCycleType.cycleList}" var="cycle" varStatus="rowStatus">
+						<tr id="tr_${rowStatus.index}" index="${rowStatus.index}">
 							<td>${cycle.name}</td>
 							<c:forEach items="${cycle.procedureParamItemList}" var="paramItems" varStatus="status">
 							<c:if test="${fn:length(paramItems) == 1}">
@@ -104,7 +107,7 @@
 							<td><c:forEach items="${paramItems}" var="paramItem" varStatus="status">${paramItem.name}<c:if test="${not status.last}">, </c:if></c:forEach></td>
 							</c:if>
 							</c:forEach>
-							<td><a href="jascript://" title="删除"><i class="icon-remove"></i></a></td>
+							<td><a href="javascript://" onclick="TableHandler.delRow(${rowStatus.index})" title="删除"><i class="icon-remove"></i></a></td>
 						</tr>
 											
 					</c:forEach>
@@ -112,6 +115,19 @@
 			</table>
 		</div>
 		
+	</div>
+	
+	<div class="modal hide fade" id="analyze-modal">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"
+				aria-hidden="true">&times;</button>
+			<h3>方案对比分析</h3>
+		</div>
+		<div class="modal-body">
+			<iframe id="listFrame"
+				src="${base}/cycle/gasStat?cycletype=${param.cycletype}&target=${param.target}&statBy=generator"
+				frameBorder="0" border="0" width="100%" height="100%"></iframe>
+		</div>
 	</div>
 
 	<div class="modal hide fade" id="config-modal">
@@ -140,9 +156,9 @@
 
 	<script type="text/javascript">
 	var VoteHandler = {
-		procMap : [],
-		procParam : [],
-		procNames : [],
+		procMap : [],		// 记录是否选中
+		procParam : [],		// 记录参数值
+		procNames : [],		// 记录阶段名称
 		initProcMap : function(){
 			<c:forEach items="${procedures}" var="procedure" varStatus="procStatus">
 			this.procMap[${procStatus.index}] = [];
@@ -160,22 +176,33 @@
 			</c:forEach>
 			</c:forEach>
 			
-			
-			// 按照第一个方案项初始化
-			<c:if test="${fn:length(curCycleType.cycleList) > 0}">
-				var procIndexStr = '${curCycleType.cycleList[0].procedureIndexStr}';
-				var procArr = procIndexStr.split('|');
-				for(var i = 0; i < procArr.length; i++){
-					var itemArr = procArr[i].split(',');
-					for(var j = 0; j < itemArr.length; j++){
-						var itemIndex = parseInt(itemArr[j], 10);
-						this.procMap[i][itemIndex] = true;
-						$('#vote_'+ i + '_' + itemIndex).addClass('se');
-					}
-				}
+			// 按照选定方案项初始化，若为选定，使用第一个
+			<c:if test="${empty selectedCycleIndex}">
+				<c:set var="selectedCycleIndex" value="0" />
 			</c:if>
+			TableHandler.selectRow(${selectedCycleIndex});
 			
-			this.refreshData();
+		},
+		loadVoteData : function(procIndexStr){
+			this.reset();
+			
+			var procArr = procIndexStr.split('|');
+			for(var i = 0; i < procArr.length; i++){
+				var itemArr = procArr[i].split(',');
+				for(var j = 0; j < itemArr.length; j++){
+					var itemIndex = parseInt(itemArr[j], 10);
+					this.procMap[i][itemIndex] = true;
+					$('#vote_'+ i + '_' + itemIndex).addClass('se');
+				}
+			}
+		},
+		reset : function(){
+			for(var col = 0; col < this.procMap.length; col++){
+				for(var row = 0; row < this.procMap[col].length; row++){
+					this.procMap[col][row] = false;
+					$('#vote_'+ col + '_' + row).removeClass('se');
+				}
+			}
 		},
 		init : function(){
 			this.initProcMap();
@@ -186,7 +213,7 @@
 				var procItemId = parseInt($(this).attr('procItemId'), 10);
 				
 				if(multi == 'true'){		// 复选
-					// 当前以选中，则取消选中
+					// 当前已选中，则取消选中
 					if(VoteHandler.procMap[procId][procItemId]){
 						VoteHandler.procMap[procId][procItemId] = false;
 						$(this).removeClass('se');
@@ -210,8 +237,30 @@
 					}
 				}
 				VoteHandler.refreshData();
+				
+				$('#input-procedureIndexStr').val(VoteHandler.getProcedureIndexStr());
 			});
 			
+		},
+		getProcedureIndexStr : function(){
+			var indexStr = "";
+			for(var col = 0; col < this.procMap.length; col++){
+				var $hasOne = false;
+				for(var row = 0; row < this.procMap[col].length; row++){
+					if(this.procMap[col][row]){
+						if($hasOne) {
+							indexStr += ',';
+						}
+						indexStr += row;
+						$hasOne = true;
+					}
+				}
+				if(col < this.procMap.length - 1){
+					indexStr += '|';
+				}
+			}
+			
+			return indexStr;
 		},
 		/**
 		*  刷新数据
@@ -279,7 +328,56 @@
    			$('#chart-container').highcharts().series[0].setData(seriesData, true);
    		}
    	}
+   	
+   	var TableHandler = {
+   		selectedRow : 0,
+   		cycleList : [],
+   		init : function(){
+   			<c:forEach items="${curCycleType.cycleList}" var="cycle">
+   			this.cycleList.push({name:'${cycle.name}', procedureIndexStr : '${cycle.procedureIndexStr}'});
+   			</c:forEach>
+   			
+   			$('table tr').click(function(){
+   				TableHandler.selectRow(parseInt($(this).attr('index')));
+   			});
+   		},
+   		// 选中行	
+   		selectRow : function(rowIndex){
+   			$("#tr_" + this.selectedRow).css({'background-color':'#fff'});
+   			$("#tr_" + rowIndex).css({'background-color':'#0088cc'});
+   			this.selectedRow = rowIndex;
+   			
+   			if(this.cycleList.length > 0){
+   				VoteHandler.loadVoteData(this.cycleList[rowIndex].procedureIndexStr);
+   			}
+   			VoteHandler.refreshData();
+   			
+   			$('#input-procedureIndexStr').val(VoteHandler.getProcedureIndexStr());
+   		},
+   		delRow : function(rowIndex){
+   			if(confirm('确定删除选中行吗？')){
+	   			window.location = "${base}/cycle/delGasCycle?rowIndex=" + rowIndex + "&cycletype=${param.cycletype}&target=${param.target}";
+   			}
+   		}
+   	}
+   	
+   	var BtnHandler = {
+   		init : function(){
+   			
+   			$('#btn-analyze').click(function(){
+   				$('#analyze-modal').modal({
+					width : '55%',
+					height : ($(window).height() - 40) + 'px',
+					modalOverflow : true,
+					top : '20px'
+				});
+   			});
+   		}
+   	}
+   	
   	$(document).ready(function(){
+  		BtnHandler.init();
+  		TableHandler.init();
   		ChartHandler.init();
   		VoteHandler.init();
   	});

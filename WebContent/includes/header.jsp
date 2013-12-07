@@ -22,17 +22,26 @@
 				<ul class="nav">
 					<li
 						<c:if test="${param.currentNav == 'statistic'}">class="active"</c:if>>
-						<c:if test="${param.target == null }">
-							<a
-								href="${base}/cycle/stat?cycletype=${param.cycletype}&target=consumption&statBy=generator">
-								<img src="${base}/images/stat.png" width="16" height="16" />&nbsp;行业数据分析
-							</a>
-						</c:if> <c:if test="${param.target != null }">
-							<a
-								href="${base}/cycle/stat?cycletype=${param.cycletype}&target=${param.target}&statBy=generator">
-								<img src="${base}/images/stat.png" width="16" height="16" />&nbsp;行业数据分析
-							</a>
+						
+						<c:if test="${empty param.target }">
+							<c:set var="_target" value="consumption" />
 						</c:if>
+						<c:if test="${not empty param.target }">
+							<c:set var="_target" value="${param.target}" />
+						</c:if>
+						
+						<c:if test="${param.cycletype != 'gas' }">
+						<a href="${base}/cycle/stat?cycletype=${param.cycletype}&target=${_target}&statBy=generator">
+							<img src="${base}/images/stat.png" width="16" height="16" />&nbsp;行业数据分析
+						</a>
+						</c:if>					
+						 <c:if test="${param.cycletype == 'gas' }">
+						<a
+								href="${base}/cycle/gasView?cycletype=${param.cycletype}&target=${_target}&statBy=generator">
+							<img src="${base}/images/stat.png" width="16" height="16" />&nbsp;行业数据分析
+						</a>
+						</c:if>
+						
 					</li>
 					<li
 						<c:if test="${param.currentNav == 'config'}">class="active"</c:if>>

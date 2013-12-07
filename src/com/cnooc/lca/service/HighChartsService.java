@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.lang.Strings;
@@ -105,6 +106,8 @@ public class HighChartsService {
 	 * @return
 	 */
 	public HighChart getEmissionChart(CycleType cycleType, String emissionType){
+		if(emissionType == null) emissionType = "total";
+		
 		HighChart chart = new HighChart();
 		LinkedList<String> xAxis = new LinkedList<>();
 		LinkedList<Serie> series = new LinkedList<>();
@@ -130,7 +133,12 @@ public class HighChartsService {
 				for(T_Cycle cycle : cycleList){
 					if(cycle.getEmissionMap() == null || cycle.getEmissionMap().get(emissionType) == null) continue;
 					
-					double emissionValue = cycle.getEmissionMap().get(emissionType).get(procedure);
+					double emissionValue = 0;
+					try{
+						emissionValue = cycle.getEmissionMap().get(emissionType).get(procedure);
+					}catch (Exception e) {
+						e.printStackTrace();
+					}
 					serieMap.get(procedure).getData().add((fixDecimal(emissionValue)));
 				}
 			}

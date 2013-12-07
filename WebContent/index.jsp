@@ -23,13 +23,13 @@ body {
 <body>
 	<div style="width: 100%; height: 100%; position: relative;">
 		<div
-			onclick="location.href='${base}/cycle/stat?cycletype=electric&target=consumption'"
+			onclick="location.href='${base}/cycle/stat?cycletype=electric&target=consumption&statBy=generator'"
 			style="cursor: pointer; width: 22%; height: 40%;  position: fixed; _position: absolute; top: 35%; margin-left: 8%; z-index: 100;"></div>
 		<div
-			onclick="location.href='${base}/cycle/stat?cycletype=transport&target=consumption'"
+			onclick="location.href='${base}/cycle/stat?cycletype=transport&target=consumption&statBy=generator'"
 			style="cursor: pointer; width: 22%; height: 40%;  position: fixed; _position: absolute; top: 35%; margin-left: 40%; z-index: 100;"></div>
 		<div
-			onclick="location.href='${base}/cycle/stat?cycletype=gas&target=consumption'"
+			onclick="location.href='${base}/cycle/gasView?cycletype=gas&target=consumption&statBy=generator'"
 			style="cursor: pointer; width: 22%; height: 40%;  position: fixed; _position: absolute; top: 35%; margin-left: 72%; z-index: 100;"></div>
 		<div>
 </body>
