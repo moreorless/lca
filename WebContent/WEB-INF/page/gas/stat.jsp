@@ -9,15 +9,14 @@
 <link type="text/css" rel="stylesheet" href="${base}/css/index.css" />
 <link type="text/css" rel="stylesheet" href="${base}/css/stat.css" />
 <style type="text/css">
-.seperator {
-	height: 10px;
-}
+body{overflow:hidden;}
+.wrap{width:100%;height:100%;overflow:hidden;}
 </style>
 </head>
 <body>
-<div>
+<div class="wrap">
 
-<div id="charts-containter" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+<div id="charts-containter" style="height:350px;margin:0 auto"></div>
 </div>
 
 <script type="text/javascript" src="${base}/js/jquery.js"></script>

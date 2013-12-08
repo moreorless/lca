@@ -1,5 +1,6 @@
 package com.cnooc.lca.excel;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -14,7 +15,9 @@ import com.cnooc.lca.excel.parser.ExcelParser;
 import com.cnooc.lca.model.NameToUuidMap;
 import com.cnooc.lca.model.ProcedureMap;
 import com.cnooc.lca.model.T_Cycle;
+import com.cnooc.lca.model.T_Procedure;
 import com.cnooc.lca.service.CycleType;
+import com.cnooc.lca.service.LngConfig;
 
 /**
  * 通用excel文档解析类
@@ -292,7 +295,33 @@ public class CommonTemplate implements ITemplate{
 			logger.error("没有配置分类排放汇总数据！！！");
 		}
 		
+		
+		// 对cycle进行特殊处理
+		cycleFilter(cycle);
+		
 		return cycle;
+	}
+	
+	private void cycleFilter(T_Cycle cycle){
+		// 如果是进口LNG车，需要特殊处理
+		if(cycle.getCode().equals("transport_foreignlng")){
+			// 全球视野下，将前三项指标值清零
+			if(LngConfig.getInstance().getConf().equals(LngConfig.GLOBAL)){
+				List<String> procNames = ProcedureMap.me().getProcedureList().get(cycle.getCycleType().getCode());
+				for(int i = 0; i < 3; i++){
+					String procName = procNames.get(i);
+					if(cycle.getConsumptionMap() != null) cycle.getConsumptionMap().put(procName, 0d);
+					if(cycle.getMergedEmissionMap() != null) cycle.getMergedEmissionMap().put(procName, 0d);
+					if(cycle.getTotalEmissionMap() != null) cycle.getTotalEmissionMap().put(procName, 0d);
+					if(cycle.getEmissionMap() != null){
+						Collection<Map<String, Double>> emissions = cycle.getEmissionMap().values();
+						for(Map<String, Double> emissionMap : emissions){
+							emissionMap.put(procName, 0d);
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	private double getCellValue(ExcelParser parser, int sheetIndex, String cellPos){

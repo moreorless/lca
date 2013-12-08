@@ -37,6 +37,7 @@ import com.cnooc.lca.model.NameToUuidMap;
 import com.cnooc.lca.model.T_Cycle;
 import com.cnooc.lca.service.CycleService;
 import com.cnooc.lca.service.CycleType;
+import com.cnooc.lca.service.LngConfig;
 
 @IocBean()
 @InjectName
@@ -112,37 +113,50 @@ public class CycleModule {
 		
 		request.setAttribute("curCycleType", curCycleType);
 		
+		// 读取LNG参数配置
+		request.setAttribute("lng_conf", LngConfig.getInstance().getConf());
 	}
 	
 	@At
 	// @Ok("redirect:/cycle/config?saveOk=true&cycletype=${p.cycletype}")
 	@Ok("json")
 	@Fail("json")
-	public void saveConfig(Ioc ioc, HttpServletRequest request, @Param("cycletype") String cycleTypeCode, @Param("::params.")Map<String, String> paramMap){
+	public void saveConfig(Ioc ioc, HttpServletRequest request, 
+			@Param("cycletype") String cycleTypeCode, 
+			@Param("::params.")Map<String, String> paramMap,
+			@Param("lng_conf") String lng_conf){
 		
 		CycleType curCycleType = cycleService.getCycleType(cycleTypeCode);
-		String excelFileName = curCycleType.getExcel();
-		ExcelParser excelParser = ExcelFactory.me().getParser(excelFileName);
-		excelParser.setAutoCommit(false);
+		if(paramMap != null){
+			String excelFileName = curCycleType.getExcel();
+			ExcelParser excelParser = ExcelFactory.me().getParser(excelFileName);
+			excelParser.setAutoCommit(false);
 		
-		// 保存配置
-		for(String key : paramMap.keySet()){
-			String[] keyitems = key.split("_");
-			int sheetIndex = Integer.parseInt(keyitems[0]);
-			String column = keyitems[1];
-			int row = Integer.parseInt(keyitems[2]);
-			try{
-				double value = Double.parseDouble(paramMap.get(key));
-				excelParser.setCellValue(sheetIndex, row, column, value);
-				logger.debug("保存自定义项目参数, sheet=" + sheetIndex + ", cell=" + column + row + ", value=" + value);
-				
-			}catch (Exception e) { 
-				logger.error("保存值错误 value=" + paramMap.get(key), e);
+			// 保存配置
+			for(String key : paramMap.keySet()){
+				String[] keyitems = key.split("_");
+				int sheetIndex = Integer.parseInt(keyitems[0]);
+				String column = keyitems[1];
+				int row = Integer.parseInt(keyitems[2]);
+				try{
+					double value = Double.parseDouble(paramMap.get(key));
+					excelParser.setCellValue(sheetIndex, row, column, value);
+					logger.debug("保存自定义项目参数, sheet=" + sheetIndex + ", cell=" + column + row + ", value=" + value);
+					
+				}catch (Exception e) { 
+					logger.error("保存值错误 value=" + paramMap.get(key), e);
+				}
 			}
+		
+			excelParser.updateBatch();
+			excelParser.setAutoCommit(true);
 		}
 		
-		excelParser.updateBatch();
-		excelParser.setAutoCommit(true);
+		// 保存LNG电动车配置
+		if(lng_conf != null){
+			LngConfig.getInstance().setConf(lng_conf);
+			LngConfig.getInstance().save();
+		}
 		
 		cycleService.reloadCycleTypeList(cycleTypeCode);				// 重新加载配置文件
 		writerConfig.load();

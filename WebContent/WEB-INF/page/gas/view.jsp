@@ -12,6 +12,7 @@
 .seperator {
 	height: 10px;
 }
+.modal-body{padding:0}
 </style>
 </head>
 <body>
@@ -117,6 +118,8 @@
 		
 	</div>
 	
+	</div>
+	
 	<div class="modal hide fade" id="analyze-modal">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal"
@@ -142,7 +145,10 @@
 				frameBorder="0" border="0" width="100%" height="100%"></iframe>
 		</div>
 	</div>
-	</div>
+	
+	<%@ include file="/includes/uploadfile.jsp" %>
+	
+	
 	<%@ include file="/includes/footer.jsp"%>
 	<script type="text/javascript" src="${base}/js/jquery.js"></script>
 	<script type="text/javascript" src="${base}/js/bootstrap.js"></script>
@@ -366,7 +372,7 @@
    			
    			$('#btn-analyze').click(function(){
    				$('#analyze-modal').modal({
-					width : '55%',
+					width : '70%',
 					height : ($(window).height() - 40) + 'px',
 					modalOverflow : true,
 					top : '20px'
@@ -380,6 +386,26 @@
   		TableHandler.init();
   		ChartHandler.init();
   		VoteHandler.init();
+  		
+  		$('#header-btn-param-config').click(function() {
+			$('#config-modal').modal({
+				width : '55%',
+				height : ($(window).height() - 40) + 'px',
+				modalOverflow : true,
+				top : '20px'
+			});
+			//{width:'65%', height:($(window).height() - 40) + 'px', modalOverflow:true, top:'20px', backdrop:true});
+		});
+
+		$('#header-btn-upload').click(function() {
+			$('#upload-modal').modal({
+				width : '45%',
+				height : ($(window).height() - 500) + 'px',
+				modalOverflow : true,
+				top : '600px'
+			});
+			//{width:'65%', height:($(window).height() - 40) + 'px', modalOverflow:true, top:'20px', backdrop:true});
+		});
   	});
 	</script>
 </body>

@@ -69,6 +69,23 @@
 		    	</c:forEach>
 		    	</div>
 		    </c:forEach>
+		    
+		    <c:if test="${param.cycletype == 'transport' }">
+		    <div class="control-group">
+		    	<label class="control-label" for="inputEmail"><b>进口LNG车选定</b></label>
+		    	<div class="controls">
+		    	<label class="radio inline">
+		    		<input type="radio" name="lng_conf" value="local"
+		    			<c:if test="${lng_conf == 'local'}">checked</c:if>/>国内视角
+	    		</label>
+	    		<label class="radio inline">
+		    		<input type="radio" name="lng_conf" value="global"
+		    		<c:if test="${lng_conf == 'global'}">checked</c:if>/>全球视角
+	    		</label> 
+		    	</div>
+		    </div>
+		    </c:if>
+		    
 		    </div>
 		    <div class="control-group">
     			<div class="controls">

@@ -1,8 +1,10 @@
 package com.cnooc.lca.service;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.nutz.ioc.Ioc;
@@ -13,6 +15,7 @@ import com.cnooc.lca.excel.parser.ExcelParser;
 import com.cnooc.lca.excel.parser.WritableExcel;
 import com.cnooc.lca.model.NameToUuidMap;
 import com.cnooc.lca.model.T_Cycle;
+import com.cnooc.lca.model.T_Procedure;
 
 /**
  * 生命周期类型 （发电/交通燃料/天然气）

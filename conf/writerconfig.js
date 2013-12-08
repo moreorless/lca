@@ -133,9 +133,11 @@ var ioc = {
 		"transport" : {
 			excel : "transport.xls",
 			sheets : []
+		},
+		"gas" : { 
+			excel : "gas.xls", 
+			sheets : [] 
 		}
-	/*
-	 * , "gas" : { excel : "gas.xls", sheets : [] }
-	 */
+	 
 	}
 };
