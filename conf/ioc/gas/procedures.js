@@ -15,19 +15,19 @@ var ioc = {
 							    {
 							    	type : "com.cnooc.lca.excel.ProcedureParamItem",
 							    	fields : {
-							    		name : "陆上气", consumption : "0,A29", emission : "1,B39"
+							    		name : "陆上气", consumption : "0,B4", emission : "0,B21"
 							    	}
 							    },
 							    {
 							    	type : "com.cnooc.lca.excel.ProcedureParamItem",
 							    	fields : {
-							    		name : "海上气", consumption : "0,A29", emission : "1,B39"
+							    		name : "海上气", consumption : "0,B5", emission : "0,B22"
 							    	}
 							    },
 							    {
 							    	type : "com.cnooc.lca.excel.ProcedureParamItem",
 							    	fields : {
-							    		name : "煤制气", consumption : "0,A29", emission : "1,B39"
+							    		name : "煤制气", consumption : "0,B6", emission : "0,B23"
 							    	}
 							    }
 							]
@@ -41,19 +41,19 @@ var ioc = {
 							    {
 							    	type : "com.cnooc.lca.excel.ProcedureParamItem",
 							    	fields : {
-							    		name : "LNG", consumption : "0,A29", emission : "1,B39"
+							    		name : "LNG", consumption : "0,D5", emission : "0,D22"
 							    	}
 							    },
 							    {
 							    	type : "com.cnooc.lca.excel.ProcedureParamItem",
 							    	fields : {
-							    		name : "CNG", consumption : "0,A29", emission : "1,B39"
+							    		name : "CNG", consumption : "0,D4", emission : "0,D21"
 							    	}
 							    },
 							    {
 							    	type : "com.cnooc.lca.excel.ProcedureParamItem",
 							    	fields : {
-							    		name : "管道气", consumption : "0,A29", emission : "1,B39"
+							    		name : "管道气", consumption : "0,D6", emission : "0,D23"
 							    	}
 							    }
 							]
@@ -67,19 +67,19 @@ var ioc = {
 							    {
 							    	type : "com.cnooc.lca.excel.ProcedureParamItem",
 							    	fields : {
-							    		name : "水运", consumption : "0,A29", emission : "1,B39"
+							    		name : "水运", consumption : "0,F4", emission : "0,F21"
 							    	}
 							    },
 							    {
 							    	type : "com.cnooc.lca.excel.ProcedureParamItem",
 							    	fields : {
-							    		name : "陆运", consumption : "0,A29", emission : "1,B39"
+							    		name : "陆运", consumption : "0,F5", emission : "0,F22"
 							    	}
 							    },
 							    {
 							    	type : "com.cnooc.lca.excel.ProcedureParamItem",
 							    	fields : {
-							    		name : "管道运输", consumption : "0,A29", emission : "1,B39"
+							    		name : "管道运输", consumption : "0,F6", emission : "0,F23"
 							    	}
 							    }
 							]
@@ -93,25 +93,25 @@ var ioc = {
 							    {
 							    	type : "com.cnooc.lca.excel.ProcedureParamItem",
 							    	fields : {
-							    		name : "发电", consumption : "0,A29", emission : "1,B39"
+							    		name : "发电", consumption : "0,H4", emission : "0,H21"
 							    	}
 							    },
 							    {
 							    	type : "com.cnooc.lca.excel.ProcedureParamItem",
 							    	fields : {
-							    		name : "交通", consumption : "0,A29", emission : "1,B39"
+							    		name : "交通", consumption : "0,H5", emission : "0,H22"
 							    	}
 							    },
 							    {
 							    	type : "com.cnooc.lca.excel.ProcedureParamItem",
 							    	fields : {
-							    		name : "工业用气", consumption : "0,A29", emission : "1,B39"
+							    		name : "工业用气", consumption : "0,H6", emission : "0,H23"
 							    	}
 							    },
 							    {
 							    	type : "com.cnooc.lca.excel.ProcedureParamItem",
 							    	fields : {
-							    		name : "城镇燃气", consumption : "0,A29", emission : "1,B39"
+							    		name : "城镇燃气", consumption : "0,H7", emission : "0,H24"
 							    	}
 							    }
 							]
