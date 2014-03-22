@@ -71,17 +71,47 @@
 				</c:forEach>
 				</div>
 				<div class="row-fluid">
-					<form class="form-inline" style='margin-bottom:10px' 
+					<form class="form-inline" style='margin-bottom:10px' id="cycle_form"
 						action="${base}/cycle/insertGasCycle?cycletype=${param.cycletype}&target=${param.target}" method="post">
-					<input type="text" name="name"/>
+					<div class="row-fluid" style="padding-bottom:5px">
+						<div class="span2">
+							<code>运输距离设置</code>&nbsp;&nbsp;&nbsp;&nbsp;
+						</div>
+						<div class="span3">
+							<label>水运</label> 
+							<input type="text" id="transby_water" value="1000" style="width:40px"/>&nbsp;km
+						</div> 
+						<div class="span3">
+							<label>陆运</label> 
+							<input type="text" id="transby_land" value="1000" style="width:40px"/>&nbsp;km
+						</div>
+						<div class="span4">	
+							<label>管道</label> 
+							<input type="text" id="transby_pipe" value="1000" style="width:40px"/>&nbsp;km
+							<!-- 
+							<button class="btn btn-info btn-mini" type="button" id="btn-set-dist">修改</button>
+							 -->
+							<!-- 
+							<a href="javascript://"><img src="${base}/images/button_ok.png" title="保存设置"></img></a>
+							 -->
+						</div>
+					</div>
+					<div class="row-fluid">
+					<div class="span2">
+						<code>方案保存与对比</code>
+					</div>
+					 <div class="span10">
+					<input type="text" id="scheme_name" name="name" class="input-xlarge" placeholder="在这里输入方案名称"/>
 					<input type="hidden" name="procedureIndexStr" id="input-procedureIndexStr"/>
-					<button class="btn" type="submit" id="btn-save">添加方案</button>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button class="btn" type="button" id="btn-analyze">方案对比</button>
+					<input type="hidden" name="transDistStr" id="input-transDistStr"/>
+					<button class="btn btn-primary" type="button" id="btn-save">保存</button>
+					<button class="btn btn-info" type="button" id="btn-analyze">对比</button>
+					</div>
+					</div>
 					</form>
 				</div>
 			</div>
-			<div class="span4" style="margin-top:-40px">
+			<div class="span4" style="padding:10px;">
 				<div id="chart-container"></div>
 			</div>
 		</div>
@@ -165,6 +195,7 @@
 		procMap : [],		// 记录是否选中
 		procParam : [],		// 记录参数值
 		procNames : [],		// 记录阶段名称
+		transdist : [1000, 1000, 1000],   // 三种运输方式的默认距离，都设置为1000
 		initProcMap : function(){
 			<c:forEach items="${procedures}" var="procedure" varStatus="procStatus">
 			this.procMap[${procStatus.index}] = [];
@@ -189,9 +220,14 @@
 			TableHandler.selectRow(${selectedCycleIndex});
 			
 		},
-		loadVoteData : function(procIndexStr){
+		loadVoteData : function(cycle_scheme){
 			this.reset();
 			
+			// 设置方案名称
+			$('#scheme_name').val(cycle_scheme.name);
+			
+			// 设置选中项
+			var procIndexStr = cycle_scheme.procedureIndexStr;
 			var procArr = procIndexStr.split('|');
 			for(var i = 0; i < procArr.length; i++){
 				var itemArr = procArr[i].split(',');
@@ -201,6 +237,15 @@
 					$('#vote_'+ i + '_' + itemIndex).addClass('se');
 				}
 			}
+			
+			// 设置传输距离
+			var transDistStr = cycle_scheme.transDistStr;
+			var distArr = transDistStr.split(',');
+			$('#transby_water').val(distArr[0]);
+			$('#transby_land').val(distArr[1]);
+			$('#transby_pipe').val(distArr[2]);
+			this.setTransDist();
+			
 		},
 		reset : function(){
 			for(var col = 0; col < this.procMap.length; col++){
@@ -277,7 +322,14 @@
 				var $value = 0;
 				for(var row = 0; row < this.procMap[col].length; row++){
 					if(this.procMap[col][row]){
-						$value += this.procParam[col][row];
+						
+						// 这里做了一个特殊处理，如果col=2，对应"运输"列，对距离做了重新计算
+						// 以现在设置的距离除以1000
+						if(col == 2){
+							$value += this.procParam[col][row] * this.transdist[row] / 1000;
+						}else{
+							$value += this.procParam[col][row];
+						}
 					}
 				}
 				seriesData.push([this.procNames[col], $value]);
@@ -285,6 +337,17 @@
 			
 			// 刷新统计图
 			ChartHandler.refresh(seriesData);
+		},
+		// 设置运输距离
+		setTransDist : function(){
+			this.transdist[0] = $('#transby_water').val();
+			this.transdist[1] = $('#transby_land').val();
+			this.transdist[2] = $('#transby_pipe').val();
+			
+			$('#input-transDistStr').val(this.transdist);
+			
+			// 修改完成后，刷新统计图
+			this.refreshData();
 		}
 		
 	};
@@ -297,10 +360,10 @@
    				            plotBackgroundColor: null,
    				            plotBorderWidth: null,
    				            plotShadow: false,
-   				         	spacing : [0, 0, 0, 0],
-   				         	margin : [0, 0, 0, 0],
-   				            width : 350,
-   				            height : 350
+   				         	spacing : [10, 10, 10, 10],
+   				         	margin : [10, 10, 10, 10],
+   				            width : 300,
+   				            height : 300
    				        },
    				        title: {
    				            text: null,
@@ -340,7 +403,12 @@
    		cycleList : [],
    		init : function(){
    			<c:forEach items="${curCycleType.cycleList}" var="cycle">
-   			this.cycleList.push({name:'${cycle.name}', procedureIndexStr : '${cycle.procedureIndexStr}'});
+   			this.cycleList.push(
+   					{
+   						name:'${cycle.name}', 
+   						procedureIndexStr : '${cycle.procedureIndexStr}',
+   						transDistStr : '${cycle.transDistStr}'
+   					});
    			</c:forEach>
    			
    			$('table tr').click(function(){
@@ -354,7 +422,7 @@
    			this.selectedRow = rowIndex;
    			
    			if(this.cycleList.length > 0){
-   				VoteHandler.loadVoteData(this.cycleList[rowIndex].procedureIndexStr);
+   				VoteHandler.loadVoteData(this.cycleList[rowIndex]);
    			}
    			VoteHandler.refreshData();
    			
@@ -364,6 +432,17 @@
    			if(confirm('确定删除选中行吗？')){
 	   			window.location = "${base}/cycle/delGasCycle?rowIndex=" + rowIndex + "&cycletype=${param.cycletype}&target=${param.target}";
    			}
+   		},
+   		isCycleNameExist : function(cycleName){
+   			for(var i = 0; i < this.cycleList.length; i++){
+   				if(this.cycleList[i].name == cycleName){
+   					return true;
+   				}
+   			}
+   			return false;
+   		},
+   		getCurCycleName : function(){
+   			return this.cycleList[this.selectedRow].name;
    		}
    	}
    	
@@ -378,6 +457,45 @@
 					top : '20px'
 				});
    			});
+   			
+   			$('#btn-set-dist').click(function(){
+   				VoteHandler.setTransDist();
+   			});
+   			
+   			$('#transby_water, #transby_land, #transby_pipe').change(function(){
+   				var regex = /^[1-9]+[0-9]*]*$/;
+   				var transIds = ['#transby_water', '#transby_land', '#transby_pipe'];
+   				for(var index in transIds){
+   					var $input = $(transIds[index]);
+	   				if(!regex.test($input.val())){
+	   					$input.css({color:'#b94a48'});
+	   					alert('运输距离必须为整数，请确认！');
+	   					
+	   					return;
+	   				}
+	   				$input.css({color:'#468847'});
+   				}
+   				
+   				VoteHandler.setTransDist();
+   			});
+   			
+   			$('#btn-save').click(function(){
+   				// 判断是否重名
+   				var schemeName = $('#scheme_name').val(); 
+   				if(schemeName.trim() == ''){
+   					alert('请输入方案名称');
+					return;
+   				}
+   				
+   				if(TableHandler.isCycleNameExist(schemeName) && TableHandler.getCurCycleName() != schemeName){
+   					if(!confirm('该方案名称已存在，继续保存将覆盖现有方案，是否继续？')){
+	   					return;
+   					}
+   				}
+   				$('#cycle_form').submit();
+   				
+   			});
+   			
    		}
    	}
    	

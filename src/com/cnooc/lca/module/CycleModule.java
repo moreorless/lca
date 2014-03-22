@@ -213,22 +213,38 @@ public class CycleModule {
 	@At
 	@Ok("jsp:page.gas.view")
 	public void insertGasCycle(HttpServletRequest request, Ioc ioc, @Param("name") String name,
-			@Param("procedureIndexStr") String procedureIndexStr){
+			@Param("procedureIndexStr") String procedureIndexStr,
+			@Param("transDistStr") String transDistStr){
 		
 		// 写入gas.txt
 		CycleType cycleType = cycleService.getCycleType("gas");
 		String templateName = cycleType.getTemplateName();
 		ProcedureTemplate tp = ioc.get(ProcedureTemplate.class, templateName);
 		
-		T_Cycle cycle = tp.createCycle(cycleType, name, procedureIndexStr);
-		cycleType.getCycleList().add(cycle);
+		T_Cycle cycle = tp.createCycle(cycleType, name, procedureIndexStr, transDistStr);
+		
+		int selectedIndex = 0;
+		boolean isNew = true;
+		// 如果有方案重名，则覆盖旧数据
+		for(int i = 0; i < cycleType.getCycleList().size(); i++){
+			if(cycleType.getCycleList().get(i).getName().equals(cycle.getName())){
+				cycleType.getCycleList().set(i, cycle);
+				isNew = false;
+				selectedIndex = i;
+				break;
+			}
+		}
+		if(isNew){
+			cycleType.getCycleList().add(cycle);
+			selectedIndex = cycleType.getCycleList().size() - 1;
+		}
 		
 		tp.saveCycleConfig(cycleType);
 		
 		List<ProcedureParam> procedures = tp.getProcedures();
 		request.setAttribute("curCycleType", cycleType);
 		request.setAttribute("procedures", procedures);
-		request.setAttribute("selectedCycleIndex", cycleType.getCycleList().size() - 1 );
+		request.setAttribute("selectedCycleIndex",  selectedIndex);
 	}
 
 	@At

@@ -14,12 +14,14 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.formula.ptg.Ptg;
+import org.nutz.json.Json;
 import org.nutz.lang.Files;
 import org.nutz.lang.Streams;
 
 import com.cnooc.lca.common.GlobalConfig;
 import com.cnooc.lca.excel.parser.ExcelParser;
 import com.cnooc.lca.model.T_Cycle;
+import com.cnooc.lca.model.T_Cycle_MiniGas;
 import com.cnooc.lca.service.CycleType;
 
 
@@ -97,6 +99,18 @@ public class ProcedureTemplate{
 		
 		
 		try{
+			String jsonStr = Files.read(confFile);
+			List<T_Cycle_MiniGas> savedCycleList = (List<T_Cycle_MiniGas>)Json.fromJson(jsonStr);
+			if(savedCycleList != null){
+				Iterator<T_Cycle_MiniGas> gasCycleIter = savedCycleList.iterator();
+				while(gasCycleIter.hasNext()){
+					T_Cycle_MiniGas gasCycle = gasCycleIter.next();
+					T_Cycle newCycle = createCycle(cycleType, gasCycle.getName(), 
+							gasCycle.getProcedureIndexStr(), gasCycle.getTransDistStr());
+					cycleList.add(newCycle);
+				}
+			}
+			/*
 			BufferedReader br = new BufferedReader(new InputStreamReader(  
 					new FileInputStream(confFile)));  
 			
@@ -111,6 +125,7 @@ public class ProcedureTemplate{
 				
 			}  
 			br.close(); 
+			*/
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -118,10 +133,19 @@ public class ProcedureTemplate{
 		return cycleList;
 	}
 	
-	public T_Cycle createCycle(CycleType cycleType, String cycleName, String procedureIndexStr){
+	/**
+	 * 
+	 * @param cycleType
+	 * @param cycleName		
+	 * @param procedureIndexStr	工序序号集合
+	 * @param transDistStr		传输距离集合，如果后续还有定制需求，则将此项扩展为map结构，存放一个方案的参数项
+	 * @return
+	 */
+	public T_Cycle createCycle(CycleType cycleType, String cycleName, String procedureIndexStr, String transDistStr){
 		T_Cycle cycle = new T_Cycle(cycleType);
 		cycle.setName(cycleName);
 		cycle.setProcedureIndexStr(procedureIndexStr);
+		cycle.setTransDistStr(transDistStr);
 		
 		// 解析生命周期中的各个阶段，计算综合能耗和排放
 		Map<String, Double> consumptionMap = new HashMap<>();
@@ -129,20 +153,32 @@ public class ProcedureTemplate{
 		
 		List<ProcedureParamItem[]> procedureParamItemList = new LinkedList<>();
 		String[] strArr = procedureIndexStr.split("\\|");
-		for(int i = 0; i < strArr.length; i++){
+		for(int col = 0; col < strArr.length; col++){
 			Double comsumptionValue = 0d;
 			Double emissionValue = 0d;
 			
-			ProcedureParam procParam = procedures.get(i);
-			String[] indexStr = strArr[i].split(",");
+			ProcedureParam procParam = procedures.get(col);
+			String[] indexStr = strArr[col].split(",");
 			
 			ProcedureParamItem[] paramItems = new ProcedureParamItem[indexStr.length];
-			for(int index = 0; index < indexStr.length; index++){
-				ProcedureParamItem pItem = procParam.getItems().get(Integer.parseInt(indexStr[index]));
-				comsumptionValue += pItem.getConsumptionValue();
-				emissionValue += pItem.getEmissionValue();
+			for(int row = 0; row < indexStr.length; row++){
 				
-				paramItems[index] = pItem;
+				ProcedureParamItem pItem = procParam.getItems().get(Integer.parseInt(indexStr[row]));
+				paramItems[row] = pItem;
+
+				/**
+				 *  这里做了一个特殊处理，如果col==2，对应"运输"列，对距离做了重新计算
+				 *  以现在设置的距离除以1000
+				 */
+				if(col == 2){
+					String[] transDistArr = transDistStr.split(",");
+					comsumptionValue += pItem.getConsumptionValue() * Integer.parseInt(transDistArr[row]) / 1000;
+					emissionValue += pItem.getEmissionValue() * Integer.parseInt(transDistArr[row]) / 1000;
+				}else{
+					comsumptionValue += pItem.getConsumptionValue();
+					emissionValue += pItem.getEmissionValue();
+				}
+				
 			}
 			
 			procedureParamItemList.add(paramItems);
@@ -197,8 +233,20 @@ public class ProcedureTemplate{
 	 * @param cycleType
 	 */
 	public void saveCycleConfig(CycleType cycleType){
-		StringBuffer buf = new StringBuffer();
 		List<T_Cycle> cycleList = cycleType.getCycleList();
+		
+		List<T_Cycle_MiniGas> gasList = new LinkedList<>();
+		Iterator<T_Cycle> iter = cycleList.iterator();
+		while(iter.hasNext()){
+			T_Cycle cycle = iter.next();
+			T_Cycle_MiniGas miniCycle = new T_Cycle_MiniGas(cycle);
+			gasList.add(miniCycle);
+		}
+		
+		String jsonStr = Json.toJson(gasList);
+		
+		/*
+		StringBuffer buf = new StringBuffer();
 		Iterator<T_Cycle> iter = cycleList.iterator();
 		while(iter.hasNext()){
 			T_Cycle cycle = iter.next();
@@ -207,6 +255,7 @@ public class ProcedureTemplate{
 			tmp.append(cycle.getProcedureIndexStr());
 			buf.append(tmp).append("\n");
 		}
+		*/
 		
 		String fileName = getCycleConfigFile(cycleType);
 		File file = new File(fileName);
@@ -214,7 +263,7 @@ public class ProcedureTemplate{
 		
 		try{
 			Writer wt = Streams.fileOutw(file);
-			wt.write(buf.toString());
+			wt.write(jsonStr);
 			wt.flush();
 			wt.close();
 		}catch (Exception e) {

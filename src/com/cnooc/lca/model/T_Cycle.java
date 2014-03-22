@@ -61,7 +61,12 @@ public class T_Cycle {
 	private List<ProcedureParamItem[]> procedureParamItemList;
 	
 	/**
-	 * 工序序号集合(阶段1序号|阶段2序号1,阶段2序号2|...|阶段n序号)
+	 * 天然气产业链使用的运输距离数据，按照gas/procedures.js配置的运输次序写入，以逗号分割，默认值1000,1000,1000
+	 */
+	private String transDistStr;
+	
+	/**
+	 * 天然气产业链使用的工序序号集合(阶段1序号|阶段2序号1,阶段2序号2|...|阶段n序号)
 	 */
 	private String procedureIndexStr;
 	
@@ -154,6 +159,14 @@ public class T_Cycle {
 	public void setProcedureParamItemList(
 			List<ProcedureParamItem[]> procedureParamItemList) {
 		this.procedureParamItemList = procedureParamItemList;
+	}
+	
+	
+	public String getTransDistStr() {
+		return transDistStr;
+	}
+	public void setTransDistStr(String transDistStr) {
+		this.transDistStr = transDistStr;
 	}
 	public String getProcedureIndexStr() {
 		return procedureIndexStr;
