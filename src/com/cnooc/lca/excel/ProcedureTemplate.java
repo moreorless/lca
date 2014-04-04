@@ -172,8 +172,11 @@ public class ProcedureTemplate{
 				 */
 				if(col == 2){
 					String[] transDistArr = transDistStr.split(",");
-					comsumptionValue += pItem.getConsumptionValue() * Integer.parseInt(transDistArr[row]) / 1000;
-					emissionValue += pItem.getEmissionValue() * Integer.parseInt(transDistArr[row]) / 1000;
+					if(transDistArr[row] == ""|| transDistArr[row] == null || transDistArr[row].length() == 0) 
+						comsumptionValue = 0.0;
+					else
+						comsumptionValue += pItem.getConsumptionValue() * Integer.parseInt(transDistArr[row]) / 1000;
+					//emissionValue += pItem.getEmissionValue() * Integer.parseInt(transDistArr[row]) / 1000;
 				}else{
 					comsumptionValue += pItem.getConsumptionValue();
 					emissionValue += pItem.getEmissionValue();

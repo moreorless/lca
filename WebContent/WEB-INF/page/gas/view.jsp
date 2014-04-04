@@ -463,7 +463,7 @@
    			});
    			
    			$('#transby_water, #transby_land, #transby_pipe').change(function(){
-   				var regex = /^[1-9]+[0-9]*]*$/;
+   				/*var regex = /^[1-9]+[0-9]*]*$/;
    				var transIds = ['#transby_water', '#transby_land', '#transby_pipe'];
    				for(var index in transIds){
    					var $input = $(transIds[index]);
@@ -474,12 +474,25 @@
 	   					return;
 	   				}
 	   				$input.css({color:'#468847'});
-   				}
+   				}*/
    				
    				VoteHandler.setTransDist();
    			});
    			
    			$('#btn-save').click(function(){
+   				//判断输入是否为空
+   				var regex = /^[1-9]+[0-9]*]*$/;
+   				var transIds = ['#transby_water', '#transby_land', '#transby_pipe'];
+   				for(var index in transIds){
+   					var $input = $(transIds[index]);
+	   				if(!regex.test($input.val())){	   					
+	   					$input.css({color:'#b94a48'});
+	   					alert('运输距离必须为整数，请确认！');	   					
+	   					return;
+	   				}
+	   				$input.css({color:'#468847'});
+   				}
+   				
    				// 判断是否重名
    				var schemeName = $('#scheme_name').val(); 
    				if(schemeName.trim() == ''){
