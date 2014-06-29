@@ -11,26 +11,47 @@
 
 <style type="text/css">
 body {
-	margin: 0px;
-	padding: 0px;
-	background-image: url(images/bg5.jpg);
-	background-size: cover;
-	width: 100%;
+	
 }
 </style>
 </head>
 
 <body>
-	<div style="width: 100%; height: 100%; position: relative;">
-		<div
-			onclick="location.href='${base}/cycle/stat?cycletype=electric&target=consumption&statBy=generator'"
-			style="cursor: pointer; width: 22%; height: 40%;  position: fixed; _position: absolute; top: 35%; margin-left: 8%; z-index: 100;"></div>
-		<div
-			onclick="location.href='${base}/cycle/stat?cycletype=transport&target=consumption&statBy=generator'"
-			style="cursor: pointer; width: 22%; height: 40%;  position: fixed; _position: absolute; top: 35%; margin-left: 40%; z-index: 100;"></div>
-		<div
-			onclick="location.href='${base}/cycle/gasView?cycletype=gas&target=consumption&statBy=generator'"
-			style="cursor: pointer; width: 22%; height: 40%;  position: fixed; _position: absolute; top: 35%; margin-left: 72%; z-index: 100;"></div>
-		<div>
+	<div id="idnex-wrap">
+		<div class="index-banner">
+			<div class="index-banner-inner">
+				<h1 class="index-banner-title">中海油碳里程分析系统</h1>
+			</div>
+		</div>
+
+		<ul class="index-list">
+			<li>
+				<a href="${base}/cycle/stat?cycletype=electric&target=consumption&statBy=generator">
+					<div  style="background-color:#7daeeb">
+					<img src="${base}/images/banner/Oil_industry-03-128.png" alt="" width="128px" height="128px" />
+					</div>
+					<h4>发电周期</h4>
+				</a>
+			</li>	
+			<li>
+				<a href="${base}/cycle/stat?cycletype=transport&target=consumption&statBy=generator">
+					<div style="background-color:#87b33e">
+						<img src="${base}/images/banner/Oil_industry-02-128.png" alt="" width="128px" height="128px" />	
+					</div>
+					<h4>交通燃料</h4>
+				</a>
+			</li>
+			<li>
+				<a href="${base}/cycle/gasView?cycletype=gas&target=consumption&statBy=generator">
+					<div style="background-color:#f7af4a">
+					<img src="${base}/images/banner/refinery-128.png" alt="" width="128px" height="128px" />
+					</div>
+					<h4>天然气产业链</h4>
+				</a>
+			</li>
+		</ul>
+
+	<div>
+
 </body>
 </html>

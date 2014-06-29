@@ -58,3 +58,52 @@ body {
 code {
   font-size: 80%;
 }
+
+.index-banner {
+    background: url("../images/pat.png?v=3.2.19") repeat scroll center top #58B454;
+    color: #FFFFFF;
+    height: 250px;
+    text-align: center;
+}
+
+.index-banner .index-banner-inner{
+    margin: 0 auto;
+    width: 980px;
+}
+
+.index-banner .index-banner-inner .index-banner-title{
+    font-weight: normal;
+    margin: 0;
+    padding: 140px 0 50px;
+    font-size: 50px;
+    color: #fefefe
+  }
+
+ul.index-list{
+    margin: 0 auto;
+    width: 900px;
+}
+ul.index-list:after{clear:both;content: "";display: table;}
+ul.index-list li{
+      float: left;
+    font-size: 14px;
+    line-height: 150%;
+    padding: 45px 20px;
+    text-align: center;
+    width: 28%;
+    list-style-type:none;
+}
+
+ul.index-list li a div{
+  padding:10px 0;
+}
+ul.index-list li h4{
+  font-size: 20px;
+  font-weight: normal;
+}
+ul.index-list li a{
+  color: #333
+}
+ul.index-list li a:hover{
+  color: #
+}

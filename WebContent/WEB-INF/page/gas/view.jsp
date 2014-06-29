@@ -37,10 +37,10 @@
 		</div>
 		<div>
 		
-		<div class="row-fluid" style="border-bottom:2px solid #ccc">
-			<div class="span8" style="border-right : 1px solid #ccc">
+		<div class="row-fluid" style="border-bottom:1px solid #ccc;margin-bottom:10px;">
+			<div class="span8">
 				
-				<div class="row-fluid" style="width:540px;height:260px">
+				<div class="row-fluid" style="width:540px;height:220px;padding-left:15px;border:1px solid #eee;margin-bottom:5px;">
 				<c:forEach items="${procedures}" var="procedure" varStatus="status">
 					<div style="float:left;width:100px;height:200px;padding:2px">
 						<h4 style="text-align:center;"><c:out value="${procedure.name }" /></h4>
