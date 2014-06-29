@@ -11,7 +11,7 @@
 
 <style type="text/css">
 body {
-	
+	background-color: #eee;
 }
 </style>
 </head>
@@ -52,6 +52,6 @@ body {
 		</ul>
 
 	<div>
-
+	<%@ include file="/includes/footer.jsp"%>
 </body>
 </html>
