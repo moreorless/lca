@@ -44,21 +44,21 @@
 		    	</label>
 				<div class="controls">
 			    <select id="sheet-selector">
-			    	<c:forEach items="${curCycleType.paramConfigure.sheets}" var="wSheet">
-			    	<option value="${wSheet.index}">${wSheet.name}</option>
+			    	<c:forEach items="${curCycleType.paramConfigure.sheets}" var="wSheet" varStatus="status">
+			    	<option value="${status.index}">${wSheet.name}</option>
 			    	</c:forEach>
 			    </select>
 		    	</div>
 		    </div>
 		    <div id="param-box">
-		    <c:forEach items="${curCycleType.paramConfigure.sheets}" var="wSheet">
+		    <c:forEach items="${curCycleType.paramConfigure.sheets}" var="wSheet" varStatus="status">
 		    	<%--
 		    		<label class="label label-info">${wSheet.name}</label>
 		    	 --%>
-		    	<div id="sheet_${wSheet.index}" style="display:none">
+		    	<div id="sheet_${status.index}" style="display:none">
 		    	<c:forEach items="${wSheet.cells}" var="wCell">
 		    		<div class="control-group<c:if test="${wCell.formula }"> error</c:if><c:if test="${!wCell.formula }"> </c:if>">
-				    	<label class="control-label" for="inputEmail"><b>${wCell.paramName}</b></label>
+				    	<label class="control-label"><b>${wCell.paramName}</b></label>
 				    	<div class="controls">
 				    		<input type="text" value="<fmt:formatNumber value='${wCell.value }' pattern='.000' />"
 				    			name="params.${wCell.sheetIndex}_${wCell.column}_${wCell.row}" 
@@ -72,7 +72,7 @@
 		    
 		    <c:if test="${param.cycletype == 'transport' }">
 		    <div class="control-group">
-		    	<label class="control-label" for="inputEmail"><b>进口LNG车选定</b></label>
+		    	<label class="control-label"><b>进口LNG车选定</b></label>
 		    	<div class="controls">
 		    	<label class="radio inline">
 		    		<input type="radio" name="lng_conf" value="local"
